@@ -1,3 +1,11 @@
+Oto kompletny kod z wprowadzonymi poprawkami:
+
+* **Przełączanie tekstu „About” / „Close” oraz „Contact” / „Close”** przy otwieraniu i zamykaniu sekcji.
+* **Rozwijana sekcja Contact** usytuowana po prawej stronie, wyrównana do prawej krawędzi (zgodnie ze zdjęciem).
+* **Stopka (Footer)** na samym dole strony z linkami wyrównanymi do lewej i prawej strony z górną linią podziału.
+* **Optymalizacje mobilne**: mniejsze marginesy, mniejsza czcionka w intro, elastyczny układ stopki i optymalny rozmiar slidera na smartfonach.
+
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -47,18 +55,39 @@
             text-decoration: underline;
         }
 
-        /* --- SEKCJA ABOUT --- */
-        #about-section {
+        /* --- SEKCJE ROZWIJANE (ABOUT & CONTACT) --- */
+        #about-section, #contact-section {
             display: none;
             border-bottom: 1px solid #1a1a1a;
             padding-bottom: 40px;
             margin-bottom: 60px;
         }
 
-        #about-section.active {
+        #about-section.active, #contact-section.active {
             display: block;
         }
 
+        /* Rozwijany kontakt (wyrównany do prawej) */
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .contact-link {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- SEKCJA ABOUT --- */
         .intro-text {
             font-size: 22px;
             line-height: 1.35;
@@ -130,15 +159,49 @@
             border-radius: 2px;
         }
 
+        /* --- STOPKA (FOOTER) --- */
+        .site-footer {
+            border-top: 1.5px solid #1a1a1a;
+            padding-top: 16px;
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-link {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
         /* RESPONYWNOŚĆ (TELEFONY) */
         @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .intro-text {
+                font-size: 18px;
+            }
+
             .project-info {
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
             
             .media-item {
-                height: 300px;
+                height: 280px;
             }
 
             .formula {
@@ -146,7 +209,18 @@
                 align-items: flex-start;
                 gap: 16px;
             }
+
             .dash { display: none; }
+
+            .site-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .footer-links {
+                gap: 16px;
+            }
         }
     </style>
 </head>
@@ -155,10 +229,11 @@
     <div class="main-container">
         
         <header class="top-nav">
-            <button class="nav-button" onclick="toggleAbout()">About</button>
-            <a href="mailto:twoj@email.com" class="nav-button">Contact</a>
+            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
+            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
         </header>
 
+        <!-- SEKCJA ABOUT -->
         <section id="about-section">
             <p class="intro-text">
                 Hi, I'm Gosia. I look for problems that I can solve through graphic design.
@@ -186,55 +261,17 @@
             </div>
         </section>
 
-
-        <article class="project-item">
-            <div class="project-info">
-                <div class="project-title">
-                    Dziewczyny<br>Maszyny<br>Event Design
-                </div>
-                <div>
-                    <span class="scope-title">Scope of work</span><br>
-                    Visual identity,<br>
-                    Digital design for social media,<br>
-                    Typeface,<br>
-                    Motion design
-                </div>
-                <div>
-                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY.
-                </div>
+        <!-- SEKCJA CONTACT (ROZWIJANA) -->
+        <section id="contact-section">
+            <div class="contact-content">
+                <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
+                <a href="https://www.instagram.com" target="_blank" class="contact-link">Instagram</a>
+                <a href="https://www.linkedin.com" target="_blank" class="contact-link">Linkedin</a>
+                <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
             </div>
+        </section>
 
-            <div class="media-slider">
-                <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 1">
-                <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
-                <img class="media-item" src="https://via.placeholder.com/300x420/c0c0c0/808080?text=Zdjecie+3" alt="Projekt 1 foto 3">
-            </div>
-    
-        <article class="project-item">
-            <div class="project-info">
-                <div class="project-title">
-                    Dziewczyny<br>Maszyny<br>Event Design
-                </div>
-                <div>
-                    <span class="scope-title">Scope of work</span><br>
-                    Visual identity,<br>
-                    Digital design for social media,<br>
-                    Typeface,<br>
-                    Motion design
-                </div>
-                <div>
-                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY.
-                </div>
-            </div>
-
-            <div class="media-slider">
-                <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 1">
-                <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
-                <img class="media-item" src="https://via.placeholder.com/300x420/c0c0c0/808080?text=Zdjecie+3" alt="Projekt 1 foto 3">
-            </div>
-        </article>
-
-
+        <!-- PROJEKTY -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -258,8 +295,6 @@
                 <img class="media-item" src="https://via.placeholder.com/300x420/c0c0c0/808080?text=Zdjecie+3" alt="Projekt 1 foto 3">
             </div>
         </article>
-
-
 
         <article class="project-item">
             <div class="project-info">
@@ -282,13 +317,58 @@
             </div>
         </article>
 
+        <!-- STOPKA Z LINKAMI -->
+        <footer class="site-footer">
+            <div class="footer-links">
+                <a href="https://www.behance.net" target="_blank" class="footer-link">Behance</a>
+                <a href="https://www.instagram.com" target="_blank" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com" target="_blank" class="footer-link">Linkedin</a>
+            </div>
+            <div>
+                <a href="mailto:gosi.marzec@gmail.com" class="footer-link">gosi.marzec@gmail.com</a>
+            </div>
+        </footer>
+
     </div>
 
     <script>
         function toggleAbout() {
-            const about = document.getElementById('about-section');
-            about.classList.toggle('active');
+            const aboutSection = document.getElementById('about-section');
+            const aboutBtn = document.getElementById('about-btn');
+            
+            // Zamknij sekcję Contact jeśli jest otwarta
+            document.getElementById('contact-section').classList.remove('active');
+            document.getElementById('contact-btn').innerText = 'Contact';
+
+            // Przełącz widoczność About
+            aboutSection.classList.toggle('active');
+            
+            if (aboutSection.classList.contains('active')) {
+                aboutBtn.innerText = 'Close';
+            } else {
+                aboutBtn.innerText = 'About';
+            }
+        }
+
+        function toggleContact() {
+            const contactSection = document.getElementById('contact-section');
+            const contactBtn = document.getElementById('contact-btn');
+            
+            // Zamknij sekcję About jeśli jest otwarta
+            document.getElementById('about-section').classList.remove('active');
+            document.getElementById('about-btn').innerText = 'About';
+
+            // Przełącz widoczność Contact
+            contactSection.classList.toggle('active');
+            
+            if (contactSection.classList.contains('active')) {
+                contactBtn.innerText = 'Close';
+            } else {
+                contactBtn.innerText = 'Contact';
+            }
         }
     </script>
 </body>
 </html>
+
+```

@@ -57,10 +57,11 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: 50px;
+            top: 100%;
             background-color: #ededed;
             z-index: 900;
             border: 2px solid #1a1a1a;
+            border-top: none;
             box-shadow: none;
             display: none;
             opacity: 0;
@@ -265,45 +266,45 @@
         <header class="top-nav">
             <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
             <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
+
+            <!-- SEKCJA ABOUT -->
+            <section id="about-section" class="overlay-panel">
+                <p class="intro-text">
+                    Hi, I'm Gosia. I look for problems that I can solve through graphic design.
+                </p>
+
+                <div class="formula">
+                    <div class="column">
+                        <div>graphic design<br>practice</div>
+                        <div class="plus">+</div>
+                        <div>technical<br>degree</div>
+                    </div>
+
+                    <div class="dash">—</div>
+
+                    <div class="column">
+                        <div>unquenchable<br>curiosity</div>
+                        <div class="plus">+</div>
+                        <div>figureing<br>everything out</div>
+                    </div>
+
+                    <div class="result">
+                        <span class="arrow">&rarr;</span>
+                        <span>that’s me</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEKCJA CONTACT -->
+            <section id="contact-section" class="overlay-panel">
+                <div class="contact-content">
+                    <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
+                    <a href="https://www.instagram.com" target="_blank" class="contact-link">Instagram</a>
+                    <a href="https://www.linkedin.com" target="_blank" class="contact-link">Linkedin</a>
+                    <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
+                </div>
+            </section>
         </header>
-
-        <!-- SEKCJA ABOUT -->
-        <section id="about-section" class="overlay-panel">
-            <p class="intro-text">
-                Hi, I'm Gosia. I look for problems that I can solve through graphic design.
-            </p>
-
-            <div class="formula">
-                <div class="column">
-                    <div>graphic design<br>practice</div>
-                    <div class="plus">+</div>
-                    <div>technical<br>degree</div>
-                </div>
-
-                <div class="dash">—</div>
-
-                <div class="column">
-                    <div>unquenchable<br>curiosity</div>
-                    <div class="plus">+</div>
-                    <div>figureing<br>everything out</div>
-                </div>
-
-                <div class="result">
-                    <span class="arrow">&rarr;</span>
-                    <span>that’s me</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEKCJA CONTACT -->
-        <section id="contact-section" class="overlay-panel">
-            <div class="contact-content">
-                <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
-                <a href="https://www.instagram.com" target="_blank" class="contact-link">Instagram</a>
-                <a href="https://www.linkedin.com" target="_blank" class="contact-link">Linkedin</a>
-                <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
-            </div>
-        </section>
 
         <!-- PROJEKT 1 (8 ZDJĘĆ) -->
         <article class="project-item">
@@ -425,7 +426,6 @@
 
         /* --- PŁYNNE PRZEWIJANIE (S-CURVE EASE, 4 ZDJĘCIA) --- */
         function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
-            // Bezier s-curve easing curve helper
             const cx = 3 * p1x;
             const bx = 3 * (p2x - p1x) - cx;
             const ax = 1 - cx - bx;
@@ -458,7 +458,6 @@
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // S-Curve cubic-bezier(0.65, 0, 0.35, 1)
                 const easedProgress = solveCubicBezier(progress, 0.65, 0, 0.35, 1);
 
                 element.scrollLeft = startScroll + distance * easedProgress;
@@ -475,11 +474,10 @@
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
             
-            // Dokładne przesunięcie o szerokość widocznego slidera (4 zdjęcia)
             const targetOffset = slider.clientWidth; 
             const targetScroll = direction > 0 ? slider.scrollLeft + targetOffset : slider.scrollLeft - targetOffset;
 
-            scrollWithCustomEase(slider, targetScroll, 750); // 750ms czas trwania animacji S-curve
+            scrollWithCustomEase(slider, targetScroll, 750);
         }
 
         function checkScrollPosition(slider) {

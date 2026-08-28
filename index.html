@@ -35,7 +35,7 @@
             border-bottom: 2px solid #1a1a1a;
             padding-bottom: 6px;
             position: relative;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-button {
@@ -57,11 +57,11 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: calc(100% - 2px); /* Idealne nałożenie na linię nawigacji */
+            top: 50px;
             background-color: #ededed;
-            z-index: 90;
+            z-index: 900;
             border: 2px solid #1a1a1a;
-            box-shadow: none; /* Brak cienia */
+            box-shadow: none;
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -133,14 +133,6 @@
         .arrow { font-size: 32px; margin-right: 6px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
-        /* --- LINIA DZIELĄCA GÓRNA --- */
-        .top-divider {
-            border: none;
-            border-top: 2px solid #1a1a1a;
-            margin-top: 18px;
-            margin-bottom: 0;
-        }
-
         /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
             border-bottom: 2px solid #1a1a1a;
@@ -179,7 +171,6 @@
             display: flex;
             gap: 16px;
             overflow-x: auto;
-            scroll-behavior: smooth;
             padding-bottom: 4px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
@@ -314,9 +305,6 @@
             </div>
         </section>
 
-        <!-- GÓRNA LINIA NADAJĄCA STRUKTURĘ -->
-        <hr class="top-divider">
-
         <!-- PROJEKT 1 (8 ZDJĘĆ) -->
         <article class="project-item">
             <div class="project-info">
@@ -408,8 +396,13 @@
             contactSection.classList.remove('active');
             contactBtn.innerText = 'Contact';
 
-            aboutSection.classList.toggle('active');
-            aboutBtn.innerText = aboutSection.classList.contains('active') ? 'Close' : 'About';
+            if (aboutSection.classList.contains('active')) {
+                aboutSection.classList.remove('active');
+                aboutBtn.innerText = 'About';
+            } else {
+                aboutSection.classList.add('active');
+                aboutBtn.innerText = 'Close';
+            }
         }
 
         function toggleContact() {
@@ -421,20 +414,72 @@
             aboutSection.classList.remove('active');
             aboutBtn.innerText = 'About';
 
-            contactSection.classList.toggle('active');
-            contactBtn.innerText = contactSection.classList.contains('active') ? 'Close' : 'Contact';
+            if (contactSection.classList.contains('active')) {
+                contactSection.classList.remove('active');
+                contactBtn.innerText = 'Contact';
+            } else {
+                contactSection.classList.add('active');
+                contactBtn.innerText = 'Close';
+            }
         }
 
-        /* --- OBSŁUGA STRZAŁEK W SLIDERZE --- */
+        /* --- PŁYNNE PRZEWIJANIE (S-CURVE EASE, 4 ZDJĘCIA) --- */
+        function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
+            // Bezier s-curve easing curve helper
+            const cx = 3 * p1x;
+            const bx = 3 * (p2x - p1x) - cx;
+            const ax = 1 - cx - bx;
+
+            const cy = 3 * p1y;
+            const by = 3 * (p2y - p1y) - cy;
+            const ay = 1 - cy - by;
+
+            function sampleCurveX(t) { return ((ax * t + bx) * t + cx) * t; }
+            function sampleCurveY(t) { return ((ay * t + by) * t + cy) * t; }
+            function sampleCurveDerivativeX(t) { return (3 * ax * t + 2 * bx) * t + cx; }
+
+            let t2 = t;
+            for (let i = 0; i < 8; i++) {
+                let x = sampleCurveX(t2) - t;
+                if (Math.abs(x) < 1e-5) return sampleCurveY(t2);
+                let d2 = sampleCurveDerivativeX(t2);
+                if (Math.abs(d2) < 1e-5) break;
+                t2 = t2 - x / d2;
+            }
+            return sampleCurveY(t2);
+        }
+
+        function scrollWithCustomEase(element, targetScroll, duration) {
+            const startScroll = element.scrollLeft;
+            const distance = targetScroll - startScroll;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // S-Curve cubic-bezier(0.65, 0, 0.35, 1)
+                const easedProgress = solveCubicBezier(progress, 0.65, 0, 0.35, 1);
+
+                element.scrollLeft = startScroll + distance * easedProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
             
-            slider.scrollBy({
-                left: scrollAmount * direction,
-                behavior: 'smooth'
-            });
+            // Dokładne przesunięcie o szerokość widocznego slidera (4 zdjęcia)
+            const targetOffset = slider.clientWidth; 
+            const targetScroll = direction > 0 ? slider.scrollLeft + targetOffset : slider.scrollLeft - targetOffset;
+
+            scrollWithCustomEase(slider, targetScroll, 750); // 750ms czas trwania animacji S-curve
         }
 
         function checkScrollPosition(slider) {

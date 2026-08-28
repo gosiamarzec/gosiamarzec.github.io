@@ -15,12 +15,15 @@
             background-color: #ededed;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #1a1a1a;
-            padding: 24px;
+            padding: 24px 32px;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .main-container {
-            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
+            position: relative;
         }
 
         /* --- NAWIGACJA GÓRNA --- */
@@ -31,6 +34,8 @@
             border-bottom: 2px solid #1a1a1a;
             padding-bottom: 8px;
             margin-bottom: 24px;
+            position: relative;
+            z-index: 100;
         }
 
         .nav-button {
@@ -47,25 +52,47 @@
             text-decoration: underline;
         }
 
-        /* --- SEKCJE ROZWIJANE (ABOUT & CONTACT) --- */
-        #about-section, #contact-section {
+        /* --- NAKŁADKI ABOUT I CONTACT (ZGODNIE ZE WZORCEM) --- */
+        .overlay-panel {
+            position: absolute;
+            top: 34px;
+            background-color: #ededed;
+            z-index: 90;
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            
+            /* Płynna animacja pokazywania */
             display: none;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 40px;
-            margin-bottom: 60px;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+            padding: 28px;
         }
 
-        #about-section.active, #contact-section.active {
+        .overlay-panel.active {
             display: block;
+            opacity: 1;
         }
 
-        /* Rozwijany kontakt (wyrównany do prawej) */
-        .contact-content {
+        /* Sekcja About – ok. 52% szerokości ekranu, po lewej */
+        #about-section {
+            left: 0;
+            width: 52%;
+            min-width: 320px;
+        }
+
+        /* Sekcja Contact – wyrównana do prawej, dopasowana szerokość */
+        #contact-section {
+            right: 0;
+            width: auto;
+            min-width: 260px;
+            text-align: right;
+        }
+
+        #contact-section .contact-content {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             gap: 12px;
-            text-align: right;
         }
 
         .contact-link {
@@ -79,20 +106,19 @@
             text-decoration: underline;
         }
 
-        /* --- SEKCJA ABOUT --- */
+        /* --- TREŚĆ ABOUT --- */
         .intro-text {
-            font-size: 22px;
+            font-size: 21px;
             line-height: 1.35;
             letter-spacing: -0.2px;
-            margin-bottom: 40px;
-            max-width: 650px;
+            margin-bottom: 36px;
         }
 
         .formula {
             display: flex;
             align-items: center;
             gap: 20px;
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 1.25;
         }
@@ -108,20 +134,20 @@
         .arrow { font-size: 24px; margin-right: 5px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
-        /* --- SZABLON PROJEKTU --- */
+        /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
             border-top: 1.5px solid #1a1a1a;
             padding-top: 16px;
-            margin-bottom: 80px;
+            margin-bottom: 70px;
         }
 
         .project-info {
             display: grid;
-            grid-template-columns: 1.2fr 1fr 2fr;
-            gap: 24px;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 32px;
             font-size: 17px;
             line-height: 1.4;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .project-title {
@@ -134,24 +160,64 @@
             display: inline-block;
         }
 
-        /* --- SLIDER / GALERIA ZDJĘĆ --- */
+        /* --- SLIDER ZE STRZAŁKAMI PRZEWIJANIA --- */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
         .media-slider {
             display: flex;
             gap: 16px;
             overflow-x: auto;
-            padding-bottom: 16px;
+            scroll-behavior: smooth;
+            padding-bottom: 8px;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
+            scrollbar-width: none; /* Ukrywa pasek przewijania */
+        }
+
+        .media-slider::-webkit-scrollbar {
+            display: none;
         }
 
         .media-item {
-            height: 420px;
+            height: 440px;
             flex-shrink: 0;
             object-fit: cover;
-            border-radius: 2px;
         }
 
-        /* --- STOPKA (FOOTER) --- */
+        /* Przyciski strzałek */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            color: #1a1a1a;
+            z-index: 10;
+            padding: 10px;
+            line-height: 1;
+            user-select: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .slider-arrow:hover {
+            opacity: 0.6;
+        }
+
+        .slider-arrow.left {
+            left: -15px;
+            display: none; /* Ukryta na początku */
+        }
+
+        .slider-arrow.right {
+            right: -15px;
+        }
+
+        /* --- STOPKA --- */
         .site-footer {
             border-top: 1.5px solid #1a1a1a;
             padding-top: 16px;
@@ -177,42 +243,16 @@
             text-decoration: underline;
         }
 
-        /* RESPONYWNOŚĆ (TELEFONY) */
-        @media (max-width: 768px) {
-            body {
-                padding: 16px;
-            }
-
-            .intro-text {
-                font-size: 18px;
-            }
-
-            .project-info {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            
-            .media-item {
-                height: 280px;
-            }
-
-            .formula {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-
+        /* RESPONYWNOŚĆ DLA EKRANÓW MOBILNYCH */
+        @media (max-width: 850px) {
+            body { padding: 16px; }
+            #about-section { width: 100%; }
+            #contact-section { width: 100%; }
+            .project-info { grid-template-columns: 1fr; gap: 16px; }
+            .media-item { height: 300px; }
+            .formula { flex-direction: column; align-items: flex-start; gap: 16px; }
             .dash { display: none; }
-
-            .site-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-
-            .footer-links {
-                gap: 16px;
-            }
+            .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
         }
     </style>
 </head>
@@ -225,8 +265,8 @@
             <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
         </header>
 
-        <!-- SEKCJA ABOUT -->
-        <section id="about-section">
+        <!-- SEKCJA ABOUT (Kompaktowa nakładka z lewej) -->
+        <section id="about-section" class="overlay-panel">
             <p class="intro-text">
                 Hi, I'm Gosia. I look for problems that I can solve through graphic design.
             </p>
@@ -253,8 +293,8 @@
             </div>
         </section>
 
-        <!-- SEKCJA CONTACT (ROZWIJANA) -->
-        <section id="contact-section">
+        <!-- SEKCJA CONTACT (Kompaktowa nakładka z prawej) -->
+        <section id="contact-section" class="overlay-panel">
             <div class="contact-content">
                 <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
                 <a href="https://www.instagram.com" target="_blank" class="contact-link">Instagram</a>
@@ -263,7 +303,7 @@
             </div>
         </section>
 
-        <!-- PROJEKTY -->
+        <!-- PROJEKT 1 -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -281,17 +321,19 @@
                 </div>
             </div>
 
-            <div class="media-slider">
-                <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 1">
-                <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
-                <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 1">
-                <img class="media-item" src="images/black2.png" alt="Projekt 1 foto 2">
-                <img class="media-item" src="images/white3.jpg" alt="Projekt 1 foto 1">
-                <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 2">                
-                <img class="media-item" src="https://via.placeholder.com/300x420/c0c0c0/808080?text=Zdjecie+3" alt="Projekt 1 foto 3">
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)">&larr;</button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 1">
+                    <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
+                    <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 3">
+                    <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 4">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
             </div>
         </article>
 
+        <!-- PROJEKT 2 -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -307,13 +349,18 @@
                 </div>
             </div>
 
-            <div class="media-slider">
-                <img class="media-item" src="https://via.placeholder.com/400x420/dddddd/808080?text=Suplementy+1" alt="Projekt 2 foto 1">
-                <img class="media-item" src="https://via.placeholder.com/500x420/cccccc/808080?text=Suplementy+2" alt="Projekt 2 foto 2">
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)">&larr;</button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/white3.jpg" alt="Projekt 2 foto 1">
+                    <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 2">
+                    <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 3">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
             </div>
         </article>
 
-        <!-- STOPKA Z LINKAMI -->
+        <!-- STOPKA -->
         <footer class="site-footer">
             <div class="footer-links">
                 <a href="https://www.behance.net" target="_blank" class="footer-link">Behance</a>
@@ -328,41 +375,73 @@
     </div>
 
     <script>
+        /* --- OBSŁUGA SEKCJI ABOUT / CONTACT --- */
         function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
-            
-            // Zamknij sekcję Contact jeśli jest otwarta
-            document.getElementById('contact-section').classList.remove('active');
-            document.getElementById('contact-btn').innerText = 'Contact';
+            const contactSection = document.getElementById('contact-section');
+            const contactBtn = document.getElementById('contact-btn');
 
-            // Przełącz widoczność About
+            contactSection.classList.remove('active');
+            contactBtn.innerText = 'Contact';
+
             aboutSection.classList.toggle('active');
-            
-            if (aboutSection.classList.contains('active')) {
-                aboutBtn.innerText = 'Close';
-            } else {
-                aboutBtn.innerText = 'About';
-            }
+            aboutBtn.innerText = aboutSection.classList.contains('active') ? 'Close' : 'About';
         }
 
         function toggleContact() {
             const contactSection = document.getElementById('contact-section');
             const contactBtn = document.getElementById('contact-btn');
-            
-            // Zamknij sekcję About jeśli jest otwarta
-            document.getElementById('about-section').classList.remove('active');
-            document.getElementById('about-btn').innerText = 'About';
+            const aboutSection = document.getElementById('about-section');
+            const aboutBtn = document.getElementById('about-btn');
 
-            // Przełącz widoczność Contact
+            aboutSection.classList.remove('active');
+            aboutBtn.innerText = 'About';
+
             contactSection.classList.toggle('active');
+            contactBtn.innerText = contactSection.classList.contains('active') ? 'Close' : 'Contact';
+        }
+
+        /* --- OBSŁUGA STRZAŁEK W SLIDERZE --- */
+        function scrollSlider(button, direction) {
+            const wrapper = button.parentElement;
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.75; // Przesuwa o 75% widocznej szerokości
             
-            if (contactSection.classList.contains('active')) {
-                contactBtn.innerText = 'Close';
+            slider.scrollBy({
+                left: scrollAmount * direction,
+                behavior: 'smooth'
+            });
+        }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.parentElement;
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+            // Pokazuj / ukrywaj strzałkę po lewej
+            if (slider.scrollLeft > 20) {
+                leftArrow.style.display = 'block';
             } else {
-                contactBtn.innerText = 'Contact';
+                leftArrow.style.display = 'none';
+            }
+
+            // Pokazuj / ukrywaj strzałkę po prawej
+            if (slider.scrollLeft >= maxScrollLeft - 20) {
+                rightArrow.style.display = 'none';
+            } else {
+                rightArrow.style.display = 'block';
             }
         }
+
+        // Inicjalizacja sprawdzania strzałek po załadowaniu
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.media-slider').forEach(slider => {
+                checkScrollPosition(slider);
+            });
+        });
     </script>
 </body>
 </html>

@@ -15,9 +15,10 @@
             background-color: #ededed;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: #1a1a1a;
-            padding: 24px 32px;
+            padding: 18px 24px;
             width: 100%;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .main-container {
@@ -32,8 +33,8 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #1a1a1a;
-            padding-bottom: 8px;
-            margin-bottom: 24px;
+            padding-bottom: 6px;
+            margin-bottom: 18px;
             position: relative;
             z-index: 100;
         }
@@ -41,31 +42,31 @@
         .nav-button {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 42px;
             font-weight: 600;
             cursor: pointer;
             color: #1a1a1a;
             text-decoration: none;
+            letter-spacing: -0.5px;
+            line-height: 1;
         }
 
         .nav-button:hover {
-            text-decoration: underline;
+            opacity: 0.7;
         }
 
-        /* --- NAKŁADKI ABOUT I CONTACT (ZGODNIE ZE WZORCEM) --- */
+        /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: 34px;
+            top: 50px;
             background-color: #ededed;
             z-index: 90;
             border: 2px solid #1a1a1a;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            
-            /* Płynna animacja pokazywania */
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
-            padding: 28px;
+            padding: 32px;
         }
 
         .overlay-panel.active {
@@ -73,18 +74,16 @@
             opacity: 1;
         }
 
-        /* Sekcja About – ok. 52% szerokości ekranu, po lewej */
         #about-section {
             left: 0;
-            width: 52%;
-            min-width: 320px;
+            width: 54%;
+            min-width: 340px;
         }
 
-        /* Sekcja Contact – wyrównana do prawej, dopasowana szerokość */
         #contact-section {
             right: 0;
             width: auto;
-            min-width: 260px;
+            min-width: 280px;
             text-align: right;
         }
 
@@ -92,11 +91,11 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 12px;
+            gap: 16px;
         }
 
         .contact-link {
-            font-size: 20px;
+            font-size: 32px;
             font-weight: 600;
             color: #1a1a1a;
             text-decoration: none;
@@ -108,19 +107,20 @@
 
         /* --- TREŚĆ ABOUT --- */
         .intro-text {
-            font-size: 21px;
-            line-height: 1.35;
-            letter-spacing: -0.2px;
+            font-size: 32px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
             margin-bottom: 36px;
+            font-weight: 400;
         }
 
         .formula {
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 18px;
+            gap: 24px;
+            font-size: 26px;
             font-weight: 500;
-            line-height: 1.25;
+            line-height: 1.2;
         }
 
         .column {
@@ -129,25 +129,27 @@
             gap: 12px;
         }
 
-        .plus { font-weight: 400; font-size: 16px; }
-        .dash { font-size: 24px; font-weight: 300; }
-        .arrow { font-size: 24px; margin-right: 5px; }
+        .plus { font-weight: 400; font-size: 22px; }
+        .dash { font-size: 32px; font-weight: 300; }
+        .arrow { font-size: 32px; margin-right: 6px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
         /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
-            border-top: 1.5px solid #1a1a1a;
-            padding-top: 16px;
-            margin-bottom: 70px;
+            border-top: 2px solid #1a1a1a;
+            padding-top: 14px;
+            margin-bottom: 60px;
         }
 
         .project-info {
             display: grid;
             grid-template-columns: 1fr 1fr 2fr;
-            gap: 32px;
-            font-size: 17px;
-            line-height: 1.4;
-            margin-bottom: 28px;
+            gap: 28px;
+            font-size: 30px;
+            line-height: 1.18;
+            letter-spacing: -0.3px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         .project-title {
@@ -156,11 +158,11 @@
 
         .scope-title {
             text-decoration: underline;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             display: inline-block;
         }
 
-        /* --- SLIDER ZE STRZAŁKAMI PRZEWIJANIA --- */
+        /* --- SLIDER I ZDJĘCIA (4 ZDJĘCIA W RZĘDZIE) --- */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -171,9 +173,9 @@
             gap: 16px;
             overflow-x: auto;
             scroll-behavior: smooth;
-            padding-bottom: 8px;
+            padding-bottom: 4px;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Ukrywa pasek przewijania */
+            scrollbar-width: none;
         }
 
         .media-slider::-webkit-scrollbar {
@@ -181,57 +183,59 @@
         }
 
         .media-item {
-            height: 440px;
+            height: 500px;
+            width: calc(25% - 12px); /* Dba o to, by w oknie mieściły się 4 zdjęcia */
+            min-width: 260px;
             flex-shrink: 0;
             object-fit: cover;
         }
 
-        /* Przyciski strzałek */
+        /* Przycisk strzałki przewijania */
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 32px;
+            font-size: 48px;
             font-weight: 300;
             cursor: pointer;
             color: #1a1a1a;
             z-index: 10;
-            padding: 10px;
+            padding: 8px;
             line-height: 1;
             user-select: none;
             transition: opacity 0.2s ease;
         }
 
         .slider-arrow:hover {
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .slider-arrow.left {
-            left: -15px;
-            display: none; /* Ukryta na początku */
+            left: -20px;
+            display: none;
         }
 
         .slider-arrow.right {
-            right: -15px;
+            right: -20px;
         }
 
         /* --- STOPKA --- */
         .site-footer {
-            border-top: 1.5px solid #1a1a1a;
+            border-top: 2px solid #1a1a1a;
             padding-top: 16px;
-            margin-top: 60px;
+            margin-top: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 18px;
+            font-size: 28px;
             font-weight: 500;
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            gap: 32px;
         }
 
         .footer-link {
@@ -243,16 +247,17 @@
             text-decoration: underline;
         }
 
-        /* RESPONYWNOŚĆ DLA EKRANÓW MOBILNYCH */
-        @media (max-width: 850px) {
-            body { padding: 16px; }
-            #about-section { width: 100%; }
-            #contact-section { width: 100%; }
-            .project-info { grid-template-columns: 1fr; gap: 16px; }
-            .media-item { height: 300px; }
-            .formula { flex-direction: column; align-items: flex-start; gap: 16px; }
+        /* RESPONYWNOŚĆ DLA TELEFONÓW */
+        @media (max-width: 900px) {
+            body { padding: 12px; }
+            .nav-button { font-size: 28px; }
+            .project-info { grid-template-columns: 1fr; gap: 14px; font-size: 20px; }
+            #about-section, #contact-section { width: 100%; }
+            .intro-text { font-size: 22px; }
+            .formula { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 18px; }
             .dash { display: none; }
-            .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .media-item { height: 320px; width: 75%; }
+            .site-footer { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 20px; }
         }
     </style>
 </head>
@@ -265,7 +270,7 @@
             <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
         </header>
 
-        <!-- SEKCJA ABOUT (Kompaktowa nakładka z lewej) -->
+        <!-- SEKCJA ABOUT -->
         <section id="about-section" class="overlay-panel">
             <p class="intro-text">
                 Hi, I'm Gosia. I look for problems that I can solve through graphic design.
@@ -293,7 +298,7 @@
             </div>
         </section>
 
-        <!-- SEKCJA CONTACT (Kompaktowa nakładka z prawej) -->
+        <!-- SEKCJA CONTACT -->
         <section id="contact-section" class="overlay-panel">
             <div class="contact-content">
                 <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
@@ -317,7 +322,7 @@
                     Motion design
                 </div>
                 <div>
-                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY.
+                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
                 </div>
             </div>
 
@@ -355,6 +360,7 @@
                     <img class="media-item" src="images/white3.jpg" alt="Projekt 2 foto 1">
                     <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 2">
                     <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 3">
+                    <img class="media-item" src="images/black.png" alt="Projekt 2 foto 4">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
             </div>
@@ -406,7 +412,7 @@
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75; // Przesuwa o 75% widocznej szerokości
+            const scrollAmount = slider.clientWidth * 0.75;
             
             slider.scrollBy({
                 left: scrollAmount * direction,
@@ -421,14 +427,12 @@
 
             const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
-            // Pokazuj / ukrywaj strzałkę po lewej
             if (slider.scrollLeft > 20) {
                 leftArrow.style.display = 'block';
             } else {
                 leftArrow.style.display = 'none';
             }
 
-            // Pokazuj / ukrywaj strzałkę po prawej
             if (slider.scrollLeft >= maxScrollLeft - 20) {
                 rightArrow.style.display = 'none';
             } else {
@@ -436,7 +440,6 @@
             }
         }
 
-        // Inicjalizacja sprawdzania strzałek po załadowaniu
         window.addEventListener('load', () => {
             document.querySelectorAll('.media-slider').forEach(slider => {
                 checkScrollPosition(slider);

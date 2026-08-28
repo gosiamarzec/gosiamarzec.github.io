@@ -34,7 +34,6 @@
             align-items: center;
             border-bottom: 2px solid #1a1a1a;
             padding-bottom: 6px;
-            margin-bottom: 18px;
             position: relative;
             z-index: 100;
         }
@@ -58,11 +57,11 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: 50px;
+            top: calc(100% - 2px); /* Idealne nałożenie na linię nawigacji */
             background-color: #ededed;
             z-index: 90;
             border: 2px solid #1a1a1a;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            box-shadow: none; /* Brak cienia */
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -134,11 +133,19 @@
         .arrow { font-size: 32px; margin-right: 6px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
+        /* --- LINIA DZIELĄCA GÓRNA --- */
+        .top-divider {
+            border: none;
+            border-top: 2px solid #1a1a1a;
+            margin-top: 18px;
+            margin-bottom: 0;
+        }
+
         /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
-            border-top: 2px solid #1a1a1a;
-            padding-top: 14px;
-            margin-bottom: 60px;
+            border-bottom: 2px solid #1a1a1a;
+            padding-top: 18px;
+            padding-bottom: 40px;
         }
 
         .project-info {
@@ -162,7 +169,7 @@
             display: inline-block;
         }
 
-        /* --- SLIDER I ZDJĘCIA (4 ZDJĘCIA W RZĘDZIE) --- */
+        /* --- SLIDER I ZDJĘCIA --- */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -184,13 +191,13 @@
 
         .media-item {
             height: 500px;
-            width: calc(25% - 12px); /* Dba o to, by w oknie mieściły się 4 zdjęcia */
+            width: calc(25% - 12px);
             min-width: 260px;
             flex-shrink: 0;
             object-fit: cover;
         }
 
-        /* Przycisk strzałki przewijania */
+        /* Strzałka nawigacyjna slidera */
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -223,9 +230,8 @@
 
         /* --- STOPKA --- */
         .site-footer {
-            border-top: 2px solid #1a1a1a;
             padding-top: 16px;
-            margin-top: 50px;
+            margin-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -247,7 +253,7 @@
             text-decoration: underline;
         }
 
-        /* RESPONYWNOŚĆ DLA TELEFONÓW */
+        /* RESPONYWNOŚĆ */
         @media (max-width: 900px) {
             body { padding: 12px; }
             .nav-button { font-size: 28px; }
@@ -308,7 +314,10 @@
             </div>
         </section>
 
-        <!-- PROJEKT 1 -->
+        <!-- GÓRNA LINIA NADAJĄCA STRUKTURĘ -->
+        <hr class="top-divider">
+
+        <!-- PROJEKT 1 (8 ZDJĘĆ) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -333,12 +342,16 @@
                     <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
                     <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 3">
                     <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 4">
+                    <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 5">
+                    <img class="media-item" src="images/black.png" alt="Projekt 1 foto 6">
+                    <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 7">
+                    <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 8">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
             </div>
         </article>
 
-        <!-- PROJEKT 2 -->
+        <!-- PROJEKT 2 (8 ZDJĘĆ) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -361,6 +374,10 @@
                     <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 2">
                     <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 3">
                     <img class="media-item" src="images/black.png" alt="Projekt 2 foto 4">
+                    <img class="media-item" src="images/white3.jpg" alt="Projekt 2 foto 5">
+                    <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 6">
+                    <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 7">
+                    <img class="media-item" src="images/black.png" alt="Projekt 2 foto 8">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
             </div>

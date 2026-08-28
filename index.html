@@ -58,7 +58,7 @@
         .overlay-panel {
             position: absolute;
             top: 100%;
-            margin-top: -2px;
+            margin-top: -2px; /* Pokrycie górnej ramki z linią nawigacji */
             background-color: #ededed;
             z-index: 900;
             border: 2px solid #1a1a1a;
@@ -162,7 +162,7 @@
             display: inline-block;
         }
 
-        /* --- SLIDER I ZDJĘCIA --- */
+        /* --- SLIDER I MEDIA --- */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -189,21 +189,27 @@
             object-fit: cover;
         }
 
+        /* --- STYLIZACJA ZMODERNIZOWANYCH STRZAŁEK SVG --- */
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 48px;
-            font-weight: 300;
             cursor: pointer;
-            color: #1a1a1a;
             z-index: 10;
             padding: 8px;
-            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             user-select: none;
             transition: opacity 0.2s ease;
+        }
+
+        .slider-arrow svg {
+            width: 36px;
+            height: 36px;
+            stroke: #1a1a1a;
         }
 
         .slider-arrow:hover {
@@ -305,7 +311,7 @@
             </section>
         </header>
 
-        <!-- PROJEKT 1 -->
+        <!-- PROJEKT 1 (Folder 1) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -319,27 +325,31 @@
                     Motion design
                 </div>
                 <div>
-                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
+                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY.
                 </div>
             </div>
 
             <div class="slider-wrapper">
-                <button class="slider-arrow left" onclick="scrollSlider(this, -1)">&larr;</button>
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 1">
-                    <img class="media-item" src="images/black.png" alt="Projekt 1 foto 2">
-                    <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 3">
-                    <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 4">
-                    <img class="media-item" src="images/white.jpg" alt="Projekt 1 foto 5">
-                    <img class="media-item" src="images/black.png" alt="Projekt 1 foto 6">
-                    <img class="media-item" src="images/white2.jpg" alt="Projekt 1 foto 7">
-                    <img class="media-item" src="images/black3.png" alt="Projekt 1 foto 8">
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7">
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
-                <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
             </div>
         </article>
 
-        <!-- PROJEKT 2 -->
+        <!-- PROJEKT 2 (Folder 2) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -356,18 +366,156 @@
             </div>
 
             <div class="slider-wrapper">
-                <button class="slider-arrow left" onclick="scrollSlider(this, -1)">&larr;</button>
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <img class="media-item" src="images/white3.jpg" alt="Projekt 2 foto 1">
-                    <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 2">
-                    <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 3">
-                    <img class="media-item" src="images/black.png" alt="Projekt 2 foto 4">
-                    <img class="media-item" src="images/white3.jpg" alt="Projekt 2 foto 5">
-                    <img class="media-item" src="images/black2.png" alt="Projekt 2 foto 6">
-                    <img class="media-item" src="images/white.jpg" alt="Projekt 2 foto 7">
-                    <img class="media-item" src="images/black.png" alt="Projekt 2 foto 8">
+                    <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1">
+                    <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2">
+                    <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
+                    <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
+                    <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
-                <button class="slider-arrow right" onclick="scrollSlider(this, 1)">&rarr;</button>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 3 (Folder 3) -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Movement<br>Visual Identity
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Branding,<br>
+                    Graphic Design
+                </div>
+                <div>
+                    Visual identity project exploring spatial motion, dynamic elements, and interactive systems.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/3/movement_1.png" alt="Movement 1">
+                    <img class="media-item" src="images/3/movement_2.png" alt="Movement 2">
+                    <img class="media-item" src="images/3/movement_3.png" alt="Movement 3">
+                    <img class="media-item" src="images/3/movement_4.png" alt="Movement 4">
+                    <img class="media-item" src="images/3/movement_5.png" alt="Movement 5">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 4 (Folder 4) -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Smutne Tańce
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Video production,<br>
+                    Cover art
+                </div>
+                <div>
+                    Audiovisual campaign and promotional art created for the Smutne Tańce project.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
+                    <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 5 (Folder 5) -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Circulary
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Motion graphics,<br>
+                    3D Visuals
+                </div>
+                <div>
+                    A series of looping motion designs exploring circular shapes, geometry, and fluid animation loops.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_4.mov" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 6 (Folder 6) -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Wine Label Collection
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Packaging design,<br>
+                    Illustration
+                </div>
+                <div>
+                    Modern wine label design concepts with minimalist typography and detailed illustrations.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/6/wine_1.png" alt="Wine 1">
+                    <img class="media-item" src="images/6/wine_2.png" alt="Wine 2">
+                    <img class="media-item" src="images/6/wine_3.png" alt="Wine 3">
+                    <img class="media-item" src="images/6/wine_4.png" alt="Wine 4">
+                    <img class="media-item" src="images/6/wine_5.png" alt="Wine 5">
+                    <img class="media-item" src="images/6/wine_6.png" alt="Wine 6">
+                    <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
             </div>
         </article>
 
@@ -485,7 +633,7 @@
             const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
             if (slider.scrollLeft > 20) {
-                leftArrow.style.display = 'block';
+                leftArrow.style.display = 'flex';
             } else {
                 leftArrow.style.display = 'none';
             }
@@ -493,7 +641,7 @@
             if (slider.scrollLeft >= maxScrollLeft - 20) {
                 rightArrow.style.display = 'none';
             } else {
-                rightArrow.style.display = 'block';
+                rightArrow.style.display = 'flex';
             }
         }
 

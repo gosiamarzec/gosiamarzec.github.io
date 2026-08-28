@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gosia Marzec - Portfolio</title>
+    <title>Gosia - Portfolio</title>
     <style>
         * {
             box-sizing: border-box;
@@ -57,7 +57,8 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: calc(100% - 2px); /* Pokrywa się z linią nawigacji */
+            top: 100%;
+            margin-top: -2px; /* Pokrycie górnej ramki z linią nawigacji */
             background-color: #ededed;
             z-index: 900;
             border: 2px solid #1a1a1a;
@@ -180,17 +181,15 @@
             display: none;
         }
 
-        /* Zachowanie oryginalnych proporcji mediów */
         .media-item {
             height: 500px;
-            width: auto;
-            max-width: 100%;
+            width: calc(25% - 12px);
+            min-width: 260px;
             flex-shrink: 0;
-            object-fit: contain;
-            background-color: transparent;
+            object-fit: cover;
         }
 
-        /* --- STRZAŁKI SVG --- */
+        /* --- STYLIZACJA ZMODERNIZOWANYCH STRZAŁEK SVG --- */
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -260,7 +259,7 @@
             .intro-text { font-size: 22px; }
             .formula { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 18px; }
             .dash { display: none; }
-            .media-item { height: 320px; }
+            .media-item { height: 320px; width: 75%; }
             .site-footer { flex-direction: column; align-items: flex-start; gap: 14px; font-size: 20px; }
         }
     </style>
@@ -282,7 +281,7 @@
                 <div class="formula">
                     <div class="column">
                         <div>graphic design<br>practice</div>
-                        <div class="plus">＋</div>
+                        <div class="plus">+</div>
                         <div>technical<br>degree</div>
                     </div>
 
@@ -290,12 +289,12 @@
 
                     <div class="column">
                         <div>unquenchable<br>curiosity</div>
-                        <div class="plus">＋</div>
+                        <div class="plus">+</div>
                         <div>figureing<br>everything out</div>
                     </div>
 
                     <div class="result">
-                        <span class="arrow">⟶</span>
+                        <span class="arrow">&rarr;</span>
                         <span>that’s me</span>
                     </div>
                 </div>
@@ -304,19 +303,19 @@
             <!-- SEKCJA CONTACT -->
             <section id="contact-section" class="overlay-panel">
                 <div class="contact-content">
-                    <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
-                    <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="contact-link">Instagram</a>
-                    <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="contact-link">Linkedin</a>
+                    <a href="https://www.behance.net" target="_blank" class="contact-link">Behance</a>
+                    <a href="https://www.instagram.com" target="_blank" class="contact-link">Instagram</a>
+                    <a href="https://www.linkedin.com" target="_blank" class="contact-link">Linkedin</a>
                     <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
                 </div>
             </section>
         </header>
 
-        <!-- PROJEKT 1 -->
+        <!-- PROJEKT 1 (Folder 1) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Dziewczyny<br>Maszyny Event Design
+                    Dziewczyny<br>Maszyny<br>Event Design
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
@@ -326,7 +325,7 @@
                     Motion design
                 </div>
                 <div>
-                    The visual identity of the mentoring program organized by the Dziewczyny-Maszyny group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
+                    The visual identity of the mentoring program organized by the <i>Dziewczyny-Maszyny</i> group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY.
                 </div>
             </div>
 
@@ -335,14 +334,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7">
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -350,11 +349,11 @@
             </div>
         </article>
 
-        <!-- PROJEKT 2 -->
+        <!-- PROJEKT 2 (Folder 2) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Supplement packaging & promotion
+                    Supplement<br>packaging &<br>promotion
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
@@ -362,7 +361,7 @@
                     Digital design for social media
                 </div>
                 <div>
-                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
+                    <i>Have a G Day</i> is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself.
                 </div>
             </div>
 
@@ -376,7 +375,7 @@
                     <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
                     <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
                     <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
-                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -384,20 +383,19 @@
             </div>
         </article>
 
-        <!-- PROJEKT 3 -->
+        <!-- PROJEKT 3 (Folder 3) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Movement diagram
+                    Movement<br>Visual Identity
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
-                    Visual identity,<br>
-                    Illustrations,<br>
-                    Digital design for social media
+                    Branding,<br>
+                    Graphic Design
                 </div>
                 <div>
-                    Graphic design project for cyclical physical movement courses. The graphic identity is based on presenting certain movement complexities in the form of simplified diagrams. This reflects the way movements are worked on during the classes.
+                    Visual identity project exploring spatial motion, dynamic elements, and interactive systems.
                 </div>
             </div>
 
@@ -418,22 +416,19 @@
             </div>
         </article>
 
-        <!-- PROJEKT 4 -->
+        <!-- PROJEKT 4 (Folder 4) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Sad Typography
+                    Smutne Tańce
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
-                    Visual identity,<br>
-                    Digital design for social media,<br>
-                    Typeface,<br>
-                    Video recording,<br>
-                    Video editing
+                    Video production,<br>
+                    Cover art
                 </div>
                 <div>
-                    Sad Dances are contemporary dance classes that allow participants to release their emotions, acting as a kind of catharsis. The visuals of the moving poster are a tribute to the organic movements of dance and refer to the nature-inspired, wavy, and dynamic shapes known from Art Nouveau.
+                    Audiovisual campaign and promotional art created for the Smutne Tańce project.
                 </div>
             </div>
 
@@ -442,10 +437,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
                     <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
                 </div>
@@ -455,55 +450,57 @@
             </div>
         </article>
 
-        <!-- PROJEKT 5 -->
+        <!-- PROJEKT 5 (Folder 5) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Circular Economy Explainer Video
+                    Circulary
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
-                    Stop-motion animation,<br>
-                    Digital design,<br>
-                    Motion design,<br>
-                    Video editing
+                    Motion graphics,<br>
+                    3D Visuals
                 </div>
                 <div>
-                    Explanatory video, which attempts to turn our inaction in the face of environmental disaster into action. The project aimed to present the idea of the natural system as a whole, of which we are an integral part, using the concept of the circular economy. Using stop-motion animation helps to create an atmosphere that feels closer and more grounded in reality. Motion design is the main element used to explain the discussed content.
+                    A series of looping motion designs exploring circular shapes, geometry, and fluid animation loops.
                 </div>
             </div>
 
-            <div class="slider-wrapper">
-                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                </button>
-                <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mov" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
-                </div>
-                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-            </div>
+
+<div class="slider-wrapper">
+    <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </button>
+    <div class="media-slider" onscroll="checkScrollPosition(this)">
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+        
+        <!-- POPRAWIONY FILMIK 4 (.mov + dodany atrybut muted): -->
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mov" type="video/quicktime"></video>
+        
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+        <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+    </div>
+    <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+</div>
         </article>
 
-        <!-- PROJEKT 6 -->
+        <!-- PROJEKT 6 (Folder 6) -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
-                    Wine label Winnica Łukasz
+                    Wine Label Collection
                 </div>
                 <div>
                     <span class="scope-title">Scope of work</span><br>
-                    Brand identity,<br>
-                    Packaging
+                    Packaging design,<br>
+                    Illustration
                 </div>
                 <div>
-                    The wine label was created for a family winery with deep agricultural roots. The project was about combining nurturing relationships between people and nature and honoring the cultivation experience that describes the vineyard and its owners. This is depicted in the graphic as a combination of nine unique fields (nine family members) forming color transitions (relationships). The colors are chosen to match the character of the wine.
+                    Modern wine label design concepts with minimalist typography and detailed illustrations.
                 </div>
             </div>
 
@@ -529,9 +526,9 @@
         <!-- STOPKA -->
         <footer class="site-footer">
             <div class="footer-links">
-                <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="footer-link">Behance</a>
-                <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="footer-link">Instagram</a>
-                <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
+                <a href="https://www.behance.net" target="_blank" class="footer-link">Behance</a>
+                <a href="https://www.instagram.com" target="_blank" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com" target="_blank" class="footer-link">Linkedin</a>
             </div>
             <div>
                 <a href="mailto:gosi.marzec@gmail.com" class="footer-link">gosi.marzec@gmail.com</a>
@@ -577,27 +574,6 @@
             }
         }
 
-        /* --- OPTYMALIZACJA WIDEO (Odtwarzanie tylko widocznych filmów) --- */
-        document.addEventListener("DOMContentLoaded", () => {
-            const videos = document.querySelectorAll("video.media-item");
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {});
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, {
-                threshold: 0.25
-            });
-
-            videos.forEach((video) => observer.observe(video));
-        });
-
-        /* --- ANIMACJA EASE DLA SLIDERA --- */
         function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
             const cx = 3 * p1x;
             const bx = 3 * (p2x - p1x) - cx;

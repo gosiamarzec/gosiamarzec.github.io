@@ -58,10 +58,10 @@
         .overlay-panel {
             position: absolute;
             top: 100%;
+            margin-top: -2px;
             background-color: #ededed;
             z-index: 900;
             border: 2px solid #1a1a1a;
-            border-top: none;
             box-shadow: none;
             display: none;
             opacity: 0;
@@ -189,7 +189,6 @@
             object-fit: cover;
         }
 
-        /* Strzałka nawigacyjna slidera */
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -306,7 +305,7 @@
             </section>
         </header>
 
-        <!-- PROJEKT 1 (8 ZDJĘĆ) -->
+        <!-- PROJEKT 1 -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -340,7 +339,7 @@
             </div>
         </article>
 
-        <!-- PROJEKT 2 (8 ZDJĘĆ) -->
+        <!-- PROJEKT 2 -->
         <article class="project-item">
             <div class="project-info">
                 <div class="project-title">
@@ -387,7 +386,6 @@
     </div>
 
     <script>
-        /* --- OBSŁUGA SEKCJI ABOUT / CONTACT --- */
         function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
@@ -424,7 +422,6 @@
             }
         }
 
-        /* --- PŁYNNE PRZEWIJANIE (S-CURVE EASE, 4 ZDJĘCIA) --- */
         function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
             const cx = 3 * p1x;
             const bx = 3 * (p2x - p1x) - cx;

@@ -2,10 +2,126 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Moja Strona</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gosia - Portfolio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ededed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .header {
+            font-size: 20px;
+            font-weight: 500;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1a1a1a;
+            margin-bottom: 24px;
+        }
+
+        .intro-text {
+            font-size: 22px;
+            line-height: 1.35;
+            letter-spacing: -0.2px;
+            margin-bottom: 80px;
+        }
+
+        .formula {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 19px;
+            font-weight: 500;
+            line-height: 1.25;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .plus {
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        .dash {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .arrow {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        .result {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        /* RWD: Dostosowanie do mniejszych ekranów mobilnych */
+        @media (max-width: 600px) {
+            .formula {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .dash {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Cześć! Moja strona działa.</h1>
-    <p>To jest pierwsza wersja przeniesiona z Readymag.</p>
+
+    <div class="container">
+        <div class="header">Close</div>
+        
+        <p class="intro-text">
+            Hi, I'm Gosia. I look for problems that I can solve through graphic design.
+        </p>
+
+        <div class="formula">
+            <!-- Pierwsza kolumna -->
+            <div class="column">
+                <div>graphic design<br>practice</div>
+                <div class="plus">+</div>
+                <div>technical<br>degree</div>
+            </div>
+
+            <div class="dash">—</div>
+
+            <!-- Druga kolumna -->
+            <div class="column">
+                <div>unquenchable<br>curiosity</div>
+                <div class="plus">+</div>
+                <div>figureing<br>everything out</div>
+            </div>
+
+            <!-- Wynik -->
+            <div class="result">
+                <span class="arrow">&rarr;</span>
+                <span>that’s me</span>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

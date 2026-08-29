@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -7,25 +7,36 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
-            /* Główny Font (Zmień nazwę tutaj, aby zaktualizować całą stronę) */
+            /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             /* Typografia */
-            --font-size-base: clamp(18px, 1.5vw, 26px); /* Rozmiar dla opisów i treści projektów */
-            --font-size-nav: clamp(22px, 2.3vw, 42px);  /* Rozmiar dla przycisków About / Contact */
+            --font-size-base: clamp(22px, 2.3vw, 42px); 
+            --font-size-nav: clamp(22px, 2.3vw, 42px);  
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
-            /* Pozycjonowanie pionowe sekcji About / Contact */
-            /* --overlay-top-offset: -2px; */
+            /* Kontrola grubości krawędzi (niezależna od zooma) */
+            --line-thickness: 2px; 
+
+            /* Pozycjonowanie i obramowanie sekcji About / Contact */
+            --overlay-top-offset: 0px;
+            --overlay-border: var(--line-thickness) solid #1a1a1a;
 
             /* Odstępy i Odległości */
             --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
-            --column-gap: 2.5vw;           /* Odstęp między kolumnami tekstu */
+            
+            /* Kontrola odstępów kolumn */
+            --column-gap-1: 2.5vw;         /* Odstęp między lewą a środkową kolumną */
+            --column-gap-2: 10vw;          /* Odstęp między środkową a prawą kolumną */
+            
             --project-padding-top: 1vw;    /* Odstęp od górnej czarnej linii */
-            --project-padding-bottom: 2vw; /* Odstęp od dolnej czarnej linii */
-            --nav-padding-bottom: 4px;     /* Odstęp tekstu nawigacji od linii */
+            --project-padding-bottom: 8vw; /* Odstęp od dolnej czarnej linii */
+            --nav-padding-bottom: 10px;    /* Odstęp tekstu nawigacji od linii */ 
+
+            /* Kontrola rozmiaru mediów (zdjęć i wideo) */
+            --media-height: clamp(300px, 34vw, 680px);
         }
 
         * {
@@ -55,7 +66,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #1a1a1a;
+            border-bottom: var(--line-thickness) solid #1a1a1a;
             padding-bottom: var(--nav-padding-bottom);
             position: sticky;
             top: 0;
@@ -87,9 +98,7 @@
             top: 100%;
             background-color: #ededed;
             z-index: 900;
-            border-left: 2px solid #1a1a1a;
-            border-right: 2px solid #1a1a1a;
-            border-bottom: 2px solid #1a1a1a;
+            border-bottom: var(--line-thickness) solid #1a1a1a;
             border-top: none;
             display: none;
             opacity: 0;
@@ -107,6 +116,9 @@
             width: 50%;
             min-width: 320px;
             max-width: 100%;
+            /* bez lewej krawędzi */
+            border-left: none;
+            border-right: var(--line-thickness) solid #1a1a1a;
         }
 
         #contact-section {
@@ -114,6 +126,9 @@
             width: auto;
             min-width: 240px;
             text-align: right;
+            /* bez prawej krawędzi */
+            border-left: var(--line-thickness) solid #1a1a1a;
+            border-right: none;
         }
 
         #contact-section .contact-content {
@@ -145,18 +160,20 @@
 
         .formula-wrapper {
             width: 100%;
-            overflow-x: auto;
+            /* Usunięto pasek przewijania */
+            overflow: hidden; 
         }
 
         .formula {
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1.2vw, 20px);
-            font-size: clamp(11px, 1.1vw, 20px);
+            /* Skalowanie odstępów i fontu w zależności od szerokości ekranu, aby zapobiec overflow */
+            gap: clamp(4px, 1vw, 20px);
+            font-size: clamp(10px, 1.2vw, 20px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
-            width: max-content;
-            max-width: 100%;
+            width: 100%;
+            white-space: nowrap;
         }
 
         .column {
@@ -173,21 +190,25 @@
 
         /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
-            border-bottom: 2px solid #1a1a1a;
+            border-bottom: var(--line-thickness) solid #1a1a1a;
             padding-top: var(--project-padding-top);
             padding-bottom: var(--project-padding-bottom);
         }
 
         .project-info {
             display: grid;
-            grid-template-columns: 1.1fr 1fr 2.2fr;
-            gap: var(--column-gap);
+            /* Konfiguracja różnych odstępów przez dedykowane, puste kolumny z wartościami marginów/odstępów zdefiniowanymi w root */
+            grid-template-columns: 1.1fr var(--column-gap-1) 1fr var(--column-gap-2) 2.2fr;
             font-size: var(--font-size-base);
             line-height: 1.22;
             letter-spacing: -0.01em;
             margin-bottom: 1.2vw;
             font-weight: var(--font-weight-regular);
         }
+        
+        .project-info > div:nth-child(1) { grid-column: 1; }
+        .project-info > div:nth-child(2) { grid-column: 3; }
+        .project-info > div:nth-child(3) { grid-column: 5; }
 
         .project-title {
             font-weight: var(--font-weight-medium);
@@ -225,9 +246,9 @@
         }
 
         .media-item {
-            height: clamp(300px, 34vw, 680px);
+            height: var(--media-height);
+            max-width: var(--media-height); /* Ograniczenie szerokości zdjęć poziomych do wysokości zdjęcia */
             width: auto;
-            max-width: none;
             flex-shrink: 0;
             object-fit: contain;
             background-color: transparent;
@@ -289,6 +310,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .footer-link:hover {
@@ -299,8 +321,24 @@
         @media (max-width: 768px) {
             body { padding: 10px; }
             .project-info { grid-template-columns: 1fr; gap: 12px; }
+            .project-info > div:nth-child(1),
+            .project-info > div:nth-child(2),
+            .project-info > div:nth-child(3) {
+                grid-column: 1;
+            }
             #about-section, #contact-section { width: 100%; }
-            .site-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
+            /* Skalowanie stopki, by elementy pozostały w jednej linii */
+            .site-footer { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: center; 
+                gap: 5px; 
+                font-size: clamp(10px, 2.5vw, 16px);
+            }
+            .footer-links {
+                gap: clamp(8px, 2vw, 24px);
+            }
         }
     </style>
 </head>
@@ -638,150 +676,63 @@
             videos.forEach((video) => observer.observe(video));
         });
 
-        /* --- ANIMACJA EASE DLA SLIDERA --- */
-        function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
-            const cx = 3 * p1x;
-            const bx = 3 * (p2x - p1x) - cx;
-            const ax = 1 - cx - bx;
-
-            const cy = 3 * p1y;
-            const by = 3 * (p2y - p1y) - cy;
-            const ay = 1 - cy - by;
-
-            function sampleCurveX(t) { return ((ax * t + bx) * t + cx) * t; }
-            function sampleCurveY(t) { return ((ay * t + by) * t + cy) * t; }
-            function sampleCurveDerivativeX(t) { return (3 * ax * t + 2 * bx) * t + cx; }
-
-            let t2 = t;
-            for (let i = 0; i < 8; i++) {
-                let x = sampleCurveX(t2) - t;
-                if (Math.abs(x) < 1e-5) return sampleCurveY(t2);
-                let d2 = sampleCurveDerivativeX(t2);
-                if (Math.abs(d2) < 1e-5) break;
-                t2 = t2 - x / d2;
-            }
-            return sampleCurveY(t2);
-        }
-
-        function scrollWithCustomEase(element, targetScroll, duration) {
-            const startScroll = element.scrollLeft;
-            const distance = targetScroll - startScroll;
-            const startTime = performance.now();
-
-            function animate(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easedProgress = solveCubicBezier(progress, 0.65, 0, 0.35, 1);
-
-                element.scrollLeft = startScroll + distance * easedProgress;
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        /* --- OBLICZANIE SZEROKOŚCI PEŁNI WIDOCZNYCH ELEMENTÓW --- */
-        function getFullyVisibleShift(slider, direction) {
-            const items = Array.from(slider.querySelectorAll('.media-item'));
-            const sliderRect = slider.getBoundingClientRect();
-            
-            let fullyVisibleShift = 0;
-
-            items.forEach((item, index) => {
-                const itemRect = item.getBoundingClientRect();
-                if (itemRect.left >= sliderRect.left - 2 && itemRect.right <= sliderRect.right + 2) {
-                    let itemGap = 0;
-                    if (index < items.length - 1) {
-                        const nextRect = items[index + 1].getBoundingClientRect();
-                        itemGap = nextRect.left - itemRect.right;
-                    }
-                    fullyVisibleShift += itemRect.width + itemGap;
-                }
-            });
-
-            if (fullyVisibleShift === 0) {
-                fullyVisibleShift = slider.clientWidth;
-            }
-
-            return fullyVisibleShift * direction;
-        }
-
-        function scrollSlider(button, direction) {
-            const wrapper = button.parentElement;
+        /* --- STRZAŁKI SLIDERA (Natywne przewijanie JS z Drag&Drop) --- */
+        function scrollSlider(btn, direction) {
+            const wrapper = btn.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            
-            const shift = getFullyVisibleShift(slider, direction);
-            const targetScroll = slider.scrollLeft + shift;
-
-            scrollWithCustomEase(slider, targetScroll, 750);
+            const scrollAmount = slider.clientWidth * 0.7; // Przewija o 70% szerokości
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
         function checkScrollPosition(slider) {
-            const wrapper = slider.parentElement;
+            const wrapper = slider.closest('.slider-wrapper');
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
-
-            if (slider.scrollLeft > 20) {
-                leftArrow.style.display = 'flex';
-            } else {
+            if (slider.scrollLeft <= 5) {
                 leftArrow.style.display = 'none';
+            } else {
+                leftArrow.style.display = 'flex';
             }
 
-            if (slider.scrollLeft >= maxScrollLeft - 20) {
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 5) {
                 rightArrow.style.display = 'none';
             } else {
                 rightArrow.style.display = 'flex';
             }
         }
 
-        /* --- PRZECIĄGANIE MYSZKĄ (DRAG-TO-SCROLL) --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const sliders = document.querySelectorAll('.media-slider');
+        // Aktywacja Drag & Drop dla sliderów
+        document.querySelectorAll('.media-slider').forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
 
-            sliders.forEach(slider => {
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                slider.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                });
-
-                slider.addEventListener('mouseleave', () => {
-                    isDown = false;
-                });
-
-                slider.addEventListener('mouseup', () => {
-                    isDown = false;
-                });
-
-                slider.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    slider.scrollLeft = scrollLeft - walk;
-                });
-
-                slider.querySelectorAll('.media-item').forEach(item => {
-                    item.addEventListener('dragstart', (e) => e.preventDefault());
-                });
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.style.cursor = 'grabbing';
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
             });
-        });
-
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.media-slider').forEach(slider => {
-                checkScrollPosition(slider);
+            
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.style.cursor = 'grab';
+            });
+            
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.style.cursor = 'grab';
+            });
+            
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1.5; // Prędkość przewijania
+                slider.scrollLeft = scrollLeft - walk;
             });
         });
     </script>
 </body>
-</html>
+</html>"""

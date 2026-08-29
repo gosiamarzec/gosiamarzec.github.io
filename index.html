@@ -7,7 +7,7 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
-            /* Główny Font */
+            /* Główny Font (Zmień nazwę tutaj, aby zaktualizować całą stronę) */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             /* Typografia */
@@ -16,6 +16,9 @@
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
+
+            /* Pozycjonowanie pionowe sekcji About / Contact */
+            /* --overlay-top-offset: -2px; */
 
             /* Odstępy i Odległości */
             --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
@@ -710,10 +713,11 @@
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
+            
             const shift = getFullyVisibleShift(slider, direction);
             const targetScroll = slider.scrollLeft + shift;
 
-            scrollWithCustomEase(slider, targetScroll, 600);
+            scrollWithCustomEase(slider, targetScroll, 750);
         }
 
         function checkScrollPosition(slider) {
@@ -721,48 +725,61 @@
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
-            if (slider.scrollLeft <= 5) {
-                leftArrow.style.display = 'none';
-            } else {
+            if (slider.scrollLeft > 20) {
                 leftArrow.style.display = 'flex';
+            } else {
+                leftArrow.style.display = 'none';
             }
 
-            if (slider.scrollLeft >= maxScroll - 5) {
+            if (slider.scrollLeft >= maxScrollLeft - 20) {
                 rightArrow.style.display = 'none';
             } else {
                 rightArrow.style.display = 'flex';
             }
         }
 
-        /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) --- */
-        document.querySelectorAll('.media-slider').forEach(slider => {
-            let isDown = false;
-            let startX;
-            let scrollLeft;
+        /* --- PRZECIĄGANIE MYSZKĄ (DRAG-TO-SCROLL) --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliders = document.querySelectorAll('.media-slider');
 
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
+            sliders.forEach(slider => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                });
+
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+
+                slider.querySelectorAll('.media-item').forEach(item => {
+                    item.addEventListener('dragstart', (e) => e.preventDefault());
+                });
             });
+        });
 
-            slider.addEventListener('mouseleave', () => {
-                isDown = false;
-            });
-
-            slider.addEventListener('mouseup', () => {
-                isDown = false;
-            });
-
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                slider.scrollLeft = scrollLeft - walk;
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.media-slider').forEach(slider => {
+                checkScrollPosition(slider);
             });
         });
     </script>

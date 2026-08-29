@@ -14,6 +14,9 @@
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
+            /* Pozycjonowanie pionowe sekcji About / Contact */
+            --overlay-top-offset: -2px;     /* Przesunięcie pionowe nakładek (dodatnie = w dół, ujemne = w górę) */
+
             /* Odstępy i Odległości */
             --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
             --column-gap: 2.5vw;           /* Odstęp między kolumnami tekstu */
@@ -74,7 +77,7 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: calc(100% - 2px);
+            top: calc(100% + var(--overlay-top-offset));
             background-color: #ededed;
             z-index: 900;
             border: 2px solid #1a1a1a;
@@ -93,6 +96,7 @@
             left: 0;
             width: 50%;
             min-width: 320px;
+            max-width: 100%;
         }
 
         #contact-section {
@@ -129,24 +133,32 @@
             font-weight: var(--font-weight-regular);
         }
 
+        .formula-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         .formula {
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: clamp(14px, 1.2vw, 20px);
+            gap: clamp(8px, 1.2vw, 20px);
+            font-size: clamp(11px, 1.1vw, 20px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
+            width: max-content;
+            max-width: 100%;
         }
 
         .column {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            white-space: nowrap;
         }
 
-        .plus { font-weight: var(--font-weight-regular); font-size: 16px; }
-        .dash { font-size: 24px; font-weight: 300; }
-        .arrow { font-size: 24px; margin-right: 4px; }
+        .plus { font-weight: var(--font-weight-regular); font-size: 0.9em; }
+        .dash { font-size: 1.3em; font-weight: 300; }
+        .arrow { font-size: 1.3em; margin-right: 4px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
         /* --- STYLIZACJA PROJEKTÓW --- */
@@ -278,8 +290,6 @@
             body { padding: 10px; }
             .project-info { grid-template-columns: 1fr; gap: 12px; }
             #about-section, #contact-section { width: 100%; }
-            .formula { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .dash { display: none; }
             .site-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
@@ -298,24 +308,26 @@
                     Hi, I'm Gosia. I look for problems that I can solve through graphic design.
                 </p>
 
-                <div class="formula">
-                    <div class="column">
-                        <div>graphic design<br>practice</div>
-                        <div class="plus">＋</div>
-                        <div>technical<br>degree</div>
-                    </div>
+                <div class="formula-wrapper">
+                    <div class="formula">
+                        <div class="column">
+                            <div>graphic design<br>practice</div>
+                            <div class="plus">＋</div>
+                            <div>technical<br>degree</div>
+                        </div>
 
-                    <div class="dash">—</div>
+                        <div class="dash">—</div>
 
-                    <div class="column">
-                        <div>unquenchable<br>curiosity</div>
-                        <div class="plus">＋</div>
-                        <div>figureing<br>everything out</div>
-                    </div>
+                        <div class="column">
+                            <div>unquenchable<br>curiosity</div>
+                            <div class="plus">＋</div>
+                            <div>figureing<br>everything out</div>
+                        </div>
 
-                    <div class="result">
-                        <span class="arrow">⟶</span>
-                        <span>that’s me</span>
+                        <div class="result">
+                            <span class="arrow">⟶</span>
+                            <span>that’s me</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -354,14 +366,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -395,7 +407,7 @@
                     <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
                     <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
                     <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -461,10 +473,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" loading="lazy">
                     <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
                 </div>
@@ -497,12 +509,12 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline preload="none"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -596,7 +608,7 @@
             }
         }
 
-        /* --- ZINTELIGENTYZOWANA OPTYMALIZACJA WIDEO (LAZY PLAYING & MEMORY CLEANUP) --- */
+        /* --- ODTWARZANIE WIDEO W WIDOKU --- */
         document.addEventListener("DOMContentLoaded", () => {
             const videos = document.querySelectorAll("video.media-item");
 
@@ -610,7 +622,7 @@
                     }
                 });
             }, {
-                threshold: 0.2
+                threshold: 0.1
             });
 
             videos.forEach((video) => observer.observe(video));

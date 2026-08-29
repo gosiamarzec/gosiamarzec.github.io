@@ -7,6 +7,9 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
+            /* Główny Font (Zmień nazwę tutaj, aby zaktualizować całą stronę) */
+            --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
             /* Typografia */
             --font-size-base: clamp(18px, 1.5vw, 26px); /* Rozmiar dla opisów i treści projektów */
             --font-size-nav: clamp(22px, 2.3vw, 42px);  /* Rozmiar dla przycisków About / Contact */
@@ -15,7 +18,7 @@
             --font-weight-bold: 600;
 
             /* Pozycjonowanie pionowe sekcji About / Contact */
-            /*--overlay-top-offset: -1px;     /* Przesunięcie pionowe nakładek (dodatnie = w dół, ujemne = w górę) */
+            /* --overlay-top-offset: -2px; */
 
             /* Odstępy i Odległości */
             --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
@@ -33,7 +36,7 @@
 
         body {
             background-color: #ededed;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-family-main);
             color: #1a1a1a;
             padding: 12px 20px;
             width: 100%;
@@ -47,20 +50,24 @@
             position: relative;
         }
 
-        /* --- NAWIGACJA GÓRNA --- */
+        /* --- NAWIGACJA GÓRNA (STICKY - CAŁY CZAS WIDOCZNA) --- */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #1a1a1a;
             padding-bottom: var(--nav-padding-bottom);
-            position: relative;
+            position: sticky;
+            top: 0;
+            background-color: #ededed;
             z-index: 1000;
+            margin-bottom: 0;
         }
 
         .nav-button {
             background: none;
             border: none;
+            font-family: var(--font-family-main);
             font-size: var(--font-size-nav);
             font-weight: var(--font-weight-bold);
             cursor: pointer;
@@ -77,10 +84,13 @@
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
-            top: calc(100% + var(--overlay-top-offset));
+            top: 100%;
             background-color: #ededed;
             z-index: 900;
-            border: 2px solid #1a1a1a;
+            border-left: 2px solid #1a1a1a;
+            border-right: 2px solid #1a1a1a;
+            border-bottom: 2px solid #1a1a1a;
+            border-top: none;
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;

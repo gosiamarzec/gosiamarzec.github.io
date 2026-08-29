@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gosia Marzec - Portfolio</title>
     <style>
+        /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
+            /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --font-size-base: clamp(16px, 2.1vw, 38px);
-            --font-size-nav: clamp(18px, 2.3vw, 42px);
+
+            /* Typografia */
+            --font-size-base: clamp(18px, 1.5vw, 26px); /* Rozmiar dla opisów i treści projektów */
+            --font-size-nav: clamp(22px, 2.3vw, 42px);  /* Rozmiar dla przycisków About / Contact */
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
-            /* Stała grubość obramowania */
-            --border-width: 2px;
-            --border-color: #1a1a1a;
-
-            --gap-col-1-2: 4vw;
-            --gap-col-2-3: 8vw;
-
-            --slider-gap: 0.8vw;
-            --project-padding-top: 1vw;
-            --project-padding-bottom: 6vw;
-            --nav-padding-bottom: 10px;
+            /* Odstępy i Odległości */
+            --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
+            --column-gap: 2.5vw;           /* Odstęp między kolumnami tekstu */
+            --project-padding-top: 1vw;    /* Odstęp od górnej czarnej linii */
+            --project-padding-bottom: 2vw; /* Odstęp od dolnej czarnej linii */
+            --nav-padding-bottom: 4px;     /* Odstęp tekstu nawigacji od linii */
         }
 
         * {
@@ -48,17 +47,18 @@
             position: relative;
         }
 
-        /* --- NAWIGACJA GÓRNA --- */
+        /* --- NAWIGACJA GÓRNA (STICKY - CAŁY CZAS WIDOCZNA) --- */
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: var(--border-width) solid var(--border-color);
+            border-bottom: 2px solid #1a1a1a;
             padding-bottom: var(--nav-padding-bottom);
             position: sticky;
             top: 0;
             background-color: #ededed;
             z-index: 1000;
+            margin-bottom: 0;
         }
 
         .nav-button {
@@ -69,6 +69,8 @@
             font-weight: var(--font-weight-bold);
             cursor: pointer;
             color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.3px;
             line-height: 1;
         }
 
@@ -82,7 +84,10 @@
             top: 100%;
             background-color: #ededed;
             z-index: 900;
-            border: var(--border-width) solid var(--border-color);
+            border-left: 2px solid #1a1a1a;
+            border-right: 2px solid #1a1a1a;
+            border-bottom: 2px solid #1a1a1a;
+            border-top: none;
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -96,10 +101,9 @@
 
         #about-section {
             left: 0;
-            width: 60%;
-            min-width: 300px;
+            width: 50%;
+            min-width: 320px;
             max-width: 100%;
-            border-left: none;
         }
 
         #contact-section {
@@ -107,7 +111,6 @@
             width: auto;
             min-width: 240px;
             text-align: right;
-            border-right: none;
         }
 
         #contact-section .contact-content {
@@ -132,41 +135,42 @@
         .intro-text {
             font-size: var(--font-size-base);
             line-height: 1.3;
-            margin-bottom: 24px;
+            letter-spacing: -0.2px;
+            margin-bottom: 28px;
             font-weight: var(--font-weight-regular);
         }
 
         .formula-wrapper {
             width: 100%;
-            overflow: hidden;
+            overflow-x: auto;
         }
 
         .formula {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: clamp(4px, 1vw, 16px);
-            font-size: clamp(9px, 0.9vw, 18px);
+            gap: clamp(8px, 1.2vw, 20px);
+            font-size: clamp(11px, 1.1vw, 20px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
-            width: 100%;
+            width: max-content;
+            max-width: 100%;
         }
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
             white-space: nowrap;
         }
 
         .plus { font-weight: var(--font-weight-regular); font-size: 0.9em; }
-        .dash { font-size: 1.2em; font-weight: 300; }
-        .arrow { font-size: 1.2em; margin-right: 4px; }
+        .dash { font-size: 1.3em; font-weight: 300; }
+        .arrow { font-size: 1.3em; margin-right: 4px; }
         .result { display: flex; align-items: center; white-space: nowrap; }
 
-        /* --- LISTA PROJEKTÓW --- */
+        /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
-            border-bottom: var(--border-width) solid var(--border-color);
+            border-bottom: 2px solid #1a1a1a;
             padding-top: var(--project-padding-top);
             padding-bottom: var(--project-padding-bottom);
         }
@@ -174,19 +178,12 @@
         .project-info {
             display: grid;
             grid-template-columns: 1.1fr 1fr 2.2fr;
-            column-gap: 0;
+            gap: var(--column-gap);
             font-size: var(--font-size-base);
             line-height: 1.22;
+            letter-spacing: -0.01em;
             margin-bottom: 1.2vw;
             font-weight: var(--font-weight-regular);
-        }
-
-        .project-info > div:nth-child(1) {
-            padding-right: var(--gap-col-1-2);
-        }
-
-        .project-info > div:nth-child(2) {
-            padding-right: var(--gap-col-2-3);
         }
 
         .project-title {
@@ -196,9 +193,10 @@
         .scope-title {
             text-decoration: underline;
             display: inline-block;
+            margin-bottom: 0;
         }
 
-        /* --- SLIDER Z JEDNAKOWĄ WYSOKOŚCIĄ ZDJĘĆ --- */
+        /* --- SLIDER I MEDIA --- */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -206,12 +204,17 @@
 
         .media-slider {
             display: flex;
-            align-items: flex-start;
             gap: var(--slider-gap);
             overflow-x: auto;
-            height: clamp(280px, 32vw, 620px);
+            padding-bottom: 2px;
+            -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             cursor: grab;
+            user-select: none;
+        }
+
+        .media-slider:active {
+            cursor: grabbing;
         }
 
         .media-slider::-webkit-scrollbar {
@@ -219,15 +222,16 @@
         }
 
         .media-item {
-            height: 100%;
+            height: clamp(300px, 34vw, 680px);
             width: auto;
             max-width: none;
             flex-shrink: 0;
-            object-fit: cover;
-            display: block;
+            object-fit: contain;
+            background-color: transparent;
+            pointer-events: auto;
         }
 
-        /* STRZAŁKI */
+        /* --- STRZAŁKI SVG --- */
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -240,33 +244,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
             transition: opacity 0.2s ease;
         }
 
         .slider-arrow svg {
             width: clamp(24px, 2vw, 40px);
             height: clamp(24px, 2vw, 40px);
-            stroke: var(--border-color);
+            stroke: #1a1a1a;
         }
 
         .slider-arrow:hover {
             opacity: 0.5;
         }
 
-        .slider-arrow.left { left: -16px; display: none; }
-        .slider-arrow.right { right: -16px; }
+        .slider-arrow.left {
+            left: -16px;
+            display: none;
+        }
+
+        .slider-arrow.right {
+            right: -16px;
+        }
 
         /* --- STOPKA --- */
         .site-footer {
-            padding-top: 1.5vw;
-            padding-bottom: 1vw;
+            padding-top: 1.2vw;
+            margin-top: 2vw;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: var(--font-size-base);
             font-weight: var(--font-weight-medium);
-            flex-wrap: wrap;
-            gap: 12px;
         }
 
         .footer-links {
@@ -279,21 +288,16 @@
             text-decoration: none;
         }
 
-        .footer-email {
-            font-size: var(--font-size-base);
-            white-space: nowrap;
-        }
-
         .footer-link:hover {
             text-decoration: underline;
         }
 
+        /* RESPONYWNOŚĆ MOBILNA */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .project-info { grid-template-columns: 1fr; gap: 12px; }
-            .project-info > div:nth-child(1),
-            .project-info > div:nth-child(2) { padding-right: 0; }
-            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
+            #about-section, #contact-section { width: 100%; }
+            .site-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
@@ -305,6 +309,7 @@
             <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
             <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
 
+            <!-- SEKCJA ABOUT -->
             <section id="about-section" class="overlay-panel">
                 <p class="intro-text">
                     Hi, I'm Gosia. I look for problems that I can solve through graphic design.
@@ -334,6 +339,7 @@
                 </div>
             </section>
 
+            <!-- SEKCJA CONTACT -->
             <section id="contact-section" class="overlay-panel">
                 <div class="contact-content">
                     <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
@@ -367,14 +373,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_6.mp4" type="video/mp4"></video>
-                    <img class="media-item" src="./images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
-                    <video class="media-item" autoplay loop muted playsinline><source src="./images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -382,6 +388,183 @@
             </div>
         </article>
 
+        <!-- PROJEKT 2 -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Supplement packaging & promotion
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Packaging,<br>
+                    Digital design for social media
+                </div>
+                <div>
+                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
+                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 3 -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Movement diagram
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Visual identity,<br>
+                    Illustrations,<br>
+                    Digital design for social media
+                </div>
+                <div>
+                    Graphic design project for cyclical physical movement courses. The graphic identity is based on presenting certain movement complexities in the form of simplified diagrams. This reflects the way movements are worked on during the classes.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/3/movement_1.png" alt="Movement 1" loading="lazy">
+                    <img class="media-item" src="images/3/movement_2.png" alt="Movement 2" loading="lazy">
+                    <img class="media-item" src="images/3/movement_3.png" alt="Movement 3" loading="lazy">
+                    <img class="media-item" src="images/3/movement_4.png" alt="Movement 4" loading="lazy">
+                    <img class="media-item" src="images/3/movement_5.png" alt="Movement 5" loading="lazy">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 4 -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Sad Typography
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Visual identity,<br>
+                    Digital design for social media,<br>
+                    Typeface,<br>
+                    Video recording,<br>
+                    Video editing
+                </div>
+                <div>
+                    Sad Dances are contemporary dance classes that allow participants to release their emotions, acting as a kind of catharsis. The visuals of the moving poster are a tribute to the organic movements of dance and refer to the nature-inspired, wavy, and dynamic shapes known from Art Nouveau.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" loading="lazy">
+                    <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 5 -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Circular Economy Explainer Video
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Stop-motion animation,<br>
+                    Digital design,<br>
+                    Motion design,<br>
+                    Video editing
+                </div>
+                <div>
+                    Explanatory video, which attempts to turn our inaction in the face of environmental disaster into action. The project aimed to present the idea of the natural system as a whole, of which we are an integral part, using the concept of the circular economy. Using stop-motion animation helps to create an atmosphere that feels closer and more grounded in reality. Motion design is the main element used to explain the discussed content.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- PROJEKT 6 -->
+        <article class="project-item">
+            <div class="project-info">
+                <div class="project-title">
+                    Wine label Winnica Łukasz
+                </div>
+                <div>
+                    <span class="scope-title">Scope of work</span><br>
+                    Brand identity,<br>
+                    Packaging
+                </div>
+                <div>
+                    The wine label was created for a family winery with deep agricultural roots. The project was about combining nurturing relationships between people and nature and honoring the cultivation experience that describes the vineyard and its owners. This is depicted in the graphic as a combination of nine unique fields (nine family members) forming color transitions (relationships). The colors are chosen to match the character of the wine.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="media-slider" onscroll="checkScrollPosition(this)">
+                    <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" loading="lazy">
+                    <img class="media-item" src="images/6/wine_2.png" alt="Wine 2" loading="lazy">
+                    <img class="media-item" src="images/6/wine_3.png" alt="Wine 3" loading="lazy">
+                    <img class="media-item" src="images/6/wine_4.png" alt="Wine 4" loading="lazy">
+                    <img class="media-item" src="images/6/wine_5.png" alt="Wine 5" loading="lazy">
+                    <img class="media-item" src="images/6/wine_6.png" alt="Wine 6" loading="lazy">
+                    <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7" loading="lazy">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <!-- STOPKA -->
         <footer class="site-footer">
             <div class="footer-links">
                 <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="footer-link">Behance</a>
@@ -389,7 +572,7 @@
                 <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
             </div>
             <div>
-                <a href="mailto:gosi.marzec@gmail.com" class="footer-link footer-email">gosi.marzec@gmail.com</a>
+                <a href="mailto:gosi.marzec@gmail.com" class="footer-link">gosi.marzec@gmail.com</a>
             </div>
         </footer>
 
@@ -432,11 +615,105 @@
             }
         }
 
+        /* --- ODTWARZANIE WIDEO W WIDOKU --- */
+        document.addEventListener("DOMContentLoaded", () => {
+            const videos = document.querySelectorAll("video.media-item");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            videos.forEach((video) => observer.observe(video));
+        });
+
+        /* --- ANIMACJA EASE DLA SLIDERA --- */
+        function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
+            const cx = 3 * p1x;
+            const bx = 3 * (p2x - p1x) - cx;
+            const ax = 1 - cx - bx;
+
+            const cy = 3 * p1y;
+            const by = 3 * (p2y - p1y) - cy;
+            const ay = 1 - cy - by;
+
+            function sampleCurveX(t) { return ((ax * t + bx) * t + cx) * t; }
+            function sampleCurveY(t) { return ((ay * t + by) * t + cy) * t; }
+            function sampleCurveDerivativeX(t) { return (3 * ax * t + 2 * bx) * t + cx; }
+
+            let t2 = t;
+            for (let i = 0; i < 8; i++) {
+                let x = sampleCurveX(t2) - t;
+                if (Math.abs(x) < 1e-5) return sampleCurveY(t2);
+                let d2 = sampleCurveDerivativeX(t2);
+                if (Math.abs(d2) < 1e-5) break;
+                t2 = t2 - x / d2;
+            }
+            return sampleCurveY(t2);
+        }
+
+        function scrollWithCustomEase(element, targetScroll, duration) {
+            const startScroll = element.scrollLeft;
+            const distance = targetScroll - startScroll;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easedProgress = solveCubicBezier(progress, 0.65, 0, 0.35, 1);
+
+                element.scrollLeft = startScroll + distance * easedProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        /* --- OBLICZANIE SZEROKOŚCI PEŁNI WIDOCZNYCH ELEMENTÓW --- */
+        function getFullyVisibleShift(slider, direction) {
+            const items = Array.from(slider.querySelectorAll('.media-item'));
+            const sliderRect = slider.getBoundingClientRect();
+            
+            let fullyVisibleShift = 0;
+
+            items.forEach((item, index) => {
+                const itemRect = item.getBoundingClientRect();
+                if (itemRect.left >= sliderRect.left - 2 && itemRect.right <= sliderRect.right + 2) {
+                    let itemGap = 0;
+                    if (index < items.length - 1) {
+                        const nextRect = items[index + 1].getBoundingClientRect();
+                        itemGap = nextRect.left - itemRect.right;
+                    }
+                    fullyVisibleShift += itemRect.width + itemGap;
+                }
+            });
+
+            if (fullyVisibleShift === 0) {
+                fullyVisibleShift = slider.clientWidth;
+            }
+
+            return fullyVisibleShift * direction;
+        }
+
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.7;
-            slider.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            const shift = getFullyVisibleShift(slider, direction);
+            const targetScroll = slider.scrollLeft + shift;
+
+            scrollWithCustomEase(slider, targetScroll, 600);
         }
 
         function checkScrollPosition(slider) {
@@ -444,9 +721,50 @@
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
-            rightArrow.style.display = (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) ? 'none' : 'flex';
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+            if (slider.scrollLeft <= 5) {
+                leftArrow.style.display = 'none';
+            } else {
+                leftArrow.style.display = 'flex';
+            }
+
+            if (slider.scrollLeft >= maxScroll - 5) {
+                rightArrow.style.display = 'none';
+            } else {
+                rightArrow.style.display = 'flex';
+            }
         }
+
+        /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) --- */
+        document.querySelectorAll('.media-slider').forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
     </script>
 </body>
 </html>

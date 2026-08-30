@@ -11,31 +11,33 @@
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             /* Typografia */
-            --font-size-base: 22px; 
-            --font-size-nav: 22px;    
+            --font-size-base: clamp(20px, 1.8vw, 30px); 
+            --font-size-nav: clamp(28px, 3vw, 52px);    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
-            /* Grubość linii i kolory */
+            /* Grubość linii na całej stronie */
             --border-width: 2px;
             --border-color: #1a1a1a;
-            --bg-color: #ededed;
 
             /* Odstępy i Odległości */
-            --slider-gap: 16px;            
-            --col-gap-1-2: 36px;         
-            --col-gap-2-3: 50px;         
+            --slider-gap: 1vw;            
+            
+            /* Odstępy między kolumnami opisu */
+            --col-gap-1-2: 2.5vw;         
+            --col-gap-2-3: 3.5vw;         
 
-            /* Układ kolumn w projekcie */
-            --project-col-1-width: 2.0fr;
-            --project-col-2-width: 1.0fr;
-            --project-col-3-width: 3.0fr;
-            --project-info-margin-bottom: 40px;
+            /* --- KONTROLA UKŁADU ORAZ PROSTOKĄTÓW TEKSTOWYCH W SEKCJI PROJEKTU --- */
+            --project-col-1-width: 1.6fr; /* Kolumna 1: Tytuł */
+            --project-col-2-width: 1.4fr; /* Kolumna 2: Scope of work */
+            --project-col-3-width: 2.0fr; /* Kolumna 3: Opis */
+            --project-info-min-height: auto; /* Opcjonalna minimalna wysokość sekcji tekstu */
+            --project-info-margin-bottom: 2.5vw; /* Odstęp sekcji tekstowej od karuzeli */
 
-            --project-padding-top: 24px;    
-            --project-padding-bottom: 36px; 
-            --nav-padding-bottom: 12px;      
+            --project-padding-top: 1.2vw;    
+            --project-padding-bottom: 2.5vw; 
+            --nav-padding-bottom: 6px;      
         }
 
         * {
@@ -45,40 +47,33 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: #ededed;
             font-family: var(--font-family-main);
             color: #1a1a1a;
-            margin: 0;
-            padding: 0;
+            padding: 12px 20px;
+            width: 100%;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- KONTENER GŁÓWNY (CZYSTY ELASKYCZNY CONTAINER) --- */
         .main-container {
             width: 100%;
-            max-width: 1440px;
             margin: 0 auto;
             position: relative;
-            padding: 12px 24px;
         }
 
         /* --- NAWIGACJA GÓRNA (STICKY) --- */
-        .top-nav-wrapper {
-            position: sticky;
-            top: 0;
-            background-color: var(--bg-color);
-            z-index: 1000;
-            border-bottom: var(--border-width) solid var(--border-color);
-        }
-
         .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: var(--border-width) solid var(--border-color);
             padding-bottom: var(--nav-padding-bottom);
-            padding-top: 12px;
-            position: relative;
+            position: sticky;
+            top: 0;
+            background-color: #ededed;
+            z-index: 1000;
+            margin-bottom: 0;
         }
 
         .nav-button {
@@ -102,14 +97,16 @@
         .overlay-panel {
             position: absolute;
             top: 100%;
-            background-color: var(--bg-color);
+            left: 0;
+            margin-top: 0;
+            background-color: #ededed;
             z-index: 900;
             border-bottom: var(--border-width) solid var(--border-color);
+            border-top: var(--border-width) solid var(--border-color);
             display: none;
             opacity: 0;
-            transition: opacity 0.2s ease-in-out;
+            transition: opacity 0.25s ease-in-out;
             padding: 24px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
         .overlay-panel.active {
@@ -121,17 +118,19 @@
             left: 0;
             width: 50%;
             min-width: 320px;
+            max-width: 100%;
+            border-left: none;
             border-right: var(--border-width) solid var(--border-color);
-            border-left: var(--border-width) solid var(--border-color);
         }
 
         #contact-section {
+            left: auto;
             right: 0;
             width: auto;
-            min-width: 260px;
+            min-width: 240px;
             text-align: right;
             border-left: var(--border-width) solid var(--border-color);
-            border-right: var(--border-width) solid var(--border-color);
+            border-right: none;
         }
 
         #contact-section .contact-content {
@@ -169,8 +168,8 @@
         .formula {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 16px;
+            gap: clamp(6px, 1vw, 20px);
+            font-size: clamp(10px, 1.2vw, 22px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
             width: 100%;
@@ -200,8 +199,9 @@
             display: grid;
             grid-template-columns: var(--project-col-1-width) var(--project-col-2-width) var(--project-col-3-width);
             align-items: flex-start;
+            min-height: var(--project-info-min-height);
             font-size: var(--font-size-base);
-            line-height: 1.25;
+            line-height: 1.22;
             letter-spacing: -0.01em;
             margin-bottom: var(--project-info-margin-bottom);
             font-weight: var(--font-weight-regular);
@@ -222,6 +222,7 @@
         .scope-title {
             text-decoration: underline;
             display: inline-block;
+            margin-bottom: 0;
         }
 
         /* --- SLIDER I MEDIA --- */
@@ -234,12 +235,12 @@
             display: flex;
             gap: var(--slider-gap);
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             cursor: grab;
             user-select: none;
-            align-items: flex-start;
+            align-items: flex-start; /* Wszystkie elementy wyrównane idealnie do górnej krawędzi */
         }
 
         .media-slider:active {
@@ -250,14 +251,16 @@
             display: none;
         }
 
-        /* Wysokość dynamiczna dopasowana do ekranu, bez zniekształceń */
+        /* Domyślny rozmiar elementów slidera */
         .media-item {
-            height: clamp(380px, 36vw, 540px);
+            height: clamp(320px, 38vw, 750px);
             width: auto;
-            max-width: 500px;
+            max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
             object-fit: contain;
             background-color: transparent;
+            pointer-events: auto;
+            align-self: flex-start; /* Strażnik wyrównania do góry */
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -265,43 +268,41 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(237, 237, 237, 0.8);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
+            background: none;
+            border: none;
             cursor: pointer;
             z-index: 10;
-            padding: 8px;
+            padding: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
-            transition: opacity 0.2s ease, background 0.2s ease;
+            transition: opacity 0.2s ease;
         }
 
         .slider-arrow svg {
-            width: 28px;
-            height: 28px;
+            width: clamp(28px, 2.5vw, 48px);
+            height: clamp(28px, 2.5vw, 48px);
             stroke: #1a1a1a;
         }
 
         .slider-arrow:hover {
-            background: #ededed;
-            opacity: 1;
+            opacity: 0.5;
         }
 
         .slider-arrow.left {
-            left: 8px;
+            left: -16px;
             display: none;
         }
 
         .slider-arrow.right {
-            right: 8px;
+            right: -16px;
         }
 
         /* --- STOPKA --- */
         .site-footer {
-            padding-top: 32px;
-            padding-bottom: 24px;
+            padding-top: 1.5vw;
+            margin-top: 2vw;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -318,7 +319,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
-            font-size: 20px;
+            font-size: clamp(14px, 1.6vw, 28px);
         }
 
         .footer-link:hover {
@@ -329,68 +330,71 @@
             white-space: nowrap;
         }
 
-        /* RWD na bardzo małe ekrany */
-        @media (max-width: 850px) {
-            .project-info {
-                grid-template-columns: 1fr;
-                gap: 20px;
+        /* RESPONSYWNOŚĆ MOBILNA */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .project-info { grid-template-columns: 1fr; gap: 12px; }
+            .project-info > div:nth-child(1),
+            .project-info > div:nth-child(2) { padding-right: 0; }
+            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
+            .site-footer { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: center; 
+                gap: 8px; 
             }
-            #about-section {
-                width: 100%;
+            .footer-email {
+                font-size: clamp(11px, 3.2vw, 16px);
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-nav-wrapper">
-        <div class="main-container" style="padding-top: 0; padding-bottom: 0;">
-            <header class="top-nav">
-                <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
-                <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
+    <div class="main-container">
+        
+        <header class="top-nav">
+            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
+            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
 
-                <section id="about-section" class="overlay-panel">
-                    <p class="intro-text">
-                        Hi, I'm Gosia. I look for problems that I can solve through graphic design.
-                    </p>
+            <section id="about-section" class="overlay-panel">
+                <p class="intro-text">
+                    Hi, I'm Gosia. I look for problems that I can solve through graphic design.
+                </p>
 
-                    <div class="formula-wrapper">
-                        <div class="formula">
-                            <div class="column">
-                                <div>graphic design<br>practice</div>
-                                <div class="plus">＋</div>
-                                <div>technical<br>degree</div>
-                            </div>
+                <div class="formula-wrapper">
+                    <div class="formula">
+                        <div class="column">
+                            <div>graphic design<br>practice</div>
+                            <div class="plus">＋</div>
+                            <div>technical<br>degree</div>
+                        </div>
 
-                            <div class="dash">—</div>
+                        <div class="dash">—</div>
 
-                            <div class="column">
-                                <div>unquenchable<br>curiosity</div>
-                                <div class="plus">＋</div>
-                                <div>figuring<br>everything out</div>
-                            </div>
+                        <div class="column">
+                            <div>unquenchable<br>curiosity</div>
+                            <div class="plus">＋</div>
+                            <div>figuring<br>everything out</div>
+                        </div>
 
-                            <div class="result">
-                                <span class="arrow">⟶</span>
-                                <span>that’s me</span>
-                            </div>
+                        <div class="result">
+                            <span class="arrow">⟶</span>
+                            <span>that’s me</span>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section id="contact-section" class="overlay-panel">
-                    <div class="contact-content">
-                        <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
-                        <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="contact-link">Instagram</a>
-                        <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="contact-link">Linkedin</a>
-                        <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
-                    </div>
-                </section>
-            </header>
-        </div>
-    </div>
-
-    <div class="main-container">
+            <section id="contact-section" class="overlay-panel">
+                <div class="contact-content">
+                    <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
+                    <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="contact-link">Instagram</a>
+                    <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="contact-link">Linkedin</a>
+                    <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
+                </div>
+            </section>
+        </header>
 
         <article class="project-item">
             <div class="project-info">
@@ -414,14 +418,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -454,7 +458,7 @@
                     <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
                     <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
                     <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -518,10 +522,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" loading="lazy">
                     <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
                 </div>
@@ -553,12 +557,12 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -614,7 +618,6 @@
     </div>
 
     <script>
-        /* --- NAWIGACJA ABOUT / CONTACT --- */
         function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
@@ -651,18 +654,6 @@
             }
         }
 
-        /* --- PRZEWIJANIE SLIDERÓW Z ANIMACJĄ --- */
-        function scrollSlider(arrowButton, direction) {
-            const wrapper = arrowButton.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.7 * direction;
-            
-            slider.scrollBy({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-
         function checkScrollPosition(slider) {
             const wrapper = slider.closest('.slider-wrapper');
             if (!wrapper) return;
@@ -681,7 +672,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
-            /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) --- */
+            /* --- OBSŁUGA PRZEWIJANIA PRZEZ PRZECIĄGANIE (DRAG TO SCROLL - LPM) --- */
             sliders.forEach((slider) => {
                 let isDown = false;
                 let startX;
@@ -694,8 +685,13 @@
                     scrollLeft = slider.scrollLeft;
                 });
 
-                slider.addEventListener("mouseleave", () => { isDown = false; });
-                slider.addEventListener("mouseup", () => { isDown = false; });
+                slider.addEventListener("mouseleave", () => {
+                    isDown = false;
+                });
+
+                slider.addEventListener("mouseup", () => {
+                    isDown = false;
+                });
 
                 slider.addEventListener("mousemove", (e) => {
                     if (!isDown) return;
@@ -712,22 +708,56 @@
                 checkScrollPosition(slider);
             });
 
-            /* --- WYMUSZENIE ODTWARZANIA WIDEO GDY WIDOCZNE NA EKRANIE --- */
-            const videos = document.querySelectorAll('video');
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            /* Odtwarzanie wideo w widoku */
+            const videos = document.querySelectorAll("video.media-item");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    const video = entry.target;
                     if (entry.isIntersecting) {
-                        entry.target.play().catch(() => {});
+                        video.play().catch(() => {});
                     } else {
-                        entry.target.pause();
+                        video.pause();
                     }
                 });
-            }, { threshold: 0.25 });
-
-            videos.forEach(video => {
-                videoObserver.observe(video);
+            }, {
+                threshold: 0.1
             });
+
+            videos.forEach((video) => observer.observe(video));
         });
+
+        /* S-CURVE (EASE-IN-OUT CUBIC) SMOOTH SCROLL DLA STRZAŁEK */
+        function scrollSlider(arrowBtn, direction) {
+            const wrapper = arrowBtn.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.75;
+            
+            const startPosition = slider.scrollLeft;
+            const targetPosition = startPosition + (scrollAmount * direction);
+            const duration = 400;
+            let startTime = null;
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const easeProgress = easeInOutCubic(progress);
+
+                slider.scrollLeft = startPosition + (targetPosition - startPosition) * easeProgress;
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                } else {
+                    checkScrollPosition(slider);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
     </script>
 </body>
 </html>

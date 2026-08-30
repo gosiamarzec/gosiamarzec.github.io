@@ -28,13 +28,6 @@
             --col-gap-1-2: 2.5vw;         
             --col-gap-2-3: 3.5vw;         
 
-            /* --- KONTROLA UKŁADU ORAZ PROSTOKĄTÓW TEKSTOWYCH W SEKCJI PROJEKTU --- */
-            --project-col-1-width: 1.6fr; /* Kolumna 1: Tytuł */
-            --project-col-2-width: 1.4fr; /* Kolumna 2: Scope of work */
-            --project-col-3-width: 2.0fr; /* Kolumna 3: Opis */
-            --project-info-min-height: auto; /* Opcjonalna minimalna wysokość sekcji tekstu */
-            --project-info-margin-bottom: 2.5vw; /* Odstęp sekcji tekstowej od karuzeli */
-
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
             --nav-padding-bottom: 6px;      
@@ -102,7 +95,7 @@
             background-color: #ededed;
             z-index: 900;
             border-bottom: var(--border-width) solid var(--border-color);
-            border-top: var(--border-width) solid var(--border-color);
+            border-top: var(--border-width) solid var(--border-color); /* Górna ramka */
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -197,13 +190,12 @@
 
         .project-info {
             display: grid;
-            grid-template-columns: var(--project-col-1-width) var(--project-col-2-width) var(--project-col-3-width);
+            grid-template-columns: 1.1fr 1fr 2.2fr;
             align-items: flex-start;
-            min-height: var(--project-info-min-height);
             font-size: var(--font-size-base);
             line-height: 1.22;
             letter-spacing: -0.01em;
-            margin-bottom: var(--project-info-margin-bottom);
+            margin-bottom: 1.5vw;
             font-weight: var(--font-weight-regular);
         }
 
@@ -238,9 +230,9 @@
             padding-bottom: 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            cursor: grab;
+            cursor: grab; /* Wskaźnik rączki */
             user-select: none;
-            align-items: flex-start; /* Wszystkie elementy wyrównane idealnie do górnej krawędzi */
+            align-items: flex-start; /* Poziome zdjęcia do górnej krawędzi */
         }
 
         .media-slider:active {
@@ -260,8 +252,9 @@
             object-fit: contain;
             background-color: transparent;
             pointer-events: auto;
-            align-self: flex-start; /* Strażnik wyrównania do góry */
         }
+
+        /* Usunięto nadpisanie wysokości dla Circular Economy, aby media zachowały standardową wysokość */
 
         /* --- STRZAŁKI SVG --- */
         .slider-arrow {
@@ -654,21 +647,6 @@
             }
         }
 
-        function checkScrollPosition(slider) {
-            const wrapper = slider.closest('.slider-wrapper');
-            if (!wrapper) return;
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
-            }
-            if (rightArrow) {
-                const maxScroll = slider.scrollWidth - slider.clientWidth - 10;
-                rightArrow.style.display = slider.scrollLeft < maxScroll ? 'flex' : 'none';
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
@@ -679,10 +657,11 @@
                 let scrollLeft;
 
                 slider.addEventListener("mousedown", (e) => {
-                    if (e.button !== 0) return;
+                    if (e.button !== 0) return; // Reaguje tylko na LPM
                     isDown = true;
                     startX = e.pageX - slider.offsetLeft;
                     scrollLeft = slider.scrollLeft;
+                    slider.style.scrollBehavior = 'auto'; // Natychmiastowa reakcja przy ciągnięciu
                 });
 
                 slider.addEventListener("mouseleave", () => {
@@ -691,21 +670,21 @@
 
                 slider.addEventListener("mouseup", () => {
                     isDown = false;
+                    slider.style.scrollBehavior = 'smooth';
                 });
 
                 slider.addEventListener("mousemove", (e) => {
                     if (!isDown) return;
                     e.preventDefault();
                     const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
+                    const walk = (x - startX) * 1.5; // Prędkość przeciągania
                     slider.scrollLeft = scrollLeft - walk;
                 });
 
+                // Zabezpieczenie przed domyślnym "przeciąganiem" obrazów/filmów jako plików
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
                 });
-
-                checkScrollPosition(slider);
             });
 
             /* Odtwarzanie wideo w widoku */
@@ -726,37 +705,30 @@
             videos.forEach((video) => observer.observe(video));
         });
 
-        /* S-CURVE (EASE-IN-OUT CUBIC) SMOOTH SCROLL DLA STRZAŁEK */
         function scrollSlider(arrowBtn, direction) {
             const wrapper = arrowBtn.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            const startPosition = slider.scrollLeft;
-            const targetPosition = startPosition + (scrollAmount * direction);
-            const duration = 400;
-            let startTime = null;
+            const scrollAmount = slider.clientWidth * 0.7;
+            slider.style.scrollBehavior = 'smooth';
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
 
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        function checkScrollPosition(slider) {
+            const wrapper = slider.closest('.slider-wrapper');
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+            if (slider.scrollLeft > 20) {
+                leftArrow.style.display = 'flex';
+            } else {
+                leftArrow.style.display = 'none';
             }
 
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                slider.scrollLeft = startPosition + (targetPosition - startPosition) * easeProgress;
-
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(animation);
-                } else {
-                    checkScrollPosition(slider);
-                }
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 20) {
+                rightArrow.style.display = 'none';
+            } else {
+                rightArrow.style.display = 'flex';
             }
-
-            requestAnimationFrame(animation);
         }
     </script>
 </body>

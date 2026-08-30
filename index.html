@@ -11,8 +11,8 @@
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             /* Typografia */
-            --font-size-base: clamp(24px, 1.8vw, 40px); 
-            --font-size-nav: clamp(24px, 1.8vw, 40px);    
+            --font-size-base: clamp(16px, 1.25vw, 24px); 
+            --font-size-nav: clamp(18px, 1.4vw, 28px);    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
@@ -95,7 +95,7 @@
             background-color: #ededed;
             z-index: 900;
             border-bottom: var(--border-width) solid var(--border-color);
-            border-top: var(--border-width) solid var(--border-color); /* Górna ramka */
+            border-top: var(--border-width) solid var(--border-color);
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -147,7 +147,7 @@
         /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: var(--font-size-base);
-            line-height: 1.3;
+            line-height: 1.35;
             letter-spacing: -0.2px;
             margin-bottom: 28px;
             font-weight: var(--font-weight-regular);
@@ -162,7 +162,7 @@
             display: flex;
             align-items: center;
             gap: clamp(6px, 1vw, 20px);
-            font-size: clamp(10px, 1.2vw, 22px);
+            font-size: clamp(10px, 1.1vw, 20px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
             width: 100%;
@@ -193,7 +193,7 @@
             grid-template-columns: 1.1fr 1fr 2.2fr;
             align-items: flex-start;
             font-size: var(--font-size-base);
-            line-height: 1.22;
+            line-height: 1.3;
             letter-spacing: -0.01em;
             margin-bottom: 1.5vw;
             font-weight: var(--font-weight-regular);
@@ -230,9 +230,9 @@
             padding-bottom: 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            cursor: grab; /* Wskaźnik rączki */
+            cursor: grab;
             user-select: none;
-            align-items: flex-start; /* Poziome zdjęcia do górnej krawędzi */
+            align-items: flex-start;
         }
 
         .media-slider:active {
@@ -243,18 +243,16 @@
             display: none;
         }
 
-        /* Domyślny rozmiar elementów slidera */
         .media-item {
             height: clamp(320px, 38vw, 750px);
             width: auto;
             max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
             object-fit: contain;
+            align-self: flex-start; /* Dociągnięcie wszystkich mediów (w tym poziomych) do góry */
             background-color: transparent;
             pointer-events: auto;
         }
-
-        /* Usunięto nadpisanie wysokości dla Circular Economy, aby media zachowały standardową wysokość */
 
         /* --- STRZAŁKI SVG --- */
         .slider-arrow {
@@ -312,7 +310,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
-            font-size: clamp(14px, 1.6vw, 28px);
+            font-size: clamp(14px, 1.25vw, 24px);
         }
 
         .footer-link:hover {
@@ -650,44 +648,36 @@
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
-            /* --- OBSŁUGA PRZEWIJANIA PRZEZ PRZECIĄGANIE (DRAG TO SCROLL - LPM) --- */
             sliders.forEach((slider) => {
                 let isDown = false;
                 let startX;
                 let scrollLeft;
 
                 slider.addEventListener("mousedown", (e) => {
-                    if (e.button !== 0) return; // Reaguje tylko na LPM
+                    if (e.button !== 0) return;
                     isDown = true;
                     startX = e.pageX - slider.offsetLeft;
                     scrollLeft = slider.scrollLeft;
-                    slider.style.scrollBehavior = 'auto'; // Natychmiastowa reakcja przy ciągnięciu
                 });
 
-                slider.addEventListener("mouseleave", () => {
-                    isDown = false;
-                });
-
-                slider.addEventListener("mouseup", () => {
-                    isDown = false;
-                    slider.style.scrollBehavior = 'smooth';
-                });
+                slider.addEventListener("mouseleave", () => { isDown = false; });
+                slider.addEventListener("mouseup", () => { isDown = false; });
 
                 slider.addEventListener("mousemove", (e) => {
                     if (!isDown) return;
                     e.preventDefault();
                     const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5; // Prędkość przeciągania
+                    const walk = (x - startX) * 1.5;
                     slider.scrollLeft = scrollLeft - walk;
                 });
 
-                // Zabezpieczenie przed domyślnym "przeciąganiem" obrazów/filmów jako plików
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
                 });
+
+                checkScrollPosition(slider);
             });
 
-            /* Odtwarzanie wideo w widoku */
             const videos = document.querySelectorAll("video.media-item");
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
@@ -698,19 +688,42 @@
                         video.pause();
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
             videos.forEach((video) => observer.observe(video));
         });
 
+        // Płynne przewijanie S-Curve (cubic-bezier ease-in-out)
+        function customSmoothScroll(element, target, duration) {
+            const start = element.scrollLeft;
+            const change = target - start;
+            const startTime = performance.now();
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                element.scrollLeft = start + change * easeInOutCubic(progress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                }
+            }
+
+            requestAnimationFrame(animateScroll);
+        }
+
         function scrollSlider(arrowBtn, direction) {
             const wrapper = arrowBtn.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.7;
-            slider.style.scrollBehavior = 'smooth';
-            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            const scrollAmount = slider.clientWidth * 0.65;
+            const targetScroll = slider.scrollLeft + (direction * scrollAmount);
+            
+            customSmoothScroll(slider, targetScroll, 750);
         }
 
         function checkScrollPosition(slider) {
@@ -718,13 +731,17 @@
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            if (slider.scrollLeft > 20) {
-                leftArrow.style.display = 'flex';
-            } else {
+            if (!leftArrow || !rightArrow) return;
+
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+            if (slider.scrollLeft <= 5) {
                 leftArrow.style.display = 'none';
+            } else {
+                leftArrow.style.display = 'flex';
             }
 
-            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 20) {
+            if (slider.scrollLeft >= maxScroll - 5) {
                 rightArrow.style.display = 'none';
             } else {
                 rightArrow.style.display = 'flex';

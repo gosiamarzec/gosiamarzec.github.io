@@ -10,14 +10,14 @@
             /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Zmniejszony o 1px względem poprzedniego (base: 19px-39px, nav: 23px-47px) */
+            /* Rozmiar fontu ujednolicony dla tekstu oraz nawigacji (About/Contact) */
             --font-size-base: clamp(19px, 2vw, 39px); 
-            --font-size-nav: clamp(23px, 2.5vw, 47px);    
+            --font-size-nav: clamp(19px, 2vw, 39px);    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
-            /* Grubość linii zwiększona 2.5x (z 2px na 5px) */
+            /* Grubość linii */
             --border-width: 5px;
             --border-color: #1a1a1a;
 
@@ -43,7 +43,8 @@
             background-color: #ededed;
             font-family: var(--font-family-main);
             color: #1a1a1a;
-            padding: 12px 20px;
+            /* Zwiększono marginesy boczne 2x (z 20px do 40px) */
+            padding: 12px 40px;
             width: 100%;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -325,7 +326,7 @@
 
         /* RESPONSYWNOŚĆ MOBILNA */
         @media (max-width: 768px) {
-            body { padding: 10px; }
+            body { padding: 10px 20px; }
             .project-info { grid-template-columns: 1fr; gap: 12px; }
             .project-info > div:nth-child(1),
             .project-info > div:nth-child(2) { padding-right: 0; }
@@ -580,7 +581,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 5 19 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" loading="lazy">
@@ -677,7 +678,16 @@
                     media.addEventListener("dragstart", (e) => e.preventDefault());
                 });
 
+                // Sprawdzenie stanu strzałek od razu po załadowaniu drzewa DOM
                 checkScrollPosition(slider);
+            });
+
+            // Aktualizacja widoczności strzałek po pełnym wyrenderowaniu stron/grafik i zmianie rozmiaru okna
+            window.addEventListener('load', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
+            });
+            window.addEventListener('resize', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
             const videos = document.querySelectorAll("video.media-item");
@@ -725,16 +735,13 @@
             
             const sliderRect = slider.getBoundingClientRect();
             
-            // Zliczanie w pełni widocznych elementów w oknie karuzeli
             const fullyVisibleItems = items.filter(item => {
                 const itemRect = item.getBoundingClientRect();
                 return itemRect.left >= sliderRect.left - 2 && itemRect.right <= sliderRect.right + 2;
             });
 
-            // Jeśli na ekranie mieści się co najmniej 1 pełny element, przesuwamy o ich ilość, w przeciwnym razie przesuwamy o 1
             const countToScroll = Math.max(1, fullyVisibleItems.length);
             
-            // Obliczenie sumarycznej szerokości przesuwanego bloku elementów z uwzględnieniem gap
             let scrollDistance = 0;
             const gap = parseFloat(getComputedStyle(slider).gap) || 0;
 
@@ -745,14 +752,14 @@
                 }
             }
 
-            // Fallback w razie braku dokładnych pomiarów
             if (scrollDistance === 0) {
                 scrollDistance = slider.clientWidth * 0.7;
             }
 
             const targetScroll = slider.scrollLeft + (direction * scrollDistance);
             
-            customSmoothScroll(slider, targetScroll, 1000);
+            /* Zwiększono duration z 1000ms na 3000ms (3x wolniej) */
+            customSmoothScroll(slider, targetScroll, 3000);
         }
 
         function checkScrollPosition(slider) {

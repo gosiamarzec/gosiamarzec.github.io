@@ -10,9 +10,9 @@
             /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Typografia */
-            --font-size-base: clamp(16px, 1.25vw, 24px); 
-            --font-size-nav: clamp(18px, 1.4vw, 28px);    
+            /* Zwiększona Typografia (dopasowana do wzorca Readymag) */
+            --font-size-base: clamp(22px, 2.3vw, 42px); 
+            --font-size-nav: clamp(26px, 2.8vw, 50px);    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
@@ -193,7 +193,7 @@
             grid-template-columns: 1.1fr 1fr 2.2fr;
             align-items: flex-start;
             font-size: var(--font-size-base);
-            line-height: 1.3;
+            line-height: 1.25;
             letter-spacing: -0.01em;
             margin-bottom: 1.5vw;
             font-weight: var(--font-weight-regular);
@@ -232,7 +232,7 @@
             scrollbar-width: none;
             cursor: grab;
             user-select: none;
-            align-items: flex-start;
+            align-items: flex-start; /* Dociągnięcie wszystkich elementów kontenera do góry */
         }
 
         .media-slider:active {
@@ -249,9 +249,10 @@
             max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
             object-fit: contain;
-            align-self: flex-start; /* Dociągnięcie wszystkich mediów (w tym poziomych) do góry */
+            align-self: flex-start; /* Gwarancja dociągnięcia pojedynczych zdjęć/wideo do góry */
             background-color: transparent;
             pointer-events: auto;
+            display: block;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -310,7 +311,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
-            font-size: clamp(14px, 1.25vw, 24px);
+            font-size: var(--font-size-base);
         }
 
         .footer-link:hover {
@@ -335,7 +336,7 @@
                 gap: 8px; 
             }
             .footer-email {
-                font-size: clamp(11px, 3.2vw, 16px);
+                font-size: clamp(14px, 3.2vw, 18px);
             }
         }
     </style>
@@ -720,10 +721,12 @@
         function scrollSlider(arrowBtn, direction) {
             const wrapper = arrowBtn.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.65;
+            /* Zmniejszono dystans do ~32% szerokości slidera (połowa poprzedniej wartości) */
+            const scrollAmount = slider.clientWidth * 0.32;
             const targetScroll = slider.scrollLeft + (direction * scrollAmount);
             
-            customSmoothScroll(slider, targetScroll, 750);
+            /* Wydłużono czas przejścia do 1200ms (dwukrotne zwolnienie prędkości) */
+            customSmoothScroll(slider, targetScroll, 1200);
         }
 
         function checkScrollPosition(slider) {

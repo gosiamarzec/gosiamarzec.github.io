@@ -14,7 +14,7 @@
             --font-size-base: clamp(20px, 1.8vw, 32px); 
             --font-size-nav: clamp(20px, 1.8vw, 32px);    
             
-            /* Dedykowany, większy rozmiar dla formuły w sekcji About (zgodnie z referencją) */
+            /* Dedykowany, większy rozmiar dla formuły w sekcji About */
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
@@ -92,25 +92,38 @@
             opacity: 0.7;
         }
 
-        /* --- NAKŁADKI ABOUT I CONTACT --- */
+        /* --- NAKŁADKI ABOUT I CONTACT Z ANIMACJĄ ROZMYCIA (BLUR) --- */
         .overlay-panel {
             position: absolute;
             top: 100%;
             left: 0;
             margin-top: 0;
-            background-color: #ededed;
+            background-color: rgba(237, 237, 237, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 900;
             border-bottom: 2px solid var(--border-color);
             border-top: 2px solid var(--border-color);
             display: none;
             opacity: 0;
-            transition: opacity 0.25s ease-in-out;
+            filter: blur(6px);
+            transform: translateY(-6px);
+            transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                        filter 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                        transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
             padding: 32px 28px;
+            pointer-events: none;
         }
 
         .overlay-panel.active {
             display: block;
+            pointer-events: auto;
+        }
+
+        .overlay-panel.visible {
             opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
         }
 
         #about-section {
@@ -152,7 +165,7 @@
             text-decoration: underline;
         }
 
-        /* --- TREŚĆ ABOUT (POWIĘKSZONA NA WZÓR REFERENCJI) --- */
+        /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -640,21 +653,38 @@
     </div>
 
     <script>
+        function openPanel(panel, btn, btnText) {
+            panel.classList.add('active');
+            requestAnimationFrame(() => {
+                panel.classList.add('visible');
+            });
+            btn.innerText = 'Close';
+        }
+
+        function closePanel(panel, btn, btnText) {
+            panel.classList.remove('visible');
+            btn.innerText = btnText;
+            setTimeout(() => {
+                if (!panel.classList.contains('visible')) {
+                    panel.classList.remove('active');
+                }
+            }, 350);
+        }
+
         function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
             const contactSection = document.getElementById('contact-section');
             const contactBtn = document.getElementById('contact-btn');
 
-            contactSection.classList.remove('active');
-            contactBtn.innerText = 'Contact';
+            if (contactSection.classList.contains('active')) {
+                closePanel(contactSection, contactBtn, 'Contact');
+            }
 
-            if (aboutSection.classList.contains('active')) {
-                aboutSection.classList.remove('active');
-                aboutBtn.innerText = 'About';
+            if (aboutSection.classList.contains('visible')) {
+                closePanel(aboutSection, aboutBtn, 'About');
             } else {
-                aboutSection.classList.add('active');
-                aboutBtn.innerText = 'Close';
+                openPanel(aboutSection, aboutBtn, 'About');
             }
         }
 
@@ -664,16 +694,37 @@
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
 
-            aboutSection.classList.remove('active');
-            aboutBtn.innerText = 'About';
-
-            if (contactSection.classList.contains('active')) {
-                contactSection.classList.remove('active');
-                contactBtn.innerText = 'Contact';
-            } else {
-                contactSection.classList.add('active');
-                contactBtn.innerText = 'Close';
+            if (aboutSection.classList.contains('active')) {
+                closePanel(aboutSection, aboutBtn, 'About');
             }
+
+            if (contactSection.classList.contains('visible')) {
+                closePanel(contactSection, contactBtn, 'Contact');
+            } else {
+                openPanel(contactSection, contactBtn, 'Contact');
+            }
+        }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.closest('.slider-wrapper');
+            if (!wrapper) return;
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+            
+            if (leftArrow) {
+                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
+            }
+            if (rightArrow) {
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+                rightArrow.style.display = slider.scrollLeft < maxScroll - 5 ? 'flex' : 'none';
+            }
+        }
+
+        function scrollSlider(button, direction) {
+            const wrapper = button.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.7;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -707,7 +758,6 @@
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
 
-                    /* Nasłuchiwanie na załadowanie mediów, aby strzałki pojawiły się od razu */
                     if (media.tagName.toLowerCase() === 'video') {
                         media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
                     } else {
@@ -728,94 +778,7 @@
             window.addEventListener('resize', () => {
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
-
-            const videos = document.querySelectorAll("video.media-item");
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {});
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            videos.forEach((video) => observer.observe(video));
         });
-
-        /* --- S-CURVE EASE-IN-OUT SILNIK PRZEWIJANIA --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        const activeAnimations = new WeakMap();
-
-        function customSmoothScroll(element, target, duration) {
-            const start = element.scrollLeft;
-            const change = target - start;
-            const startTime = performance.now();
-
-            if (activeAnimations.has(element)) {
-                cancelAnimationFrame(activeAnimations.get(element));
-            }
-
-            function animateScroll(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                element.scrollLeft = start + (change * easeProgress);
-
-                if (progress < 1) {
-                    const frameId = requestAnimationFrame(animateScroll);
-                    activeAnimations.set(element, frameId);
-                } else {
-                    activeAnimations.delete(element);
-                }
-            }
-
-            const frameId = requestAnimationFrame(animateScroll);
-            activeAnimations.set(element, frameId);
-        }
-
-        function scrollSlider(arrowButton, direction) {
-            const wrapper = arrowButton.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            let currentTarget = slider.scrollLeft;
-            if (activeAnimations.has(slider)) {
-                currentTarget = slider._targetScrollLeft || slider.scrollLeft;
-            }
-
-            let targetScroll = currentTarget + (direction * scrollAmount);
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-
-            slider._targetScrollLeft = targetScroll;
-
-            /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
-            customSmoothScroll(slider, targetScroll, 1500);
-        }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.closest('.slider-wrapper');
-            if (!wrapper) return;
-
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-            if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
-            }
-
-            if (rightArrow) {
-                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
-            }
-        }
     </script>
 </body>
 </html>

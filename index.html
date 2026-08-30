@@ -11,8 +11,8 @@
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             /* Rozmiar fontu tekstu oraz nawigacji */
-            --font-size-base: clamp(18px, 1.8vw, 32px); 
-            --font-size-nav: clamp(18px, 1.8vw, 32px);    
+            --font-size-base: clamp(20px, 1.8vw, 32px); 
+            --font-size-nav: clamp(20px, 1.8vw, 32px);    
             
             /* Dedykowany, większy rozmiar dla formuły w sekcji About (zgodnie z referencją) */
             --formula-font-size: clamp(15px, 1.5vw, 26px);
@@ -796,7 +796,7 @@
             slider._targetScrollLeft = targetScroll;
 
             /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
-            customSmoothScroll(slider, targetScroll, 1100);
+            customSmoothScroll(slider, targetScroll, 1500);
         }
 
         function checkScrollPosition(slider) {

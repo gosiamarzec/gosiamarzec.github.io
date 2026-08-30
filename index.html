@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gosia Marzec - Portfolio</title>
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
@@ -10,9 +10,9 @@
             /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Typografia */
-            --font-size-base: clamp(16px, 2.3vw, 30px); 
-            --font-size-nav: clamp(16px, 2.3vw, 30px);    
+            /* Typografia (Stałe rozmiary w pikselach) */
+            --font-size-base: 22px; 
+            --font-size-nav: 22px;    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
@@ -22,21 +22,21 @@
             --border-color: #1a1a1a;
 
             /* Odstępy i Odległości */
-            --slider-gap: 1vw;            
+            --slider-gap: 16px;            
             
             /* Odstępy między kolumnami opisu */
-            --col-gap-1-2: 2.5vw;         
-            --col-gap-2-3: 3.5vw;         
+            --col-gap-1-2: 36px;         
+            --col-gap-2-3: 50px;         
 
             /* --- KONTROLA UKŁADU ORAZ PROSTOKĄTÓW TEKSTOWYCH W SEKCJI PROJEKTU --- */
             --project-col-1-width: 2.0fr; /* Kolumna 1: Tytuł */
             --project-col-2-width: 1.0fr; /* Kolumna 2: Scope of work */
             --project-col-3-width: 3.0fr; /* Kolumna 3: Opis */
-            --project-info-min-height: auto; /* Opcjonalna minimalna wysokość sekcji tekstu */
-            --project-info-margin-bottom: 5vw; /* Odstęp sekcji tekstowej od karuzeli */
+            --project-info-min-height: auto;
+            --project-info-margin-bottom: 70px;
 
-            --project-padding-top: 1.2vw;    
-            --project-padding-bottom: 2.5vw; 
+            --project-padding-top: 18px;    
+            --project-padding-bottom: 36px; 
             --nav-padding-bottom: 6px;      
         }
 
@@ -50,16 +50,19 @@
             background-color: #ededed;
             font-family: var(--font-family-main);
             color: #1a1a1a;
-            padding: 12px 20px;
-            width: 100%;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- KONTENER SKALOWANY (SZTYWNA SZEROKOŚĆ BAZOWA) --- */
         .main-container {
-            width: 100%;
+            width: 1440px;
             margin: 0 auto;
             position: relative;
+            padding: 12px 20px;
+            transform-origin: top left;
         }
 
         /* --- NAWIGACJA GÓRNA (STICKY) --- */
@@ -168,8 +171,8 @@
         .formula {
             display: flex;
             align-items: center;
-            gap: clamp(6px, 1vw, 20px);
-            font-size: clamp(10px, 1.2vw, 22px);
+            gap: 14px;
+            font-size: 16px;
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
             width: 100%;
@@ -240,7 +243,7 @@
             scrollbar-width: none;
             cursor: grab;
             user-select: none;
-            align-items: flex-start; /* Wszystkie elementy wyrównane idealnie do górnej krawędzi */
+            align-items: flex-start;
         }
 
         .media-slider:active {
@@ -251,16 +254,15 @@
             display: none;
         }
 
-        /* Domyślny rozmiar elementów slidera */
         .media-item {
-            height: clamp(320px, 38vw, 750px);
+            height: 520px;
             width: auto;
-            max-width: clamp(260px, 32vw, 600px);
+            max-width: 450px;
             flex-shrink: 0;
             object-fit: contain;
             background-color: transparent;
             pointer-events: auto;
-            align-self: flex-start; /* Strażnik wyrównania do góry */
+            align-self: flex-start;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -281,8 +283,8 @@
         }
 
         .slider-arrow svg {
-            width: clamp(28px, 2.5vw, 48px);
-            height: clamp(28px, 2.5vw, 48px);
+            width: 36px;
+            height: 36px;
             stroke: #1a1a1a;
         }
 
@@ -301,8 +303,8 @@
 
         /* --- STOPKA --- */
         .site-footer {
-            padding-top: 1.5vw;
-            margin-top: 2vw;
+            padding-top: 24px;
+            margin-top: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -319,7 +321,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
-            font-size: clamp(14px, 1.6vw, 28px);
+            font-size: 20px;
         }
 
         .footer-link:hover {
@@ -328,24 +330,6 @@
 
         .footer-email {
             white-space: nowrap;
-        }
-
-        /* RESPONSYWNOŚĆ MOBILNA */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .project-info { grid-template-columns: 1fr; gap: 12px; }
-            .project-info > div:nth-child(1),
-            .project-info > div:nth-child(2) { padding-right: 0; }
-            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
-            .site-footer { 
-                flex-direction: row; 
-                justify-content: space-between; 
-                align-items: center; 
-                gap: 8px; 
-            }
-            .footer-email {
-                font-size: clamp(11px, 3.2vw, 16px);
-            }
         }
     </style>
 </head>
@@ -618,6 +602,20 @@
     </div>
 
     <script>
+        /* --- DYNAMICZNE SKALOWANIE CAŁEJ STRONY DLA ZACHOWANIA PROPORCJI LAYOUTU --- */
+        function scalePage() {
+            const baseWidth = 1440; // Bazowa szerokość projektu
+            const currentWidth = window.innerWidth;
+            const scale = currentWidth / baseWidth;
+
+            const container = document.querySelector('.main-container');
+            container.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', scalePage);
+        window.addEventListener('DOMContentLoaded', scalePage);
+
+        /* --- NAWIGACJA ABOUT / CONTACT --- */
         function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
@@ -654,6 +652,37 @@
             }
         }
 
+        /* --- PRZEWIJANIE SLIDERÓW Z ANIMACJĄ (800ms) --- */
+        function scrollSlider(arrowButton, direction) {
+            const wrapper = arrowButton.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.7 * direction;
+            
+            const start = slider.scrollLeft;
+            const target = start + scrollAmount;
+            const duration = 800; // Czas animacji w ms
+            let startTime = null;
+
+            function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            function animateScroll(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const easeProgress = easeInOutQuad(progress);
+
+                slider.scrollLeft = start + (scrollAmount * easeProgress);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animateScroll);
+                }
+            }
+
+            requestAnimationFrame(animateScroll);
+        }
+
         function checkScrollPosition(slider) {
             const wrapper = slider.closest('.slider-wrapper');
             if (!wrapper) return;
@@ -672,7 +701,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
-            /* --- OBSŁUGA PRZEWIJANIA PRZEZ PRZECIĄGANIE (DRAG TO SCROLL - LPM) --- */
+            /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) --- */
             sliders.forEach((slider) => {
                 let isDown = false;
                 let startX;
@@ -707,57 +736,7 @@
 
                 checkScrollPosition(slider);
             });
-
-            /* Odtwarzanie wideo w widoku */
-            const videos = document.querySelectorAll("video.media-item");
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {});
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            videos.forEach((video) => observer.observe(video));
         });
-
-        /* S-CURVE (EASE-IN-OUT CUBIC) SMOOTH SCROLL DLA STRZAŁEK */
-        function scrollSlider(arrowBtn, direction) {
-            const wrapper = arrowBtn.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            const startPosition = slider.scrollLeft;
-            const targetPosition = startPosition + (scrollAmount * direction);
-            const duration = 800;
-            let startTime = null;
-
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            }
-
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                slider.scrollLeft = startPosition + (targetPosition - startPosition) * easeProgress;
-
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(animation);
-                } else {
-                    checkScrollPosition(slider);
-                }
-            }
-
-            requestAnimationFrame(animation);
-        }
     </script>
 </body>
 </html>

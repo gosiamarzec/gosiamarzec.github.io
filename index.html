@@ -54,13 +54,13 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- KONTENER GŁÓWNY (ROZCIĄGNIĘTY DO BRZEGÓW EKRANU DLA USUNIĘCIA ODSTĘPÓW BOCZNYCH) --- */
+        /* --- KONTENER GŁÓWNY (CZYSTY ELASKYCZNY CONTAINER) --- */
         .main-container {
             width: 100%;
-            max-width: 100%;
-            margin: 0;
+            max-width: 1440px;
+            margin: 0 auto;
             position: relative;
-            padding: 12px 32px;
+            padding: 12px 24px;
         }
 
         /* --- NAWIGACJA GÓRNA (STICKY) --- */
@@ -70,7 +70,6 @@
             background-color: var(--bg-color);
             z-index: 1000;
             border-bottom: var(--border-width) solid var(--border-color);
-            width: 100%;
         }
 
         .top-nav {
@@ -241,7 +240,6 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: smooth; /* S-curve płynne przewijanie natywne */
         }
 
         .media-slider:active {
@@ -252,53 +250,52 @@
             display: none;
         }
 
-        /* Wysokość dynamiczna dopasowana do szerokości okna */
+        /* Wysokość dynamiczna dopasowana do ekranu, bez zniekształceń */
         .media-item {
-            height: clamp(380px, 34vw, 560px);
+            height: clamp(380px, 36vw, 540px);
             width: auto;
-            max-width: 600px;
+            max-width: 500px;
             flex-shrink: 0;
             object-fit: contain;
             background-color: transparent;
         }
 
-        /* --- STRZAŁKI BEZ BIAŁEGO TŁA / KÓŁKA --- */
+        /* --- STRZAŁKI SVG --- */
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
-            border: none;
-            border-radius: 0;
+            background: rgba(237, 237, 237, 0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
             cursor: pointer;
             z-index: 10;
-            padding: 4px;
+            padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
-            filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.3));
+            transition: opacity 0.2s ease, background 0.2s ease;
         }
 
         .slider-arrow svg {
-            width: 34px;
-            height: 34px;
+            width: 28px;
+            height: 28px;
             stroke: #1a1a1a;
-            fill: none;
         }
 
         .slider-arrow:hover {
-            transform: translateY(-50%) scale(1.15);
+            background: #ededed;
             opacity: 1;
         }
 
         .slider-arrow.left {
-            left: 12px;
+            left: 8px;
+            display: none;
         }
 
         .slider-arrow.right {
-            right: 12px;
+            right: 8px;
         }
 
         /* --- STOPKA --- */
@@ -334,9 +331,6 @@
 
         /* RWD na bardzo małe ekrany */
         @media (max-width: 850px) {
-            .main-container {
-                padding: 12px 16px;
-            }
             .project-info {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -417,7 +411,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
@@ -430,7 +424,7 @@
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -452,7 +446,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" loading="lazy">
@@ -463,7 +457,7 @@
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -486,7 +480,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <img class="media-item" src="images/3/movement_1.png" alt="Movement 1" loading="lazy">
@@ -496,7 +490,7 @@
                     <img class="media-item" src="images/3/movement_5.png" alt="Movement 5" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -521,7 +515,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
@@ -532,7 +526,7 @@
                     <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -556,7 +550,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
@@ -567,7 +561,7 @@
                     <video class="media-item" autoplay loop muted playsinline preload="auto"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -589,7 +583,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider" onscroll="checkScrollPosition(this)">
                     <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" loading="lazy">
@@ -601,7 +595,7 @@
                     <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -657,40 +651,16 @@
             }
         }
 
-        /* --- ANIMACJA CUBIC-BEZIER (S-CURVE EASE-IN-OUT) ZAMIAST LINIOWEGO SCROLLA --- */
-        function smoothScrollTo(element, targetScroll, duration) {
-            const startScroll = element.scrollLeft;
-            const distance = targetScroll - startScroll;
-            let startTime = null;
-
-            // Funkcja Easing S-Curve (Cubic Ease-In-Out)
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            }
-
-            function animation(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                element.scrollLeft = startScroll + (distance * easeProgress);
-
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(animation);
-                }
-            }
-
-            requestAnimationFrame(animation);
-        }
-
+        /* --- PRZEWIJANIE SLIDERÓW Z ANIMACJĄ --- */
         function scrollSlider(arrowButton, direction) {
             const wrapper = arrowButton.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75 * direction;
-            const target = slider.scrollLeft + scrollAmount;
-
-            smoothScrollTo(slider, target, 550); // 550ms z łagodnym S-curve
+            const scrollAmount = slider.clientWidth * 0.7 * direction;
+            
+            slider.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
         }
 
         function checkScrollPosition(slider) {
@@ -700,17 +670,18 @@
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
             if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
+                leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
             }
             if (rightArrow) {
-                const maxScroll = slider.scrollWidth - slider.clientWidth - 5;
-                rightArrow.style.display = (slider.scrollWidth > slider.clientWidth && slider.scrollLeft < maxScroll) ? 'flex' : 'none';
+                const maxScroll = slider.scrollWidth - slider.clientWidth - 10;
+                rightArrow.style.display = slider.scrollLeft < maxScroll ? 'flex' : 'none';
             }
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
+            /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) --- */
             sliders.forEach((slider) => {
                 let isDown = false;
                 let startX;
@@ -738,20 +709,10 @@
                     media.addEventListener("dragstart", (e) => e.preventDefault());
                 });
 
-                // Inicjalizacja widoczności strzałek przy starcie
                 checkScrollPosition(slider);
             });
 
-            // Ponowna weryfikacja strzałek po załadowaniu zdjęć/wideo
-            window.addEventListener("load", () => {
-                sliders.forEach(slider => checkScrollPosition(slider));
-            });
-
-            window.addEventListener("resize", () => {
-                sliders.forEach(slider => checkScrollPosition(slider));
-            });
-
-            /* --- AUTO-PLAY DLA WIDEO --- */
+            /* --- WYMUSZENIE ODTWARZANIA WIDEO GDY WIDOCZNE NA EKRANIE --- */
             const videos = document.querySelectorAll('video');
             const videoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -761,7 +722,7 @@
                         entry.target.pause();
                     }
                 });
-            }, { threshold: 0.2 });
+            }, { threshold: 0.25 });
 
             videos.forEach(video => {
                 videoObserver.observe(video);

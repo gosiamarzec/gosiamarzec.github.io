@@ -232,7 +232,7 @@
             scrollbar-width: none;
             cursor: grab; /* Wskaźnik rączki */
             user-select: none;
-            align-items: flex-start; /* Poziome zdjęcia do górnej krawędzi */
+            align-items: flex-start; /* Poziome zdjęcia i wideo do górnej krawędzi */
         }
 
         .media-slider:active {
@@ -252,9 +252,8 @@
             object-fit: contain;
             background-color: transparent;
             pointer-events: auto;
+            align-self: flex-start; /* Przyleganie do górnej krawędzi kontenera */
         }
-
-        /* Usunięto nadpisanie wysokości dla Circular Economy, aby media zachowały standardową wysokość */
 
         /* --- STRZAŁKI SVG --- */
         .slider-arrow {
@@ -661,7 +660,6 @@
                     isDown = true;
                     startX = e.pageX - slider.offsetLeft;
                     scrollLeft = slider.scrollLeft;
-                    slider.style.scrollBehavior = 'auto'; // Natychmiastowa reakcja przy ciągnięciu
                 });
 
                 slider.addEventListener("mouseleave", () => {
@@ -670,7 +668,6 @@
 
                 slider.addEventListener("mouseup", () => {
                     isDown = false;
-                    slider.style.scrollBehavior = 'smooth';
                 });
 
                 slider.addEventListener("mousemove", (e) => {
@@ -685,6 +682,9 @@
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
                 });
+
+                // Inicjalizacja widoczności strzałek na starcie
+                checkScrollPosition(slider);
             });
 
             /* Odtwarzanie wideo w widoku */
@@ -705,26 +705,59 @@
             videos.forEach((video) => observer.observe(video));
         });
 
+        /* S-CURVE (EASE-IN-OUT CUBIC) SMOOTH SCROLL DLA STRZAŁEK */
         function scrollSlider(arrowBtn, direction) {
             const wrapper = arrowBtn.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.7;
-            slider.style.scrollBehavior = 'smooth';
-            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            const scrollAmount = slider.clientWidth * 0.75; // Dystans przewijania
+            
+            const startPosition = slider.scrollLeft;
+            const targetPosition = startPosition + (scrollAmount * direction);
+            const distance = targetPosition - startPosition;
+            const startTime = performance.now();
+            const duration = 500; // Czas trwania w ms
+
+            // Funkcja łagodzenia ruchu S-Curve (Ease-InOut Cubic)
+            function easeInOutCubic(t) {
+                return t < 0.5 
+                    ? 4 * t * t * t 
+                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = easeInOutCubic(progress);
+
+                slider.scrollLeft = startPosition + (distance * easeProgress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                } else {
+                    checkScrollPosition(slider);
+                }
+            }
+
+            requestAnimationFrame(animateScroll);
         }
 
+        /* DYNAMICZNE UKRYWANIE/POKAZYWANIE STRZAŁEK */
         function checkScrollPosition(slider) {
             const wrapper = slider.closest('.slider-wrapper');
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            if (slider.scrollLeft > 20) {
-                leftArrow.style.display = 'flex';
-            } else {
+            if (!leftArrow || !rightArrow) return;
+
+            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+            if (slider.scrollLeft <= 5) {
                 leftArrow.style.display = 'none';
+            } else {
+                leftArrow.style.display = 'flex';
             }
 
-            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 20) {
+            if (slider.scrollLeft >= maxScrollLeft - 5) {
                 rightArrow.style.display = 'none';
             } else {
                 rightArrow.style.display = 'flex';

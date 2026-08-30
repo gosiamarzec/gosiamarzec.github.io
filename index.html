@@ -10,9 +10,9 @@
             /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Typografia */
-            --font-size-base: clamp(18px, 1.5vw, 26px); /* Rozmiar dla opisów i treści projektów */
-            --font-size-nav: clamp(22px, 2.3vw, 42px);  /* Rozmiar dla przycisków About / Contact */
+            /* Powiększona typografia (zbliżona do oryginału) */
+            --font-size-base: clamp(20px, 1.8vw, 30px); 
+            --font-size-nav: clamp(28px, 3vw, 52px);    
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
@@ -22,15 +22,15 @@
             --border-color: #1a1a1a;
 
             /* Odstępy i Odległości */
-            --slider-gap: 0.8vw;           /* Odstęp między zdjęciami w karuzeli */
+            --slider-gap: 1vw;            
             
-            /* Niezależne odstępy między kolumnami opisu */
-            --col-gap-1-2: 2.5vw;         /* Odstęp między kolumną 1 i 2 */
-            --col-gap-2-3: 3.5vw;         /* Odstęp między kolumną 2 i 3 */
+            /* Odstępy między kolumnami opisu */
+            --col-gap-1-2: 2.5vw;         
+            --col-gap-2-3: 3.5vw;         
 
-            --project-padding-top: 1vw;    /* Odstęp od górnej czarnej linii */
-            --project-padding-bottom: 2vw; /* Odstęp od dolnej czarnej linii */
-            --nav-padding-bottom: 4px;     /* Odstęp tekstu nawigacji od linii */
+            --project-padding-top: 1.2vw;    
+            --project-padding-bottom: 2.5vw; 
+            --nav-padding-bottom: 6px;      
         }
 
         * {
@@ -86,10 +86,12 @@
             opacity: 0.7;
         }
 
-        /* --- NAKŁADKI ABOUT I CONTACT --- */
+        /* --- NAKŁADKI ABOUT I CONTACT (USUNIĘTY OFFSET) --- */
         .overlay-panel {
             position: absolute;
             top: 100%;
+            left: 0;
+            margin-top: 0;
             background-color: #ededed;
             z-index: 900;
             border-bottom: var(--border-width) solid var(--border-color);
@@ -105,7 +107,6 @@
             opacity: 1;
         }
 
-        /* Usunięcie zewnętrznych ramek: lewej dla About, prawej dla Contact */
         #about-section {
             left: 0;
             width: 50%;
@@ -116,6 +117,7 @@
         }
 
         #contact-section {
+            left: auto;
             right: 0;
             width: auto;
             min-width: 240px;
@@ -151,7 +153,6 @@
             font-weight: var(--font-weight-regular);
         }
 
-        /* Brak paska przewijania, pełne automatyczne skalowanie schematu */
         .formula-wrapper {
             width: 100%;
             overflow: hidden;
@@ -161,7 +162,7 @@
             display: flex;
             align-items: center;
             gap: clamp(6px, 1vw, 20px);
-            font-size: clamp(9px, 1.05vw, 20px);
+            font-size: clamp(10px, 1.2vw, 22px);
             font-weight: var(--font-weight-medium);
             line-height: 1.2;
             width: 100%;
@@ -187,14 +188,15 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
-        /* Niezależne sterowanie odstępami między 3 kolumnami */
+        /* Wyrównanie w pionie do samej góry (align-items: flex-start) */
         .project-info {
             display: grid;
             grid-template-columns: 1.1fr 1fr 2.2fr;
+            align-items: flex-start;
             font-size: var(--font-size-base);
             line-height: 1.22;
             letter-spacing: -0.01em;
-            margin-bottom: 1.2vw;
+            margin-bottom: 1.5vw;
             font-weight: var(--font-weight-regular);
         }
 
@@ -216,7 +218,7 @@
             margin-bottom: 0;
         }
 
-        /* --- SLIDER I MEDIA --- */
+        /* --- SLIDER I MEDIA (WYRÓWNANIE DO GÓRY, NORMALNY KURSOR) --- */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -229,28 +231,32 @@
             padding-bottom: 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            cursor: grab;
+            cursor: default !important; /* Usunięto łapkę (grab) */
             user-select: none;
-            align-items: flex-start;
-        }
-
-        .media-slider:active {
-            cursor: grabbing;
+            align-items: flex-start; /* Wyrównanie elementów do góry */
         }
 
         .media-slider::-webkit-scrollbar {
             display: none;
         }
 
-        /* Ograniczenie gabarytów poziomych kadrów względem pionowych */
+        /* Domyślny, powiększony rozmiar elementów slidera */
         .media-item {
-            height: clamp(260px, 30vw, 600px);
+            height: clamp(320px, 38vw, 750px);
             width: auto;
-            max-width: clamp(200px, 25vw, 450px);
+            max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
             object-fit: contain;
             background-color: transparent;
             pointer-events: auto;
+        }
+
+        /* --- SPECJALNE WYMIARY DLA CIRCULAR ECONOMY (1920px) --- */
+        #circular-economy .media-item {
+            height: 100%;
+            max-height: 1920px;
+            width: auto;
+            max-width: none;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -271,8 +277,8 @@
         }
 
         .slider-arrow svg {
-            width: clamp(24px, 2vw, 40px);
-            height: clamp(24px, 2vw, 40px);
+            width: clamp(28px, 2.5vw, 48px);
+            height: clamp(28px, 2.5vw, 48px);
             stroke: #1a1a1a;
         }
 
@@ -291,7 +297,7 @@
 
         /* --- STOPKA --- */
         .site-footer {
-            padding-top: 1.2vw;
+            padding-top: 1.5vw;
             margin-top: 2vw;
             display: flex;
             justify-content: space-between;
@@ -309,7 +315,7 @@
         .footer-link {
             color: #1a1a1a;
             text-decoration: none;
-            font-size: clamp(12px, 1.4vw, 26px);
+            font-size: clamp(14px, 1.6vw, 28px);
         }
 
         .footer-link:hover {
@@ -525,7 +531,7 @@
             </div>
         </article>
 
-        <article class="project-item">
+        <article class="project-item" id="circular-economy">
             <div class="project-info">
                 <div class="project-title">
                     Circular Economy Explainer Video
@@ -644,10 +650,21 @@
             }
         }
 
-        /* --- ODTWARZANIE WIDEO W WIDOKU --- */
+        /* --- OBSŁUGA PRZEWIJANIA MYSZKĄ (WHEEL -> HORIZONTAL SCROLL) --- */
         document.addEventListener("DOMContentLoaded", () => {
-            const videos = document.querySelectorAll("video.media-item");
+            const sliders = document.querySelectorAll(".media-slider");
 
+            sliders.forEach((slider) => {
+                slider.addEventListener("wheel", (e) => {
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        slider.scrollLeft += e.deltaY;
+                    }
+                }, { passive: false });
+            });
+
+            /* Odtwarzanie wideo w widoku */
+            const videos = document.querySelectorAll("video.media-item");
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     const video = entry.target;

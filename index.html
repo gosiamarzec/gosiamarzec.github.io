@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Karuzeli</title>
+    <title>Test Wszystkich Karuzeli</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: #ededed;
             padding: 40px;
+            font-family: sans-serif;
         }
 
-        /* Kontener główny dla układu strzałki + slider */
+        .project-item {
+            margin-bottom: 60px;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        /* Kontener dla pojedynczego slidera */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -22,17 +35,17 @@
             display: flex;
             gap: 1vw;
             overflow-x: auto;
-            scrollbar-width: none; /* Ukrycie paska w FF */
+            scrollbar-width: none;
             scroll-behavior: smooth;
             scroll-snap-type: x mandatory;
         }
 
         .media-slider::-webkit-scrollbar {
-            display: none; /* Ukrycie paska w Chrome/Safari */
+            display: none;
         }
 
         .media-item {
-            max-height: 500px;
+            max-height: 450px;
             width: auto;
             flex-shrink: 0;
             scroll-snap-align: start;
@@ -43,7 +56,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             border: 1px solid #000;
             cursor: pointer;
             z-index: 10;
@@ -57,27 +70,108 @@
 </head>
 <body>
 
-    <div class="slider-wrapper">
-        <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
-        
-        <div class="media-slider">
-            <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1">
-            <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2">
-            <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
-            <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
-            <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
-            <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+    <article class="project-item">
+        <h2>1. Dziewczyny Maszyny Event Design</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7">
+                <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
+    </article>
 
-        <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
-    </div>
+    <article class="project-item">
+        <h2>2. Supplement packaging & promotion</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1">
+                <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2">
+                <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
+                <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
+                <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
+                <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>3. Movement diagram</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1">
+                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2">
+                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3">
+                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4">
+                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>4. Sad Typography</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
+                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>5. Circular Economy Explainer Video</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>6. Wine label Winnica Łukasz</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1">
+                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2">
+                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3">
+                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4">
+                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5">
+                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6">
+                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
 
     <script>
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            
-            // Przewijamy o widoczną szerokość okna slidera
             const scrollStep = slider.clientWidth;
             
             slider.scrollBy({
@@ -91,6 +185,8 @@
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
+            if (!leftArrow || !rightArrow) return;
+
             const maxScroll = slider.scrollWidth - slider.clientWidth;
             
             const isAtStart = slider.scrollLeft <= 5;
@@ -101,12 +197,30 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const slider = document.querySelector(".media-slider");
-            slider.addEventListener("scroll", () => checkScrollPosition(slider));
-            window.addEventListener('resize', () => checkScrollPosition(slider));
-            
-            // Inicjalna weryfikacja strzałek
-            checkScrollPosition(slider);
+            const sliders = document.querySelectorAll(".media-slider");
+
+            sliders.forEach((slider) => {
+                slider.addEventListener("scroll", () => checkScrollPosition(slider));
+                checkScrollPosition(slider);
+            });
+
+            window.addEventListener('resize', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
+            });
+
+            // Autoplay dla filmików gdy są w zasięgu wzroku
+            const videos = document.querySelectorAll("video.media-item");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play().catch(() => {});
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            videos.forEach(video => observer.observe(video));
         });
     </script>
 

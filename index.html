@@ -261,7 +261,7 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         .media-slider:active {
@@ -376,8 +376,8 @@
     <div class="main-container">
         
         <header class="top-nav">
-            <button id="about-btn" class="nav-button" onclick="toggleAbout(event)">About</button>
-            <button id="contact-btn" class="nav-button" onclick="toggleContact(event)">Contact</button>
+            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
+            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
 
             <section id="about-section" class="overlay-panel">
                 <p class="intro-text">
@@ -640,8 +640,8 @@
     </div>
 
     <script>
-        function toggleAbout(e) {
-            if (e) e.stopPropagation();
+        /* --- NAWIGACJA (TOGGLE) --- */
+        function toggleAbout() {
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
             const contactSection = document.getElementById('contact-section');
@@ -659,8 +659,7 @@
             }
         }
 
-        function toggleContact(e) {
-            if (e) e.stopPropagation();
+        function toggleContact() {
             const contactSection = document.getElementById('contact-section');
             const contactBtn = document.getElementById('contact-btn');
             const aboutSection = document.getElementById('about-section');
@@ -678,35 +677,99 @@
             }
         }
 
+        /* --- ANIMACJA CUBIC BEZIER --- */
+        function solveCubicBezier(t, p1x, p1y, p2x, p2y) {
+            const cx = 3 * p1x;
+            const bx = 3 * (p2x - p1x) - cx;
+            const ax = 1 - cx - bx;
+
+            const cy = 3 * p1y;
+            const by = 3 * (p2y - p1y) - cy;
+            const ay = 1 - cy - by;
+
+            function sampleCurveX(t) { return ((ax * t + bx) * t + cx) * t; }
+            function sampleCurveY(t) { return ((ay * t + by) * t + cy) * t; }
+            function sampleCurveDerivativeX(t) { return (3 * ax * t + 2 * bx) * t + cx; }
+
+            let t2 = t;
+            for (let i = 0; i < 8; i++) {
+                let x = sampleCurveX(t2) - t;
+                if (Math.abs(x) < 1e-5) return sampleCurveY(t2);
+                let d2 = sampleCurveDerivativeX(t2);
+                if (Math.abs(d2) < 1e-5) break;
+                t2 = t2 - x / d2;
+            }
+            return sampleCurveY(t2);
+        }
+
+        function scrollWithCustomEase(element, targetScroll, duration) {
+            const startScroll = element.scrollLeft;
+            const distance = targetScroll - startScroll;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easedProgress = solveCubicBezier(progress, 0.65, 0, 0.35, 1);
+                element.scrollLeft = startScroll + distance * easedProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        /* --- LOGIKA STRZAŁEK I PRZESUWANIA --- */
+        function getFullyVisibleShift(slider, direction) {
+            const items = Array.from(slider.querySelectorAll('.media-item'));
+            const sliderRect = slider.getBoundingClientRect();
+            let fullyVisibleShift = 0;
+
+            items.forEach((item, index) => {
+                const itemRect = item.getBoundingClientRect();
+                if (itemRect.left >= sliderRect.left - 4 && itemRect.right <= sliderRect.right + 4) {
+                    let itemGap = 0;
+                    if (index < items.length - 1) {
+                        const nextRect = items[index + 1].getBoundingClientRect();
+                        itemGap = nextRect.left - itemRect.right;
+                    }
+                    fullyVisibleShift += itemRect.width + itemGap;
+                }
+            });
+
+            if (fullyVisibleShift === 0) {
+                fullyVisibleShift = slider.clientWidth;
+            }
+
+            return fullyVisibleShift * direction;
+        }
+
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.7;
-            slider.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            const shift = getFullyVisibleShift(slider, direction);
+            const targetScroll = slider.scrollLeft + shift;
+
+            scrollWithCustomEase(slider, targetScroll, 750);
         }
 
         function checkScrollPosition(slider) {
             const wrapper = slider.parentElement;
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
-            
+
             if (!leftArrow || !rightArrow) return;
 
             const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
-            if (slider.scrollLeft > 10) {
-                leftArrow.style.display = 'flex';
-            } else {
-                leftArrow.style.display = 'none';
-            }
-
-            if (slider.scrollLeft < maxScrollLeft - 10) {
-                rightArrow.style.display = 'flex';
-            } else {
-                rightArrow.style.display = 'none';
-            }
+            leftArrow.style.display = slider.scrollLeft > 20 ? 'flex' : 'none';
+            rightArrow.style.display = slider.scrollLeft >= maxScrollLeft - 20 ? 'none' : 'flex';
         }
 
+        /* --- INICJALIZACJA EVENTÓW ORAZ AUTO-PLAY DLA WIDEO --- */
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
@@ -759,7 +822,7 @@
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
-            // Autoplay dla wideo tylko wtedy, gdy są widoczne na ekranie
+            /* Automatyczne odtwarzanie filmów gdy pojawią się w widoku */
             const videos = document.querySelectorAll("video.media-item");
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
@@ -772,23 +835,6 @@
             }, { threshold: 0.2 });
 
             videos.forEach((video) => observer.observe(video));
-
-            // Zamykanie nakładek po kliknięciu poza nimi
-            document.addEventListener('click', (e) => {
-                const aboutSection = document.getElementById('about-section');
-                const contactSection = document.getElementById('contact-section');
-                const aboutBtn = document.getElementById('about-btn');
-                const contactBtn = document.getElementById('contact-btn');
-
-                if (!aboutSection.contains(e.target) && e.target !== aboutBtn) {
-                    aboutSection.classList.remove('active');
-                    aboutBtn.innerText = 'About';
-                }
-                if (!contactSection.contains(e.target) && e.target !== contactBtn) {
-                    contactSection.classList.remove('active');
-                    contactBtn.innerText = 'Contact';
-                }
-            });
         });
     </script>
 </body>

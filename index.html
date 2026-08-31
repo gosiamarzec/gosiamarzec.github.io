@@ -14,7 +14,7 @@
             --font-size-base: clamp(20px, 1.8vw, 32px); 
             --font-size-nav: clamp(20px, 1.8vw, 32px);    
             
-            /* Dedykowany, większy rozmiar dla formuły w sekcji About (zgodnie z referencją) */
+            /* Dedykowany, większy rozmiar dla formuły w sekcji About */
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
@@ -152,7 +152,7 @@
             text-decoration: underline;
         }
 
-        /* --- TREŚĆ ABOUT (POWIĘKSZONA NA WZÓR REFERENCJI) --- */
+        /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -261,7 +261,7 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
         }
 
         .media-slider:active {
@@ -376,8 +376,8 @@
     <div class="main-container">
         
         <header class="top-nav">
-            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
-            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
+            <button id="about-btn" class="nav-button" onclick="toggleAbout(event)">About</button>
+            <button id="contact-btn" class="nav-button" onclick="toggleContact(event)">Contact</button>
 
             <section id="about-section" class="overlay-panel">
                 <p class="intro-text">
@@ -640,7 +640,8 @@
     </div>
 
     <script>
-        function toggleAbout() {
+        function toggleAbout(e) {
+            if (e) e.stopPropagation();
             const aboutSection = document.getElementById('about-section');
             const aboutBtn = document.getElementById('about-btn');
             const contactSection = document.getElementById('contact-section');
@@ -658,7 +659,8 @@
             }
         }
 
-        function toggleContact() {
+        function toggleContact(e) {
+            if (e) e.stopPropagation();
             const contactSection = document.getElementById('contact-section');
             const contactBtn = document.getElementById('contact-btn');
             const aboutSection = document.getElementById('about-section');
@@ -673,6 +675,35 @@
             } else {
                 contactSection.classList.add('active');
                 contactBtn.innerText = 'Close';
+            }
+        }
+
+        function scrollSlider(button, direction) {
+            const wrapper = button.parentElement;
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.7;
+            slider.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+        }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.parentElement;
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+            
+            if (!leftArrow || !rightArrow) return;
+
+            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+            if (slider.scrollLeft > 10) {
+                leftArrow.style.display = 'flex';
+            } else {
+                leftArrow.style.display = 'none';
+            }
+
+            if (slider.scrollLeft < maxScrollLeft - 10) {
+                rightArrow.style.display = 'flex';
+            } else {
+                rightArrow.style.display = 'none';
             }
         }
 
@@ -707,7 +738,6 @@
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
 
-                    /* Nasłuchiwanie na załadowanie mediów, aby strzałki pojawiły się od razu */
                     if (media.tagName.toLowerCase() === 'video') {
                         media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
                     } else {
@@ -729,93 +759,37 @@
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
+            // Autoplay dla wideo tylko wtedy, gdy są widoczne na ekranie
             const videos = document.querySelectorAll("video.media-item");
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
-                    const video = entry.target;
                     if (entry.isIntersecting) {
-                        video.play().catch(() => {});
+                        entry.target.play().catch(() => {});
                     } else {
-                        video.pause();
+                        entry.target.pause();
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.2 });
 
             videos.forEach((video) => observer.observe(video));
-        });
 
-        /* --- S-CURVE EASE-IN-OUT SILNIK PRZEWIJANIA --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
+            // Zamykanie nakładek po kliknięciu poza nimi
+            document.addEventListener('click', (e) => {
+                const aboutSection = document.getElementById('about-section');
+                const contactSection = document.getElementById('contact-section');
+                const aboutBtn = document.getElementById('about-btn');
+                const contactBtn = document.getElementById('contact-btn');
 
-        const activeAnimations = new WeakMap();
-
-        function customSmoothScroll(element, target, duration) {
-            const start = element.scrollLeft;
-            const change = target - start;
-            const startTime = performance.now();
-
-            if (activeAnimations.has(element)) {
-                cancelAnimationFrame(activeAnimations.get(element));
-            }
-
-            function animateScroll(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                element.scrollLeft = start + (change * easeProgress);
-
-                if (progress < 1) {
-                    const frameId = requestAnimationFrame(animateScroll);
-                    activeAnimations.set(element, frameId);
-                } else {
-                    activeAnimations.delete(element);
+                if (!aboutSection.contains(e.target) && e.target !== aboutBtn) {
+                    aboutSection.classList.remove('active');
+                    aboutBtn.innerText = 'About';
                 }
-            }
-
-            const frameId = requestAnimationFrame(animateScroll);
-            activeAnimations.set(element, frameId);
-        }
-
-        function scrollSlider(arrowButton, direction) {
-            const wrapper = arrowButton.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            let currentTarget = slider.scrollLeft;
-            if (activeAnimations.has(slider)) {
-                currentTarget = slider._targetScrollLeft || slider.scrollLeft;
-            }
-
-            let targetScroll = currentTarget + (direction * scrollAmount);
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-
-            slider._targetScrollLeft = targetScroll;
-
-            /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
-            customSmoothScroll(slider, targetScroll, 1500);
-        }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.closest('.slider-wrapper');
-            if (!wrapper) return;
-
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-            if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
-            }
-
-            if (rightArrow) {
-                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
-            }
-        }
+                if (!contactSection.contains(e.target) && e.target !== contactBtn) {
+                    contactSection.classList.remove('active');
+                    contactBtn.innerText = 'Contact';
+                }
+            });
+        });
     </script>
 </body>
 </html>

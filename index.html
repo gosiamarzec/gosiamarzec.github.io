@@ -14,7 +14,7 @@
             --font-size-base: clamp(20px, 1.8vw, 32px); 
             --font-size-nav: clamp(20px, 1.8vw, 32px);    
             
-            /* Dedykowany, większy rozmiar dla formuły w sekcji About (zgodnie z referencją) */
+            /* Dedykowany, większy rozmiar dla formuły w sekcji About */
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
@@ -101,7 +101,7 @@
             background-color: #ededed;
             z-index: 900;
             border-bottom: 2px solid var(--border-color);
-            border-top: 2px solid var(--border-color);
+            border-top: none; /* Górna krawędź usunięta, aby nie podwajać linii z top-nav */
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -152,7 +152,7 @@
             text-decoration: underline;
         }
 
-        /* --- TREŚĆ ABOUT (POWIĘKSZONA NA WZÓR REFERENCJI) --- */
+        /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -261,7 +261,8 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
         }
 
         .media-slider:active {
@@ -283,6 +284,7 @@
             padding: 0;
             background-color: transparent;
             pointer-events: auto;
+            scroll-snap-align: start;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -348,6 +350,11 @@
             text-decoration: underline;
         }
 
+        .footer-email-container {
+            margin-left: auto;
+            text-align: right;
+        }
+
         .footer-email {
             white-space: nowrap;
         }
@@ -364,9 +371,6 @@
                 justify-content: space-between; 
                 align-items: center; 
                 gap: 8px; 
-            }
-            .footer-email {
-                font-size: clamp(14px, 3.2vw, 18px);
             }
         }
     </style>
@@ -632,7 +636,7 @@
                 <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="footer-link">Instagram</a>
                 <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
             </div>
-            <div>
+            <div class="footer-email-container">
                 <a href="mailto:gosi.marzec@gmail.com" class="footer-link footer-email">gosi.marzec@gmail.com</a>
             </div>
         </footer>
@@ -676,6 +680,28 @@
             }
         }
 
+        function checkScrollPosition(slider) {
+            const wrapper = slider.closest('.slider-wrapper');
+            if (!wrapper) return;
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+            if (leftArrow) {
+                leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
+            }
+            if (rightArrow) {
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+                rightArrow.style.display = slider.scrollLeft < maxScroll - 10 ? 'flex' : 'none';
+            }
+        }
+
+        function scrollSlider(button, direction) {
+            const wrapper = button.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.8;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
@@ -707,7 +733,6 @@
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
 
-                    /* Nasłuchiwanie na załadowanie mediów, aby strzałki pojawiły się od razu */
                     if (media.tagName.toLowerCase() === 'video') {
                         media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
                     } else {
@@ -721,101 +746,7 @@
 
                 checkScrollPosition(slider);
             });
-
-            window.addEventListener('load', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-            window.addEventListener('resize', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-
-            const videos = document.querySelectorAll("video.media-item");
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {});
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            videos.forEach((video) => observer.observe(video));
         });
-
-        /* --- S-CURVE EASE-IN-OUT SILNIK PRZEWIJANIA --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        const activeAnimations = new WeakMap();
-
-        function customSmoothScroll(element, target, duration) {
-            const start = element.scrollLeft;
-            const change = target - start;
-            const startTime = performance.now();
-
-            if (activeAnimations.has(element)) {
-                cancelAnimationFrame(activeAnimations.get(element));
-            }
-
-            function animateScroll(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                element.scrollLeft = start + (change * easeProgress);
-
-                if (progress < 1) {
-                    const frameId = requestAnimationFrame(animateScroll);
-                    activeAnimations.set(element, frameId);
-                } else {
-                    activeAnimations.delete(element);
-                }
-            }
-
-            const frameId = requestAnimationFrame(animateScroll);
-            activeAnimations.set(element, frameId);
-        }
-
-        function scrollSlider(arrowButton, direction) {
-            const wrapper = arrowButton.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            let currentTarget = slider.scrollLeft;
-            if (activeAnimations.has(slider)) {
-                currentTarget = slider._targetScrollLeft || slider.scrollLeft;
-            }
-
-            let targetScroll = currentTarget + (direction * scrollAmount);
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-
-            slider._targetScrollLeft = targetScroll;
-
-            /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
-            customSmoothScroll(slider, targetScroll, 1500);
-        }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.closest('.slider-wrapper');
-            if (!wrapper) return;
-
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-            if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
-            }
-
-            if (rightArrow) {
-                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
-            }
-        }
     </script>
 </body>
 </html>

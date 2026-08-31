@@ -3,243 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gosia Marzec - Portfolio</title>
+    <title>Test Karuzeli</title>
     <style>
-        /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
-        :root {
-            --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-            --font-size-base: clamp(20px, 1.8vw, 32px); 
-            --font-size-nav: clamp(20px, 1.8vw, 32px);    
-            
-            --formula-font-size: clamp(15px, 1.5vw, 26px);
-
-            --font-weight-regular: 400;
-            --font-weight-medium: 500;
-            --font-weight-bold: 600;
-
-            --border-width-top: 3px;
-            --border-width: 2px;
-            --border-color: #1a1a1a;
-
-            --slider-gap: 1vw;            
-            
-            --col-gap-1-2: 2.5vw;         
-            --col-gap-2-3: 3.5vw;         
-
-            --project-padding-top: 1.2vw;    
-            --project-padding-bottom: 2.5vw; 
-            --nav-padding-bottom: 6px;      
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: #ededed;
-            font-family: var(--font-family-main);
-            color: #1a1a1a;
-            padding: 12px 40px;
-            width: 100%;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            padding: 40px;
         }
 
-        .main-container {
-            width: 100%;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        /* --- NAWIGACJA GÓRNA (STICKY) --- */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--border-color);
-            padding-bottom: var(--nav-padding-bottom);
-            position: sticky;
-            top: 0;
-            background-color: #ededed;
-            z-index: 1000;
-            margin-bottom: 0;
-            transform: translateZ(0);
-        }
-
-        .nav-button {
-            background: none;
-            border: none;
-            font-family: var(--font-family-main);
-            font-size: var(--font-size-nav);
-            font-weight: var(--font-weight-bold);
-            cursor: pointer;
-            color: #1a1a1a;
-            text-decoration: none;
-            letter-spacing: -0.3px;
-            line-height: 1;
-        }
-
-        .nav-button:hover {
-            opacity: 0.7;
-        }
-
-        /* --- NAKŁADKI ABOUT I CONTACT --- */
-        .overlay-panel {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0;
-            background-color: #ededed;
-            z-index: 900;
-            border-bottom: 2px solid var(--border-color);
-            border-top: 2px solid var(--border-color);
-            display: none;
-            opacity: 0;
-            transition: opacity 0.25s ease-in-out;
-            padding: 32px 28px;
-        }
-
-        .overlay-panel.active {
-            display: block;
-            opacity: 1;
-        }
-
-        #about-section {
-            left: 0;
-            width: 58%;
-            min-width: 340px;
-            max-width: 100%;
-            border-left: none;
-            border-right: 2px solid var(--border-color);
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        #contact-section {
-            left: auto;
-            right: 0;
-            width: auto;
-            min-width: 240px;
-            text-align: right;
-            border-left: 2px solid var(--border-color);
-            border-right: none;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        #contact-section .contact-content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .contact-link {
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-bold);
-            color: #1a1a1a;
-            text-decoration: none;
-        }
-
-        .contact-link:hover {
-            text-decoration: underline;
-        }
-
-        /* --- TREŚĆ ABOUT --- */
-        .intro-text {
-            font-size: clamp(20px, 2.1vw, 36px);
-            line-height: 1.25;
-            letter-spacing: -0.3px;
-            margin-bottom: 40px;
-            font-weight: var(--font-weight-medium);
-        }
-
-        .formula-wrapper {
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .formula {
-            display: flex;
-            align-items: center;
-            gap: clamp(10px, 1.8vw, 32px);
-            font-size: var(--formula-font-size);
-            font-weight: var(--font-weight-bold);
-            line-height: 1.15;
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            white-space: nowrap;
-        }
-
-        .plus { 
-            font-weight: var(--font-weight-regular); 
-            font-size: 1.1em; 
-            text-align: center;
-            margin: 2px 0;
-        }
-
-        .dash { 
-            font-size: 1.6em; 
-            font-weight: 300; 
-        }
-
-        .arrow { 
-            font-size: 1.5em; 
-            margin-right: 8px; 
-            font-weight: 300;
-        }
-
-        .result { 
-            display: flex; 
-            align-items: center; 
-            white-space: nowrap; 
-            font-weight: var(--font-weight-bold);
-        }
-
-        /* --- STYLIZACJA PROJEKTÓW --- */
-        .project-item {
-            border-bottom: 2px solid var(--border-color);
-            padding-top: var(--project-padding-top);
-            padding-bottom: var(--project-padding-bottom);
-        }
-
-        .project-info {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr 2.2fr;
-            align-items: flex-start;
-            font-size: var(--font-size-base);
-            line-height: 1.25;
-            letter-spacing: -0.01em;
-            margin-bottom: 1.5vw;
-            font-weight: var(--font-weight-regular);
-        }
-
-        .project-info > div:nth-child(1) {
-            padding-right: var(--col-gap-1-2);
-        }
-
-        .project-info > div:nth-child(2) {
-            padding-right: var(--col-gap-2-3);
-        }
-
-        .project-title {
-            font-weight: var(--font-weight-medium);
-        }
-
-        .scope-title {
-            text-decoration: underline;
-            display: inline-block;
-            margin-bottom: 0;
-        }
-
-        /* --- SLIDER I MEDIA --- */
+        /* Kontener główny dla układu strzałki + slider */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -247,266 +20,64 @@
 
         .media-slider {
             display: flex;
-            gap: var(--slider-gap);
+            gap: 1vw;
             overflow-x: auto;
-            padding-bottom: 2px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            cursor: grab;
-            user-select: none;
-            align-items: flex-start;
-            
-            /* Zmiany zapewniające płynny scroll i dociąganie */
+            scrollbar-width: none; /* Ukrycie paska w FF */
             scroll-behavior: smooth;
             scroll-snap-type: x mandatory;
         }
 
-        .media-slider:active {
-            cursor: grabbing;
-        }
-
         .media-slider::-webkit-scrollbar {
-            display: none;
+            display: none; /* Ukrycie paska w Chrome/Safari */
         }
 
         .media-item {
-            max-height: clamp(300px, 35vw, 700px);
+            max-height: 500px;
             width: auto;
-            max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
-            display: block;
-            vertical-align: top;
-            margin: 0;
-            padding: 0;
-            background-color: transparent;
-            pointer-events: auto;
-
-            /* Wyrównanie slajdu do lewej krawędzi kontenera */
             scroll-snap-align: start;
         }
 
-        /* --- STRZAŁKI SVG --- */
+        /* Strzałki */
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #000;
             cursor: pointer;
             z-index: 10;
-            padding: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            user-select: none;
-            transition: opacity 0.2s ease;
+            padding: 10px 15px;
+            font-weight: bold;
         }
 
-        .slider-arrow svg {
-            width: clamp(28px, 2.5vw, 48px);
-            height: clamp(28px, 2.5vw, 48px);
-            stroke: #1a1a1a;
-        }
-
-        .slider-arrow:hover {
-            opacity: 0.5;
-        }
-
-        .slider-arrow.left {
-            left: -16px;
-            display: none;
-        }
-
-        .slider-arrow.right {
-            right: -16px;
-        }
-
-        /* --- STOPKA --- */
-        .site-footer {
-            padding-top: 1.5vw;
-            margin-top: 2vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-medium);
-            width: 100%;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-link {
-            color: #1a1a1a;
-            text-decoration: none;
-            font-size: var(--font-size-base);
-        }
-
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-
-        .footer-email {
-            white-space: nowrap;
-        }
-
-        /* RESPONSYWNOŚĆ MOBILNA */
-        @media (max-width: 768px) {
-            body { padding: 10px 20px; }
-            .project-info { grid-template-columns: 1fr; gap: 12px; }
-            .project-info > div:nth-child(1),
-            .project-info > div:nth-child(2) { padding-right: 0; }
-            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
-            .site-footer { 
-                flex-direction: row; 
-                justify-content: space-between; 
-                align-items: center; 
-                gap: 8px; 
-            }
-            .footer-email {
-                font-size: clamp(14px, 3.2vw, 18px);
-            }
-        }
+        .slider-arrow.left { left: 10px; display: none; }
+        .slider-arrow.right { right: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
+    <div class="slider-wrapper">
+        <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
         
-        <header class="top-nav">
-            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
-            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
+        <div class="media-slider">
+            <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1">
+            <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2">
+            <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
+            <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
+            <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
+            <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+        </div>
 
-            <section id="about-section" class="overlay-panel">
-                <p class="intro-text">
-                    Hi, I'm Gosia. I look for problems that I can solve through graphic design.
-                </p>
-
-                <div class="formula-wrapper">
-                    <div class="formula">
-                        <div class="column">
-                            <div>graphic design<br>practice</div>
-                            <div class="plus">+</div>
-                            <div>technical<br>degree</div>
-                        </div>
-
-                        <div class="dash">—</div>
-
-                        <div class="column">
-                            <div>unquenchable<br>curiosity</div>
-                            <div class="plus">+</div>
-                            <div>figureing<br>everything out</div>
-                        </div>
-
-                        <div class="result">
-                            <span class="arrow">⟶</span>
-                            <span>that’s me</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact-section" class="overlay-panel">
-                <div class="contact-content">
-                    <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
-                    <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="contact-link">Instagram</a>
-                    <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="contact-link">Linkedin</a>
-                    <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
-                </div>
-            </section>
-        </header>
-
-        <article class="project-item">
-            <div class="project-info">
-                <div class="project-title">
-                    Supplement<br>packaging &<br>promotion
-                </div>
-                <div>
-                    <span class="scope-title">Scope of work</span><br>
-                    Packaging,<br>
-                    Digital design<br>for social media
-                </div>
-                <div>
-                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
-                </div>
-            </div>
-
-            <div class="slider-wrapper">
-                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                </button>
-                <div class="media-slider">
-                    <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" loading="lazy">
-                    <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2" loading="lazy">
-                    <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
-                    <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
-                    <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
-                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
-                </div>
-                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-            </div>
-        </article>
-
-        <footer class="site-footer">
-            <div class="footer-links">
-                <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="footer-link">Behance</a>
-                <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="footer-link">Instagram</a>
-                <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
-            </div>
-            <div>
-                <a href="mailto:gosi.marzec@gmail.com" class="footer-link footer-email">gosi.marzec@gmail.com</a>
-            </div>
-        </footer>
-
+        <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
     </div>
 
     <script>
-        function toggleAbout() {
-            const aboutSection = document.getElementById('about-section');
-            const aboutBtn = document.getElementById('about-btn');
-            const contactSection = document.getElementById('contact-section');
-            const contactBtn = document.getElementById('contact-btn');
-
-            contactSection.classList.remove('active');
-            contactBtn.innerText = 'Contact';
-
-            if (aboutSection.classList.contains('active')) {
-                aboutSection.classList.remove('active');
-                aboutBtn.innerText = 'About';
-            } else {
-                aboutSection.classList.add('active');
-                aboutBtn.innerText = 'Close';
-            }
-        }
-
-        function toggleContact() {
-            const contactSection = document.getElementById('contact-section');
-            const contactBtn = document.getElementById('contact-btn');
-            const aboutSection = document.getElementById('about-section');
-            const aboutBtn = document.getElementById('about-btn');
-
-            aboutSection.classList.remove('active');
-            aboutBtn.innerText = 'About';
-
-            if (contactSection.classList.contains('active')) {
-                contactSection.classList.remove('active');
-                contactBtn.innerText = 'Contact';
-            } else {
-                contactSection.classList.add('active');
-                contactBtn.innerText = 'Close';
-            }
-        }
-
-        /* METODA PRZEWIJANIA KLIKNIĘCIEM STRZAŁKI */
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
             
-            // Pobiera aktualną widoczną szerokość kontenera
+            // Przewijamy o widoczną szerokość okna slidera
             const scrollStep = slider.clientWidth;
             
             slider.scrollBy({
@@ -515,90 +86,29 @@
             });
         }
 
-        /* AKTUALIZACJA WIDOCZNOŚCI STRZAŁEK */
         function checkScrollPosition(slider) {
             const wrapper = slider.parentElement;
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
-            if (!leftArrow || !rightArrow) return;
-
             const maxScroll = slider.scrollWidth - slider.clientWidth;
             
-            // Próg tolerancji w pikselach dla zaokrągleń przeglądarki
             const isAtStart = slider.scrollLeft <= 5;
             const isAtEnd = slider.scrollLeft >= maxScroll - 5;
 
-            leftArrow.style.display = isAtStart ? 'none' : 'flex';
-            rightArrow.style.display = isAtEnd ? 'none' : 'flex';
+            leftArrow.style.display = isAtStart ? 'none' : 'block';
+            rightArrow.style.display = isAtEnd ? 'none' : 'block';
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const sliders = document.querySelectorAll(".media-slider");
-
-            sliders.forEach((slider) => {
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                slider.addEventListener("scroll", () => checkScrollPosition(slider));
-
-                slider.addEventListener("mousedown", (e) => {
-                    if (e.button !== 0) return;
-                    isDown = true;
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                });
-
-                slider.addEventListener("mouseleave", () => { isDown = false; });
-                slider.addEventListener("mouseup", () => { isDown = false; });
-
-                slider.addEventListener("mousemove", (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    slider.scrollLeft = scrollLeft - walk;
-                });
-
-                slider.querySelectorAll("img, video").forEach((media) => {
-                    media.addEventListener("dragstart", (e) => e.preventDefault());
-
-                    if (media.tagName.toLowerCase() === 'video') {
-                        media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
-                    } else {
-                        if (media.complete) {
-                            checkScrollPosition(slider);
-                        } else {
-                            media.addEventListener('load', () => checkScrollPosition(slider));
-                        }
-                    }
-                });
-
-                checkScrollPosition(slider);
-            });
-
-            window.addEventListener('load', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-            window.addEventListener('resize', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-
-            // Autoplay filmików przy przewijaniu
-            const videos = document.querySelectorAll("video.media-item");
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.play().catch(() => {});
-                    } else {
-                        entry.target.pause();
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            videos.forEach(video => observer.observe(video));
+            const slider = document.querySelector(".media-slider");
+            slider.addEventListener("scroll", () => checkScrollPosition(slider));
+            window.addEventListener('resize', () => checkScrollPosition(slider));
+            
+            // Inicjalna weryfikacja strzałek
+            checkScrollPosition(slider);
         });
     </script>
+
 </body>
 </html>

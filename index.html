@@ -152,7 +152,7 @@
             text-decoration: underline;
         }
 
-        /* --- TREŚĆ ABOUT (POWIĘKSZONA NA WZÓR REFERENCJI) --- */
+        /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -261,7 +261,7 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: auto;
+            scroll-behavior: auto !important; /* Sztywny, bezwzględny krok bez ingerencji CSS */
         }
 
         .media-slider:active {
@@ -276,7 +276,7 @@
             max-height: clamp(300px, 35vw, 700px);
             width: auto;
             max-width: clamp(260px, 32vw, 600px);
-            flex-shrink: 0;
+            flex: 0 0 auto; /* Trzyma stały wymiar, nie kurczy się */
             display: block;
             vertical-align: top;
             margin: 0;
@@ -676,6 +676,58 @@
             }
         }
 
+        // --- PRECYZYJNA LOGIKA MATEMATYCZNA SKOKU SLIDERÓW ---
+        
+        function getStepSize(slider) {
+            const items = slider.querySelectorAll(".media-item");
+            if (!items.length) return 0;
+            
+            // Dokładna szerokość z ułamkami pikseli
+            const cardWidth = items[0].getBoundingClientRect().width;
+            
+            // Odczytanie gap z CSS
+            const computedStyle = window.getComputedStyle(slider);
+            const gap = parseFloat(computedStyle.gap) || 0;
+            
+            return cardWidth + gap;
+        }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.parentElement;
+            const leftArrow = wrapper.querySelector(".slider-arrow.left");
+            const rightArrow = wrapper.querySelector(".slider-arrow.right");
+
+            if (!leftArrow || !rightArrow) return;
+
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            // Tolerancja 2px na rozbieżności zaokrągleń ekranu
+            leftArrow.style.display = slider.scrollLeft > 2 ? "flex" : "none";
+            rightArrow.style.display = slider.scrollLeft < maxScroll - 2 ? "flex" : "none";
+        }
+
+        function scrollSlider(arrowButton, direction) {
+            const wrapper = arrowButton.parentElement;
+            const slider = wrapper.querySelector(".media-slider");
+            const items = slider.querySelectorAll(".media-item");
+            
+            if (!items.length) return;
+
+            const stepSize = getStepSize(slider);
+            
+            // Wyznazenie aktualnego indeksu na podstawie obecnej pozycji scrolla
+            const currentIndex = Math.round(slider.scrollLeft / stepSize);
+            const targetIndex = currentIndex + direction;
+            
+            const maxIndex = items.length - 1;
+            const clampedIndex = Math.max(0, Math.min(targetIndex, maxIndex));
+
+            // Sztywne przeskoczenie na nową pozycję
+            slider.scrollLeft = clampedIndex * stepSize;
+            
+            checkScrollPosition(slider);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
@@ -707,7 +759,6 @@
                 slider.querySelectorAll("img, video").forEach((media) => {
                     media.addEventListener("dragstart", (e) => e.preventDefault());
 
-                    /* Nasłuchiwanie na załadowanie mediów, aby strzałki pojawiły się od razu */
                     if (media.tagName.toLowerCase() === 'video') {
                         media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
                     } else {
@@ -739,83 +790,10 @@
                         video.pause();
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.25 });
 
             videos.forEach((video) => observer.observe(video));
         });
-
-        /* --- S-CURVE EASE-IN-OUT SILNIK PRZEWIJANIA --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        const activeAnimations = new WeakMap();
-
-        function customSmoothScroll(element, target, duration) {
-            const start = element.scrollLeft;
-            const change = target - start;
-            const startTime = performance.now();
-
-            if (activeAnimations.has(element)) {
-                cancelAnimationFrame(activeAnimations.get(element));
-            }
-
-            function animateScroll(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutCubic(progress);
-
-                element.scrollLeft = start + (change * easeProgress);
-
-                if (progress < 1) {
-                    const frameId = requestAnimationFrame(animateScroll);
-                    activeAnimations.set(element, frameId);
-                } else {
-                    activeAnimations.delete(element);
-                }
-            }
-
-            const frameId = requestAnimationFrame(animateScroll);
-            activeAnimations.set(element, frameId);
-        }
-
-        function scrollSlider(arrowButton, direction) {
-            const wrapper = arrowButton.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.75;
-            
-            let currentTarget = slider.scrollLeft;
-            if (activeAnimations.has(slider)) {
-                currentTarget = slider._targetScrollLeft || slider.scrollLeft;
-            }
-
-            let targetScroll = currentTarget + (direction * scrollAmount);
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-
-            slider._targetScrollLeft = targetScroll;
-
-            /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
-            customSmoothScroll(slider, targetScroll, 1500);
-        }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.closest('.slider-wrapper');
-            if (!wrapper) return;
-
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-            if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
-            }
-
-            if (rightArrow) {
-                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
-            }
-        }
     </script>
 </body>
 </html>

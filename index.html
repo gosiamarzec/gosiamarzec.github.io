@@ -7,29 +7,21 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
-            /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-            /* Rozmiar fontu tekstu oraz nawigacji */
-            --font-size-base: clamp(20px, 1.8vw, 32px); 
-            --font-size-nav: clamp(20px, 1.8vw, 32px);    
-            
-            /* Dedykowany, większy rozmiar dla formuły w sekcji About */
+            --font-size-base: clamp(18px, 1.8vw, 32px); 
+            --font-size-nav: clamp(18px, 1.8vw, 32px);    
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
-            /* Grubość linii - sztywne wartości px bez jednostek elastycznych */
             --border-width-top: 3px;
             --border-width: 2px;
             --border-color: #1a1a1a;
 
-            /* Odstępy i Odległości */
             --slider-gap: 1vw;            
-            
-            /* Odstępy między kolumnami opisu */
             --col-gap-1-2: 2.5vw;         
             --col-gap-2-3: 3.5vw;         
 
@@ -60,7 +52,7 @@
             position: relative;
         }
 
-        /* --- NAWIGACJA GÓRNA (STICKY) --- */
+        /* --- NAWIGACJA GÓRNA --- */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -88,20 +80,17 @@
             line-height: 1;
         }
 
-        .nav-button:hover {
-            opacity: 0.7;
-        }
+        .nav-button:hover { opacity: 0.7; }
 
         /* --- NAKŁADKI ABOUT I CONTACT --- */
         .overlay-panel {
             position: absolute;
             top: 100%;
             left: 0;
-            margin-top: 0;
             background-color: #ededed;
             z-index: 900;
             border-bottom: 2px solid var(--border-color);
-            border-top: none; /* Górna krawędź usunięta, aby nie podwajać linii z top-nav */
+            border-top: none;
             display: none;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -116,9 +105,8 @@
         #about-section {
             left: 0;
             width: 58%;
-            min-width: 340px;
+            min-width: 320px;
             max-width: 100%;
-            border-left: none;
             border-right: 2px solid var(--border-color);
             border-bottom: 2px solid var(--border-color);
         }
@@ -130,7 +118,6 @@
             min-width: 240px;
             text-align: right;
             border-left: 2px solid var(--border-color);
-            border-right: none;
             border-bottom: 2px solid var(--border-color);
         }
 
@@ -148,11 +135,8 @@
             text-decoration: none;
         }
 
-        .contact-link:hover {
-            text-decoration: underline;
-        }
+        .contact-link:hover { text-decoration: underline; }
 
-        /* --- TREŚĆ ABOUT --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -191,16 +175,8 @@
             margin: 2px 0;
         }
 
-        .dash { 
-            font-size: 1.6em; 
-            font-weight: 300; 
-        }
-
-        .arrow { 
-            font-size: 1.5em; 
-            margin-right: 8px; 
-            font-weight: 300;
-        }
+        .dash { font-size: 1.6em; font-weight: 300; }
+        .arrow { font-size: 1.5em; margin-right: 8px; font-weight: 300; }
 
         .result { 
             display: flex; 
@@ -227,23 +203,11 @@
             font-weight: var(--font-weight-regular);
         }
 
-        .project-info > div:nth-child(1) {
-            padding-right: var(--col-gap-1-2);
-        }
+        .project-info > div:nth-child(1) { padding-right: var(--col-gap-1-2); }
+        .project-info > div:nth-child(2) { padding-right: var(--col-gap-2-3); }
 
-        .project-info > div:nth-child(2) {
-            padding-right: var(--col-gap-2-3);
-        }
-
-        .project-title {
-            font-weight: var(--font-weight-medium);
-        }
-
-        .scope-title {
-            text-decoration: underline;
-            display: inline-block;
-            margin-bottom: 0;
-        }
+        .project-title { font-weight: var(--font-weight-medium); }
+        .scope-title { text-decoration: underline; display: inline-block; }
 
         /* --- SLIDER I MEDIA --- */
         .slider-wrapper {
@@ -255,23 +219,17 @@
             display: flex;
             gap: var(--slider-gap);
             overflow-x: auto;
-            padding-bottom: 2px;
+            padding-bottom: 4px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             cursor: grab;
             user-select: none;
             align-items: flex-start;
             scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
         }
 
-        .media-slider:active {
-            cursor: grabbing;
-        }
-
-        .media-slider::-webkit-scrollbar {
-            display: none;
-        }
+        .media-slider:active { cursor: grabbing; }
+        .media-slider::-webkit-scrollbar { display: none; }
 
         .media-item {
             max-height: clamp(300px, 35vw, 700px);
@@ -279,12 +237,9 @@
             max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
             display: block;
-            vertical-align: top;
             margin: 0;
             padding: 0;
-            background-color: transparent;
             pointer-events: auto;
-            scroll-snap-align: start;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -292,8 +247,9 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
+            background: rgba(237, 237, 237, 0.8);
             border: none;
+            border-radius: 50%;
             cursor: pointer;
             z-index: 10;
             padding: 6px;
@@ -310,18 +266,9 @@
             stroke: #1a1a1a;
         }
 
-        .slider-arrow:hover {
-            opacity: 0.5;
-        }
-
-        .slider-arrow.left {
-            left: -16px;
-            display: none;
-        }
-
-        .slider-arrow.right {
-            right: -16px;
-        }
+        .slider-arrow:hover { opacity: 0.6; }
+        .slider-arrow.left { left: 4px; }
+        .slider-arrow.right { right: 4px; }
 
         /* --- STOPKA --- */
         .site-footer {
@@ -346,31 +293,54 @@
             font-size: var(--font-size-base);
         }
 
-        .footer-link:hover {
-            text-decoration: underline;
-        }
+        .footer-link:hover { text-decoration: underline; }
 
         .footer-email-container {
             margin-left: auto;
             text-align: right;
         }
 
-        .footer-email {
-            white-space: nowrap;
-        }
-
-        /* RESPONSYWNOŚĆ MOBILNA */
+        /* --- RESPONSYWNOŚĆ MOBILNA --- */
         @media (max-width: 768px) {
-            body { padding: 10px 20px; }
+            body { padding: 10px 16px; }
             .project-info { grid-template-columns: 1fr; gap: 12px; }
             .project-info > div:nth-child(1),
             .project-info > div:nth-child(2) { padding-right: 0; }
-            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
+            
+            #about-section, #contact-section { 
+                width: 100%; 
+                border-left: none; 
+                border-right: none; 
+                padding: 20px 16px;
+            }
+
+            /* Naprawa formuły w About na mobilce */
+            .formula {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .dash { display: none; }
+            .arrow { transform: rotate(90deg); margin: 8px 0; }
+
+            /* Naprawa Stopki na mobilce */
             .site-footer { 
-                flex-direction: row; 
-                justify-content: space-between; 
-                align-items: center; 
-                gap: 8px; 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 16px; 
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .footer-email-container {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .footer-email {
+                font-size: 16px;
+                word-break: break-all;
             }
         }
     </style>
@@ -401,7 +371,7 @@
                         <div class="column">
                             <div>unquenchable<br>curiosity</div>
                             <div class="plus">+</div>
-                            <div>figureing<br>everything out</div>
+                            <div>figuring<br>everything out</div>
                         </div>
 
                         <div class="result">
@@ -444,14 +414,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
-                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -484,7 +454,7 @@
                     <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
                     <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
                     <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
-                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -548,10 +518,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
                     <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" loading="lazy">
                     <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
                 </div>
@@ -583,12 +553,12 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" autoplay loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -686,19 +656,20 @@
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
 
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
             if (leftArrow) {
-                leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
+                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
             }
             if (rightArrow) {
-                const maxScroll = slider.scrollWidth - slider.clientWidth;
-                rightArrow.style.display = slider.scrollLeft < maxScroll - 10 ? 'flex' : 'none';
+                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
             }
         }
 
         function scrollSlider(button, direction) {
             const wrapper = button.closest('.slider-wrapper');
             const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.8;
+            const scrollAmount = slider.clientWidth * 0.75;
             slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
@@ -734,7 +705,8 @@
                     media.addEventListener("dragstart", (e) => e.preventDefault());
 
                     if (media.tagName.toLowerCase() === 'video') {
-                        media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
+                        media.play().catch(() => {});
+                        media.addEventListener('loadeddata', () => checkScrollPosition(slider));
                     } else {
                         if (media.complete) {
                             checkScrollPosition(slider);
@@ -744,8 +716,12 @@
                     }
                 });
 
-                checkScrollPosition(slider);
+                setTimeout(() => checkScrollPosition(slider), 100);
             });
+        });
+
+        window.addEventListener('resize', () => {
+            document.querySelectorAll(".media-slider").forEach(slider => checkScrollPosition(slider));
         });
     </script>
 </body>

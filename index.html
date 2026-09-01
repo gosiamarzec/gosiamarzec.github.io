@@ -7,15 +7,15 @@
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-    background-color: #ededed;
-    padding: clamp(15px, 3vw, 40px);
-    font-family: sans-serif;
-    
-    /* Rozszerzenie limitu do pełnej szerokości 4K (3840px) */
-    max-width: 3840px;
-    margin: 0 auto;
-}
+    body {
+        background-color: #ededed;
+        padding: clamp(15px, 3vw, 40px);
+        font-family: sans-serif;
+        
+        /* Rozszerzenie limitu do pełnej szerokości 4K (3840px) */
+        max-width: 3840px;
+        margin: 0 auto;
+    }
 
     .project-item {
         margin-bottom: clamp(30px, 4vw, 60px);
@@ -39,6 +39,12 @@ body {
         gap: 1vw;
         overflow-x: auto;
         scrollbar-width: none;
+        cursor: grab; /* Wskazuje użytkownikowi, że można chwycić element */
+        user-select: none; /* Zapobiega zaznaczaniu tekstu/obrazków podczas przeciągania */
+    }
+
+    .media-slider.active {
+        cursor: grabbing; /* Zmienia kursor na zamkniętą dłoń w trakcie przeciągania */
     }
 
     .media-slider::-webkit-scrollbar {
@@ -46,13 +52,13 @@ body {
     }
 
     /* Skalowanie bazowe na PC z dolnym i górnym limitem zoomu */
-.media-item {
-    /* Podbicie górnego limitu wysokości do 900px, by media rosły na 1440p i UltraWide */
-    height: clamp(380px, 35vw, 900px); 
-    width: auto;
-    flex-shrink: 0;
-    object-fit: contain;
-}
+    .media-item {
+        /* Podbicie górnego limitu wysokości do 900px, by media rosły na 1440p i UltraWide */
+        height: clamp(380px, 35vw, 900px); 
+        width: auto;
+        flex-shrink: 0;
+        object-fit: contain;
+    }
 
     /* Ograniczenia dla urządzeń mobilnych */
     @media (max-width: 768px) {
@@ -88,14 +94,14 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
-                <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7">
-                <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -106,12 +112,12 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1">
-                <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2">
-                <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3">
-                <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4">
-                <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5">
-                <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
+                <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2" ondragstart="return false;">
+                <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" ondragstart="return false;">
+                <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" ondragstart="return false;">
+                <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" ondragstart="return false;">
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -122,11 +128,11 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1">
-                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2">
-                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3">
-                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4">
-                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5">
+                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
+                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2" ondragstart="return false;">
+                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3" ondragstart="return false;">
+                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4" ondragstart="return false;">
+                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -137,12 +143,12 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
-                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
-                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" ondragstart="return false;">
+                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -153,12 +159,12 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -169,13 +175,13 @@ body {
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1">
-                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2">
-                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3">
-                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4">
-                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5">
-                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6">
-                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7">
+                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6" ondragstart="return false;">
+                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -215,71 +221,71 @@ body {
             requestAnimationFrame(step);
         }
 
-function scrollSlider(button, direction) {
-    const wrapper = button.parentElement;
-    const slider = wrapper.querySelector('.media-slider');
-    const items = Array.from(slider.querySelectorAll('.media-item'));
-    
-    if (!items.length) return;
-
-    const sliderRect = slider.getBoundingClientRect();
-    const maxScroll = slider.scrollWidth - slider.clientWidth;
-    
-    const isMobile = window.innerWidth <= 768;
-    const tolerance = isMobile ? 1 : 5;
-
-    let targetScroll = slider.scrollLeft;
-
-    if (direction === 1) {
-        let nextItem = items.find(item => {
-            const itemRect = item.getBoundingClientRect();
-            return itemRect.right > sliderRect.right + tolerance;
-        });
-
-        if (nextItem) {
-            const nextItemRect = nextItem.getBoundingClientRect();
-            const nextItemWidth = nextItemRect.width;
+        function scrollSlider(button, direction) {
+            const wrapper = button.parentElement;
+            const slider = wrapper.querySelector('.media-slider');
+            const items = Array.from(slider.querySelectorAll('.media-item'));
             
-            let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
+            if (!items.length) return;
 
-            if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
-                targetScroll = maxScroll;
+            const sliderRect = slider.getBoundingClientRect();
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            const isMobile = window.innerWidth <= 768;
+            const tolerance = isMobile ? 1 : 5;
+
+            let targetScroll = slider.scrollLeft;
+
+            if (direction === 1) {
+                let nextItem = items.find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.right > sliderRect.right + tolerance;
+                });
+
+                if (nextItem) {
+                    const nextItemRect = nextItem.getBoundingClientRect();
+                    const nextItemWidth = nextItemRect.width;
+                    
+                    let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
+
+                    if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
+                        targetScroll = maxScroll;
+                    } else {
+                        targetScroll = calculatedTarget;
+                    }
+                } else {
+                    targetScroll = maxScroll;
+                }
             } else {
-                targetScroll = calculatedTarget;
+                let prevItem = items.slice().reverse().find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.left < sliderRect.left - tolerance;
+                });
+
+                if (prevItem) {
+                    const prevItemRect = prevItem.getBoundingClientRect();
+                    const prevItemWidth = prevItemRect.width;
+
+                    let calculatedTarget = slider.scrollLeft - (sliderRect.right - prevItemRect.right);
+
+                    if (calculatedTarget < prevItemWidth * 0.5) {
+                        targetScroll = 0;
+                    } else {
+                        targetScroll = calculatedTarget;
+                    }
+                } else {
+                    targetScroll = 0;
+                }
             }
-        } else {
-            targetScroll = maxScroll;
-        }
-    } else {
-        let prevItem = items.slice().reverse().find(item => {
-            const itemRect = item.getBoundingClientRect();
-            return itemRect.left < sliderRect.left - tolerance;
-        });
 
-        if (prevItem) {
-            const prevItemRect = prevItem.getBoundingClientRect();
-            const prevItemWidth = prevItemRect.width;
-
-            // Wyrównanie prawej krawędzi schowanego obrazka do prawej krawędzi slidera
-            let calculatedTarget = slider.scrollLeft - (sliderRect.right - prevItemRect.right);
-
-            if (calculatedTarget < prevItemWidth * 0.5) {
-                targetScroll = 0;
-            } else {
-                targetScroll = calculatedTarget;
+            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
+                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
             }
-        } else {
-            targetScroll = 0;
+
+            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+            animateScroll(slider, targetScroll);
         }
-    }
 
-    if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
-        targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
-    }
-
-    targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-    animateScroll(slider, targetScroll);
-}
         function checkScrollPosition(slider) {
             const wrapper = slider.parentElement;
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
@@ -308,6 +314,36 @@ function scrollSlider(button, direction) {
             sliders.forEach((slider) => {
                 slider.addEventListener("scroll", () => checkScrollPosition(slider));
                 checkScrollPosition(slider);
+
+                // Obsługa przewijania myszką (Drag-to-scroll)
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    slider.classList.add('active');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.5; // Czułość przewijania (1.5x)
+                    slider.scrollLeft = scrollLeft - walk;
+                });
             });
 
             window.addEventListener('load', () => {

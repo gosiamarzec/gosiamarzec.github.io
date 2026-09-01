@@ -45,6 +45,19 @@
             max-height: 450px;
             width: auto;
             flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        /* Ograniczenia skalowania na telefonach */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .media-item {
+                max-height: 250px;
+                max-width: 85vw;
+            }
         }
 
         /* Strzałki */
@@ -206,24 +219,19 @@
             if (!items.length) return;
 
             const sliderRect = slider.getBoundingClientRect();
-            const tolerance = 5;
             const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            const isMobile = window.innerWidth <= 768;
+            const tolerance = isMobile ? 1 : 5;
+
             let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
-                // Próba 1: Szukamy elementu wystającego po prawej stronie
+                // Szukamy elementu wystającego po prawej stronie
                 let nextItem = items.find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.right > sliderRect.right + tolerance;
                 });
-
-                // Fallback: Jeśli wyliczenia zawiodły, bierze następny element w indeksie DOM
-                if (!nextItem) {
-                    const currentIndex = items.findIndex(item => item.getBoundingClientRect().right > sliderRect.left + tolerance);
-                    if (currentIndex !== -1 && currentIndex < items.length - 1) {
-                        nextItem = items[currentIndex + 1];
-                    }
-                }
 
                 if (nextItem) {
                     targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
@@ -231,25 +239,22 @@
                     targetScroll = maxScroll;
                 }
             } else {
-                // Próba 1: Szukamy elementu wystającego po lewej stronie
+                // Szukamy elementu wystającego po lewej stronie
                 let prevItem = items.slice().reverse().find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.left < sliderRect.left - tolerance;
                 });
-
-                // Fallback: Jeśli wyliczenia zawiodły, bierze poprzedni element w indeksie DOM
-                if (!prevItem) {
-                    const currentIndex = items.findIndex(item => item.getBoundingClientRect().right >= sliderRect.left);
-                    if (currentIndex > 0) {
-                        prevItem = items[currentIndex - 1];
-                    }
-                }
 
                 if (prevItem) {
                     targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
                 } else {
                     targetScroll = 0;
                 }
+            }
+
+            // Fallback zabezpieczający przed brakiem reakcji na małych ekranach
+            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
+                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
             }
 
             targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));

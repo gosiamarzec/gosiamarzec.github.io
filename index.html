@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Wszystkich Karuzeli</title>
+    <title>Test Prędkości Karuzeli</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,7 +25,6 @@
             color: #1a1a1a;
         }
 
-        /* Kontener dla pojedynczego slidera */
         .slider-wrapper {
             position: relative;
             width: 100%;
@@ -36,8 +35,7 @@
             gap: 1vw;
             overflow-x: auto;
             scrollbar-width: none;
-            scroll-behavior: smooth;
-            /* Usunięto scroll-snap-type, aby JS mógł precyzyjnie pozycjonować widok */
+            /* Wyłączamy CSS-owe smooth behavior – całą animacją steruje nasz JS */
         }
 
         .media-slider::-webkit-scrollbar {
@@ -103,71 +101,49 @@
         </div>
     </article>
 
-    <article class="project-item">
-        <h2>3. Movement diagram</h2>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
-            <div class="media-slider">
-                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1">
-                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2">
-                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3">
-                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4">
-                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5">
-            </div>
-            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
-        </div>
-    </article>
-
-    <article class="project-item">
-        <h2>4. Sad Typography</h2>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
-            <div class="media-slider">
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
-                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
-                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
-            </div>
-            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
-        </div>
-    </article>
-
-    <article class="project-item">
-        <h2>5. Circular Economy Explainer Video</h2>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
-            <div class="media-slider">
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
-            </div>
-            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
-        </div>
-    </article>
-
-    <article class="project-item">
-        <h2>6. Wine label Winnica Łukasz</h2>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
-            <div class="media-slider">
-                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1">
-                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2">
-                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3">
-                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4">
-                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5">
-                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6">
-                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7">
-            </div>
-            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
-        </div>
-    </article>
-
     <script>
+        // Funkcja ułatwiająca gładkie przyspieszanie i hamowanie (Ease-In-Out)
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        // Glówna funkcja wykonująca customową animację przewijania ze stałą prędkością
+        function animateScroll(slider, targetScroll) {
+            const startScroll = slider.scrollLeft;
+            const distance = targetScroll - startScroll;
+            
+            if (Math.abs(distance) < 1) return;
+
+            // KONTROLA PRĘDKOŚCI:
+            // 0.8 ms na 1px przesunięcia (im większa liczba, tym WOLNIEJ)
+            // Przy 0.8: dystans 500px pokonuje w 400ms, a dystans 1500px w 1200ms
+            const speedFactor = 0.8; 
+            
+            // Minimalny i maksymalny czas (zabezpieczenie dla bardzo małych/dużych przesunięć)
+            const minDuration = 300; // ms
+            const maxDuration = 2000; // ms
+
+            const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
+            let startTime = null;
+
+            function step(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Przeliczamy postęp przez funkcję easing
+                const easeProgress = easeInOutCubic(progress);
+                
+                slider.scrollLeft = startScroll + (distance * easeProgress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
@@ -176,35 +152,35 @@
             if (!items.length) return;
 
             const sliderRect = slider.getBoundingClientRect();
-            const tolerance = 5; // Margines na zaokrąglenia przeglądarki
+            const tolerance = 5;
+            let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
-                // PRZEWIJANIE W PRAWO: Szukamy pierwszego elementu wystającego po prawej stronie
                 const nextItem = items.find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.right > sliderRect.right + tolerance;
                 });
 
                 if (nextItem) {
-                    const targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
-                    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                    targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
                 } else {
-                    slider.scrollTo({ left: slider.scrollWidth, behavior: 'smooth' });
+                    targetScroll = slider.scrollWidth - slider.clientWidth;
                 }
             } else {
-                // PRZEWIJANIE W LEWO: Szukamy pierwszego uciętego/ukrytego elementu z lewej strony
                 const prevItem = items.slice().reverse().find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.left < sliderRect.left - tolerance;
                 });
 
                 if (prevItem) {
-                    const targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
-                    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                    targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
                 } else {
-                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                    targetScroll = 0;
                 }
             }
+
+            // Uruchamiamy naszą customową animację zamiast natywnego scrollTo
+            animateScroll(slider, targetScroll);
         }
 
         function checkScrollPosition(slider) {
@@ -235,7 +211,6 @@
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
-            // Autoplay dla filmików gdy są w zasięgu wzroku
             const videos = document.querySelectorAll("video.media-item");
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

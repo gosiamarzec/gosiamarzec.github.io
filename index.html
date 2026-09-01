@@ -34,15 +34,15 @@
         width: 100%;
     }
 
-.media-slider {
-    display: flex;
-    gap: 1vw;
-    overflow-x: auto;
-    scrollbar-width: none;
-    cursor: grab;
-    user-select: none;
-    align-items: flex-start; /* Przypina do górnej krawędzi */
-}
+    .media-slider {
+        display: flex;
+        gap: 1vw;
+        overflow-x: auto;
+        scrollbar-width: none;
+        cursor: grab;
+        user-select: none;
+        align-items: flex-start; /* Przypina obiekty do górnej krawędzi */
+    }
 
     .media-slider.active {
         cursor: grabbing; /* Zmienia kursor na zamkniętą dłoń w trakcie przeciągania */
@@ -52,35 +52,21 @@
         display: none;
     }
 
-/* W CSS ustawiamy domyślne zachowanie mediów */
-.media-item {
-    /* Sztywna szerokość bazowa, wysokość wynika z pliku */
-    width: var(--item-size, 350px);
-    height: auto;
-    flex-shrink: 0;
-    object-fit: contain;
-}
-
-/* Jeśli kadr jest pionowy (portrait), jego wysokość z definiowanej szerokości wyjdzie np. 525px.
-   Jeśli jest poziomy (landscape), jego szerokość będzie większa, ale wysokość wyniesie dokładnie tyle, 
-   ile wynosi szerokość pionowych obiektów (czyli --item-size)! */
-
-/* Urządzenia mobilne */
-@media (max-width: 768px) {
+    /* Sztywna szerokość bazowa – wysokość wynika proporcjonalnie z pliku.
+       Dzięki temu wysokość kadru poziomego jest równa szerokości kadru pionowego! */
     .media-item {
-        width: 55vw;                  /* Pokazuje 1 pełny kadr + fragment następnego */
+        width: var(--item-size, 350px);
         height: auto;
-        max-height: none;
+        flex-shrink: 0;
+        object-fit: contain;
     }
-}
 
     /* Ograniczenia dla urządzeń mobilnych */
     @media (max-width: 768px) {
         .media-item {
+            width: 55vw; /* Podgląd kolejnego kadru po prawej stronie */
             height: auto;
-            min-height: unset;
-            max-height: clamp(150px, 30vh, 180px); /* Zmniejszony rozmiar na telefonie */
-            max-width: 60vw;                        /* Podgląd kolejnego kadru po prawej */
+            max-height: none;
         }
     }
 
@@ -103,7 +89,7 @@
 </head>
 <body>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>1. Dziewczyny Maszyny Event Design</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -121,7 +107,7 @@
         </div>
     </article>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>2. Supplement packaging & promotion</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -137,7 +123,7 @@
         </div>
     </article>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>3. Movement diagram</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -152,7 +138,7 @@
         </div>
     </article>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>4. Sad Typography</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -168,7 +154,7 @@
         </div>
     </article>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>5. Circular Economy Explainer Video</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -184,7 +170,7 @@
         </div>
     </article>
 
-    <article class="project-item">
+    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
         <h2>6. Wine label Winnica Łukasz</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -355,7 +341,7 @@
                     if (!isDown) return;
                     e.preventDefault();
                     const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5; // Czułość przewijania (1.5x)
+                    const walk = (x - startX) * 1.5;
                     slider.scrollLeft = scrollLeft - walk;
                 });
             });

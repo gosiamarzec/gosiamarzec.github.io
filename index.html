@@ -207,9 +207,6 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
-        /* =========================================================
-           UKŁAD KOLUMN W SEKCJI TEKSTOWEJ PROJEKTU (RESPONSYWNY)
-           ========================================================= */
         .project-info {
             display: flex;
             flex-wrap: wrap;
@@ -222,28 +219,23 @@
             font-weight: var(--font-weight-regular);
         }
 
-        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITOROWIE) — 3 KOLUMNY W 1 RZĘDZIE */
         .col-title {
-            /* Zmieniaj procenty szerokości pierwszej kolumny (np. 30%) */
             flex: 0 0 30%;
             max-width: 30%;
-            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
+            padding-right: 2vw;
         }
 
         .col-scope {
-            /* Zmieniaj procenty szerokości drugiej kolumny (np. 20%) */
             flex: 0 0 20%;
             max-width: 20%;
-            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
+            padding-right: 2vw;
         }
 
         .col-desc {
-            /* Zmieniaj procenty szerokości trzeciej kolumny (np. 50%) */
             flex: 0 0 50%;
             max-width: 50%;
         }
 
-        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
         @media (max-width: 850px) {
             .col-title {
                 flex: 0 0 auto;
@@ -254,8 +246,8 @@
                 flex: 0 0 auto;
                 max-width: 50%;
                 padding-right: 0;
-                margin-left: auto; /* Przesuwa cały blok maksymalnie w prawo */
-                text-align: left;  /* Tekst w bloku wyrównany do lewej */
+                margin-left: auto;
+                text-align: left;
             }
 
             .col-desc {
@@ -319,17 +311,12 @@
             display: block;
         }
 
-        /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
-           ========================================================= */
-
-        /* SEKCJA 1 */
+        /* INDYWIDUALNE SZEROKOŚCI SEKCJI */
         .m-1-1 { width: clamp(333px, 27vw, 564px) !important; }
         .m-1-2, .m-1-3, .m-1-4, .m-1-5, .m-1-6, .m-1-7, .m-1-8 { 
             width: clamp(234px, 19vw, 396px) !important; 
         }
 
-        /* SEKCJA 2 */
         .m-2-1, .m-2-3, .m-2-4 { 
             width: clamp(311px, 25vw, 527px) !important; 
         }
@@ -337,25 +324,21 @@
         .m-2-5 { width: clamp(480px, 38vw, 812px) !important; }
         .m-2-6 { width: clamp(259px, 21vw, 438px) !important; }
 
-        /* SEKCJA 3 */
         .m-3-1, .m-3-2, .m-3-3, .m-3-4 { 
             width: clamp(381px, 31vw, 645px) !important; 
         }
         .m-3-5 { width: clamp(579px, 46vw, 979px) !important; }
 
-        /* SEKCJA 4 */
         .m-4-1, .m-4-2, .m-4-3, .m-4-4 { 
             width: clamp(287px, 23vw, 486px) !important; 
         }
         .m-4-5 { width: clamp(325px, 26vw, 550px) !important; }
         .m-4-6 { width: clamp(345px, 28vw, 583px) !important; }
 
-        /* SEKCJA 5 */
         .m-5-1, .m-5-2, .m-5-3, .m-5-4, .m-5-5, .m-5-6 { 
             width: clamp(347px, 28vw, 587px) !important; 
         }
 
-        /* SEKCJA 6 */
         .m-6-1, .m-6-2, .m-6-3, .m-6-4, .m-6-5, .m-6-6, .m-6-7 { 
             width: clamp(289px, 23vw, 490px) !important; 
         }
@@ -427,7 +410,6 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ GLOBALNA MOBILNA */
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
             .media-item { width: 75vw !important; }
@@ -546,7 +528,8 @@
                     Digital design<br>for social media
                 </div>
                 <div class="col-desc">
-                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.                </div>
+                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
+                </div>
             </div>
 
             <div class="slider-wrapper">
@@ -734,90 +717,86 @@
             contactSec.classList.toggle('active');
         }
 
-        /* --- PRECYZYJNA MECHANIKA SCROLLOWANIA I KARUZELI --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
+        /* --- OBSŁUGA AUTOMATYCZNEGO ODTWARZANIA WIDEO NA EKRANIE --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('video');
 
-        function animateScroll(slider, targetScroll) {
-            const startScroll = slider.scrollLeft;
-            const distance = targetScroll - startScroll;
-            
-            if (Math.abs(distance) < 1) return;
-
-            const speedFactor = 1.5; 
-            const minDuration = 1000; 
-            const maxDuration = 3000; 
-
-            const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
-            let startTime = null;
-
-            function step(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easeProgress = easeInOutCubic(progress);
-                slider.scrollLeft = startScroll + (distance * easeProgress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                }
-            }
-
-            requestAnimationFrame(step);
-        }
-
-        function scrollSlider(button, direction) {
-            const wrapper = button.parentElement;
-            const slider = wrapper.querySelector('.media-slider');
-            const items = Array.from(slider.querySelectorAll('.media-item'));
-            
-            if (!items.length) return;
-
-            const sliderRect = slider.getBoundingClientRect();
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            
-            const isMobile = window.innerWidth <= 768;
-            const tolerance = isMobile ? 1 : 5;
-
-            let targetScroll = slider.scrollLeft;
-
-            if (direction === 1) {
-                let nextItem = items.find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.right > sliderRect.right + tolerance;
-                });
-
-                if (nextItem) {
-                    const nextItemRect = nextItem.getBoundingClientRect();
-                    const nextItemWidth = nextItemRect.width;
-                    
-                    let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
-
-                    if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
-                        targetScroll = maxScroll;
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
                     } else {
-                        targetScroll = calculatedTarget;
+                        video.pause();
                     }
-                } else {
-                    targetScroll = maxScroll;
+                });
+            }, { threshold: 0.25 });
+
+            videos.forEach(video => videoObserver.observe(video));
+
+            /* --- PRZECIĄGANIE MYSZKĄ SLIDERÓW --- */
+            const sliders = document.querySelectorAll('.media-slider');
+
+            sliders.forEach(slider => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                const wrapper = slider.closest('.slider-wrapper');
+                const leftArrow = wrapper.querySelector('.slider-arrow.left');
+                const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+                function updateArrows() {
+                    const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+                    if (leftArrow) {
+                        leftArrow.style.display = slider.scrollLeft > 10 ? 'flex' : 'none';
+                    }
+                    if (rightArrow) {
+                        rightArrow.style.display = slider.scrollLeft < maxScrollLeft - 10 ? 'flex' : 'none';
+                    }
                 }
-            } else {
-                let prevItem = items.slice().reverse().find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.left < sliderRect.left - tolerance;
+
+                slider.addEventListener('scroll', updateArrows);
+                window.addEventListener('resize', updateArrows);
+                updateArrows();
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    slider.classList.add('active');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
                 });
 
-                if (prevItem) {
-                    const prevItemRect = prevItem.getBoundingClientRect();
-                    targetScroll = slider.scrollLeft + (prevItemRect.left - sliderRect.left);
-                } else {
-                    targetScroll = 0;
-                }
-            }
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
 
-            animateScroll(slider, targetScroll);
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+            });
+        });
+
+        /* --- MECHANIKA PRZEWIJANIA STRZAŁKAMI --- */
+        function scrollSlider(button, direction) {
+            const wrapper = button.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.6;
+            
+            slider.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
         }
     </script>
 </body>

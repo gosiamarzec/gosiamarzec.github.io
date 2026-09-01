@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Prędkości Karuzeli</title>
+    <title>Karuzela Media</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -20,8 +20,8 @@
         border-bottom: 2px solid #1a1a1a;
         padding-bottom: clamp(20px, 3vw, 40px);
         
-        /* Moduł bazowy: definicja szerokości pionowego kadru */
-        --item-size: clamp(260px, 20vw, 420px);
+        /* Wysokość paska dla całej karuzeli (dostosowuje się do ekranu) */
+        --carousel-height: clamp(300px, 35vh, 520px);
     }
 
     h2 {
@@ -42,7 +42,8 @@
         scrollbar-width: none;
         cursor: grab;
         user-select: none;
-        align-items: flex-start; /* Przypina media do górnej krawędzi karuzeli */
+        /* Równa wysokość dla wszystkich elementów w rzędzie */
+        height: var(--carousel-height);
     }
 
     .media-slider.active {
@@ -53,36 +54,19 @@
         display: none;
     }
 
-    /* DOMYŚLNIE (Pionowe media i kwadraty) */
+    /* KAZDE MEDIA WYPEŁNIAJĄ CAŁĄ WYSOKOŚĆ KARUZELI */
     .media-item {
-        width: var(--item-size);
-        height: auto;
+        height: 100%;
+        width: auto;
         flex-shrink: 0;
         object-fit: contain;
+        display: block;
     }
 
-    /* KADRY POZIOME (Landscape) - ich WYSOKOŚĆ staje się równa SZEROKOŚCI kadru pionowego! */
-    .media-item[style*="aspect-ratio"],
-    img.media-item,
-    video.media-item {
-        /* Przeglądarka auto-wykrywa media poziome po proporcjach */
-    }
-
-    @supports (aspect-ratio: 1) {
-        /* Reguła dla mediów, których szerokość jest większa od wysokości (poziome) */
-        .media-item {
-            /* Jeśli kadr jest poziomy, wysokość wyniesie dokładnie tyle, ile szerokość pionowych */
-            max-height: var(--item-size);
-        }
-    }
-
-    /* Ograniczenia dla urządzeń mobilnych */
+    /* Wersja mobilna */
     @media (max-width: 768px) {
         .project-item {
-            --item-size: 55vw;
-        }
-        .media-item {
-            max-height: 55vw;
+            --carousel-height: 250px;
         }
     }
 
@@ -204,41 +188,6 @@
     </article>
 
     <script>
-        // JS automatycznie nadaje właściwość aspect-ratio po załadowaniu mediów,
-        // dzięki czemu kadr poziomy natychmiast dopasowuje swoją wysokość do szerokości kadru pionowego.
-        function adjustMediaAspectRatios() {
-            const mediaItems = document.querySelectorAll('.media-item');
-            
-            mediaItems.forEach(item => {
-                const applyRatio = (width, height) => {
-                    if (!width || !height) return;
-                    if (width > height) {
-                        // Jeśli plik jest poziomy: ustawiamy jego wysokość na sztywno = --item-size
-                        item.style.height = 'var(--item-size)';
-                        item.style.width = 'auto';
-                    } else {
-                        // Jeśli plik jest pionowy: szerokość = --item-size
-                        item.style.width = 'var(--item-size)';
-                        item.style.height = 'auto';
-                    }
-                };
-
-                if (item.tagName === 'IMG') {
-                    if (item.complete) {
-                        applyRatio(item.naturalWidth, item.naturalHeight);
-                    } else {
-                        item.addEventListener('load', () => applyRatio(item.naturalWidth, item.naturalHeight));
-                    }
-                } else if (item.tagName === 'VIDEO') {
-                    if (item.readyState >= 1) {
-                        applyRatio(item.videoWidth, item.videoHeight);
-                    } else {
-                        item.addEventListener('loadedmetadata', () => applyRatio(item.videoWidth, item.videoHeight));
-                    }
-                }
-            });
-        }
-
         function easeInOutCubic(t) {
             return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
@@ -360,8 +309,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            adjustMediaAspectRatios();
-
             const sliders = document.querySelectorAll(".media-slider");
 
             sliders.forEach((slider) => {
@@ -399,7 +346,6 @@
             });
 
             window.addEventListener('load', () => {
-                adjustMediaAspectRatios();
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 

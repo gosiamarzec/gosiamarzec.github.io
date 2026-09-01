@@ -274,7 +274,7 @@
         }
 
         /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
+           INDYWIDUALNE SZEROKOŚCI SEKCJI (NOWA MACIERZ 1920px)
            ========================================================= */
 
         /* SEKCJA 1 */
@@ -427,7 +427,7 @@
                         <div class="column">
                             <div>unquenchable<br>curiosity</div>
                             <div class="plus">+</div>
-                            <div>figuring<br>everything out</div>
+                            <div>figureing<br>everything out</div>
                         </div>
 
                         <div class="result">
@@ -770,77 +770,105 @@
                 }
             }
 
-            if (Math.abs(targetScroll - slider.scrollLeft) >= 1) {
-                animateScroll(slider, targetScroll);
+            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
+                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
             }
+
+            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+            animateScroll(slider, targetScroll);
         }
 
-        /* --- OBSŁUGA STRZAŁEK I AUTOPLAY WIDEO --- */
-        function updateArrowVisibility(slider) {
+        function checkScrollPosition(slider) {
             const wrapper = slider.parentElement;
             const leftArrow = wrapper.querySelector('.slider-arrow.left');
             const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
             if (!leftArrow || !rightArrow) return;
 
-            const scrollLeft = slider.scrollLeft;
             const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            if (maxScroll <= 0) {
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'none';
+                return;
+            }
 
-            leftArrow.style.display = scrollLeft > 10 ? 'flex' : 'none';
-            rightArrow.style.display = scrollLeft < maxScroll - 10 ? 'flex' : 'none';
+            const isAtStart = slider.scrollLeft <= 5;
+            const isAtEnd = slider.scrollLeft >= maxScroll - 5;
+
+            leftArrow.style.display = isAtStart ? 'none' : 'flex';
+            rightArrow.style.display = isAtEnd ? 'none' : 'flex';
         }
 
-        document.querySelectorAll('.media-slider').forEach(slider => {
-            slider.addEventListener('scroll', () => {
-                updateArrowVisibility(slider);
+        document.addEventListener("DOMContentLoaded", () => {
+            const sliders = document.querySelectorAll(".media-slider");
+
+            sliders.forEach((slider) => {
+                slider.addEventListener("scroll", () => checkScrollPosition(slider));
+                checkScrollPosition(slider);
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    slider.classList.add('active');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    slider.scrollLeft = scrollLeft - walk;
+                });
             });
-            updateArrowVisibility(slider);
 
-            // Drag-to-scroll (przeciąganie myszką)
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
+            window.addEventListener('load', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
-            slider.addEventListener('mouseleave', () => {
-                isDown = false;
-                slider.classList.remove('active');
+            const sliderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        checkScrollPosition(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sliders.forEach(slider => sliderObserver.observe(slider));
+
+            window.addEventListener('resize', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
-            slider.addEventListener('mouseup', () => {
-                isDown = false;
-                slider.classList.remove('active');
-            });
+            const videos = document.querySelectorAll("video.media-item");
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play().catch(() => {});
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
 
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                slider.scrollLeft = scrollLeft - walk;
-            });
-        });
-
-        // Autoplay wideo, gdy są widoczne na ekranie (IntersectionObserver)
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    video.play().catch(() => {});
-                } else {
-                    video.pause();
-                }
-            });
-        }, { threshold: 0.25 });
-
-        document.querySelectorAll('video.media-item').forEach(video => {
-            videoObserver.observe(video);
+            videos.forEach(video => videoObserver.observe(video));
         });
     </script>
+
 </body>
 </html>

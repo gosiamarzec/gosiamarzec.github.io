@@ -11,8 +11,6 @@
         background-color: #ededed;
         padding: clamp(15px, 3vw, 40px);
         font-family: sans-serif;
-        
-        /* Rozszerzenie limitu do pełnej szerokości 4K (3840px) */
         max-width: 3840px;
         margin: 0 auto;
     }
@@ -21,6 +19,9 @@
         margin-bottom: clamp(30px, 4vw, 60px);
         border-bottom: 2px solid #1a1a1a;
         padding-bottom: clamp(20px, 3vw, 40px);
+        
+        /* Moduł bazowy: definicja szerokości pionowego kadru */
+        --item-size: clamp(260px, 20vw, 420px);
     }
 
     h2 {
@@ -41,36 +42,51 @@
         scrollbar-width: none;
         cursor: grab;
         user-select: none;
-        align-items: flex-start; /* Przypina obiekty do górnej krawędzi */
+        align-items: flex-start; /* Przypina media do górnej krawędzi karuzeli */
     }
 
     .media-slider.active {
-        cursor: grabbing; /* Zmienia kursor na zamkniętą dłoń w trakcie przeciągania */
+        cursor: grabbing;
     }
 
     .media-slider::-webkit-scrollbar {
         display: none;
     }
 
-    /* Sztywna szerokość bazowa – wysokość wynika proporcjonalnie z pliku.
-       Dzięki temu wysokość kadru poziomego jest równa szerokości kadru pionowego! */
+    /* DOMYŚLNIE (Pionowe media i kwadraty) */
     .media-item {
-        width: var(--item-size, 350px);
+        width: var(--item-size);
         height: auto;
         flex-shrink: 0;
         object-fit: contain;
     }
 
-    /* Ograniczenia dla urządzeń mobilnych */
-    @media (max-width: 768px) {
+    /* KADRY POZIOME (Landscape) - ich WYSOKOŚĆ staje się równa SZEROKOŚCI kadru pionowego! */
+    .media-item[style*="aspect-ratio"],
+    img.media-item,
+    video.media-item {
+        /* Przeglądarka auto-wykrywa media poziome po proporcjach */
+    }
+
+    @supports (aspect-ratio: 1) {
+        /* Reguła dla mediów, których szerokość jest większa od wysokości (poziome) */
         .media-item {
-            width: 55vw; /* Podgląd kolejnego kadru po prawej stronie */
-            height: auto;
-            max-height: none;
+            /* Jeśli kadr jest poziomy, wysokość wyniesie dokładnie tyle, ile szerokość pionowych */
+            max-height: var(--item-size);
         }
     }
 
-    /* Strzałki */
+    /* Ograniczenia dla urządzeń mobilnych */
+    @media (max-width: 768px) {
+        .project-item {
+            --item-size: 55vw;
+        }
+        .media-item {
+            max-height: 55vw;
+        }
+    }
+
+    /* Strzałki nawigacyjne */
     .slider-arrow {
         position: absolute;
         top: 50%;
@@ -89,7 +105,7 @@
 </head>
 <body>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>1. Dziewczyny Maszyny Event Design</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -107,7 +123,7 @@
         </div>
     </article>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>2. Supplement packaging & promotion</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -123,7 +139,7 @@
         </div>
     </article>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>3. Movement diagram</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -138,7 +154,7 @@
         </div>
     </article>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>4. Sad Typography</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -154,7 +170,7 @@
         </div>
     </article>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>5. Circular Economy Explainer Video</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -170,7 +186,7 @@
         </div>
     </article>
 
-    <article class="project-item" style="--item-size: clamp(280px, 22vw, 500px);">
+    <article class="project-item">
         <h2>6. Wine label Winnica Łukasz</h2>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
@@ -188,6 +204,41 @@
     </article>
 
     <script>
+        // JS automatycznie nadaje właściwość aspect-ratio po załadowaniu mediów,
+        // dzięki czemu kadr poziomy natychmiast dopasowuje swoją wysokość do szerokości kadru pionowego.
+        function adjustMediaAspectRatios() {
+            const mediaItems = document.querySelectorAll('.media-item');
+            
+            mediaItems.forEach(item => {
+                const applyRatio = (width, height) => {
+                    if (!width || !height) return;
+                    if (width > height) {
+                        // Jeśli plik jest poziomy: ustawiamy jego wysokość na sztywno = --item-size
+                        item.style.height = 'var(--item-size)';
+                        item.style.width = 'auto';
+                    } else {
+                        // Jeśli plik jest pionowy: szerokość = --item-size
+                        item.style.width = 'var(--item-size)';
+                        item.style.height = 'auto';
+                    }
+                };
+
+                if (item.tagName === 'IMG') {
+                    if (item.complete) {
+                        applyRatio(item.naturalWidth, item.naturalHeight);
+                    } else {
+                        item.addEventListener('load', () => applyRatio(item.naturalWidth, item.naturalHeight));
+                    }
+                } else if (item.tagName === 'VIDEO') {
+                    if (item.readyState >= 1) {
+                        applyRatio(item.videoWidth, item.videoHeight);
+                    } else {
+                        item.addEventListener('loadedmetadata', () => applyRatio(item.videoWidth, item.videoHeight));
+                    }
+                }
+            });
+        }
+
         function easeInOutCubic(t) {
             return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
@@ -309,13 +360,14 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            adjustMediaAspectRatios();
+
             const sliders = document.querySelectorAll(".media-slider");
 
             sliders.forEach((slider) => {
                 slider.addEventListener("scroll", () => checkScrollPosition(slider));
                 checkScrollPosition(slider);
 
-                // Obsługa przewijania myszką (Drag-to-scroll)
                 let isDown = false;
                 let startX;
                 let scrollLeft;
@@ -347,6 +399,7 @@
             });
 
             window.addEventListener('load', () => {
+                adjustMediaAspectRatios();
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 

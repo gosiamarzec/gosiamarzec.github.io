@@ -21,9 +21,9 @@
             --border-width: 2px;
             --border-color: #1a1a1a;
 
-            --slider-gap: 1vw;            
-            --col-gap-1-2: 2.5vw;         
-            --col-gap-2-3: 3.5vw;         
+            --slider-gap: 1vw;             
+            --col-gap-1-2: 2.5vw;          
+            --col-gap-2-3: 3.5vw;          
 
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
@@ -210,9 +210,11 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
+        /* --- UKŁAD KOLUMN W SEKCJI TEKSTOWEJ (2 W RZĘDZIE + 1 PONIŻEJ) --- */
         .project-info {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr 2.2fr;
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 1.5vw;
             align-items: flex-start;
             font-size: var(--font-size-base);
             line-height: 1.25;
@@ -221,12 +223,20 @@
             font-weight: var(--font-weight-regular);
         }
 
+        /* Kolumna 1 i Kolumna 2 w jednym rzędzie (dzielą po 50% z uwzględnieniem odstępu) */
         .project-info > div:nth-child(1) {
+            flex: 0 0 calc(50% - (var(--col-gap-1-2) / 2));
             padding-right: var(--col-gap-1-2);
         }
 
         .project-info > div:nth-child(2) {
-            padding-right: var(--col-gap-2-3);
+            flex: 0 0 calc(50% - (var(--col-gap-1-2) / 2));
+        }
+
+        /* Kolumna 3 spada na dół i zajmuje całą szerokość */
+        .project-info > div:nth-child(3) {
+            flex: 0 0 100%;
+            margin-top: 0.5vw;
         }
 
         .project-title {
@@ -385,9 +395,8 @@
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
             .media-item { width: 75vw !important; }
-            .project-info { grid-template-columns: 1fr; gap: 12px; }
             .project-info > div:nth-child(1),
-            .project-info > div:nth-child(2) { padding-right: 0; }
+            .project-info > div:nth-child(2) { flex: 0 0 100%; padding-right: 0; }
             #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
             .site-footer { 
                 flex-direction: row; 
@@ -690,8 +699,8 @@
             
             if (Math.abs(distance) < 1) return;
 
-            const speedFactor = 2.0; 
-            const minDuration = 1200; 
+            const speedFactor = 1.5; 
+            const minDuration = 1000; 
             const maxDuration = 3000; 
 
             const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
@@ -770,105 +779,10 @@
                 }
             }
 
-            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
-                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
+            if (Math.abs(targetScroll - slider.scrollLeft) >= 10) {
+                animateScroll(slider, targetScroll);
             }
-
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-            animateScroll(slider, targetScroll);
         }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.parentElement;
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            if (!leftArrow || !rightArrow) return;
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            
-            if (maxScroll <= 0) {
-                leftArrow.style.display = 'none';
-                rightArrow.style.display = 'none';
-                return;
-            }
-
-            const isAtStart = slider.scrollLeft <= 5;
-            const isAtEnd = slider.scrollLeft >= maxScroll - 5;
-
-            leftArrow.style.display = isAtStart ? 'none' : 'flex';
-            rightArrow.style.display = isAtEnd ? 'none' : 'flex';
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const sliders = document.querySelectorAll(".media-slider");
-
-            sliders.forEach((slider) => {
-                slider.addEventListener("scroll", () => checkScrollPosition(slider));
-                checkScrollPosition(slider);
-
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                slider.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    slider.classList.add('active');
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                });
-
-                slider.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
-
-                slider.addEventListener('mouseup', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
-
-                slider.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    slider.scrollLeft = scrollLeft - walk;
-                });
-            });
-
-            window.addEventListener('load', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-
-            const sliderObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        checkScrollPosition(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            sliders.forEach(slider => sliderObserver.observe(slider));
-
-            window.addEventListener('resize', () => {
-                sliders.forEach((slider) => checkScrollPosition(slider));
-            });
-
-            const videos = document.querySelectorAll("video.media-item");
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.play().catch(() => {});
-                    } else {
-                        entry.target.pause();
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            videos.forEach(video => videoObserver.observe(video));
-        });
     </script>
-
 </body>
 </html>

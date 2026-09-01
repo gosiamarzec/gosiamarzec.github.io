@@ -175,9 +175,9 @@
             
             if (Math.abs(distance) < 1) return;
 
-            const speedFactor = 1.6; 
-            const minDuration = 800; 
-            const maxDuration = 2000; 
+            const speedFactor = 2.0; 
+            const minDuration = 1200; 
+            const maxDuration = 3000; 
 
             const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
             let startTime = null;

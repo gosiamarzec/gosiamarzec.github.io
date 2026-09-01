@@ -41,7 +41,7 @@
     scrollbar-width: none;
     cursor: grab;
     user-select: none;
-    align-items: flex-start; /* Przypina kadry do górnej krawędzi */
+    align-items: flex-start; /* Przypina do górnej krawędzi */
 }
 
     .media-slider.active {
@@ -52,14 +52,18 @@
         display: none;
     }
 
-/* Skalowanie na PC oparte na szerokości */
+/* W CSS ustawiamy domyślne zachowanie mediów */
 .media-item {
-    /* Sztywna lub elastyczna szerokość (np. clamp) */
-    width: clamp(250px, 22vw, 550px); 
-    height: auto;                     /* Wysokość wynika bezpośrednio z proporcji pliku */
+    /* Sztywna szerokość bazowa, wysokość wynika z pliku */
+    width: var(--item-size, 350px);
+    height: auto;
     flex-shrink: 0;
     object-fit: contain;
 }
+
+/* Jeśli kadr jest pionowy (portrait), jego wysokość z definiowanej szerokości wyjdzie np. 525px.
+   Jeśli jest poziomy (landscape), jego szerokość będzie większa, ale wysokość wyniesie dokładnie tyle, 
+   ile wynosi szerokość pionowych obiektów (czyli --item-size)! */
 
 /* Urządzenia mobilne */
 @media (max-width: 768px) {

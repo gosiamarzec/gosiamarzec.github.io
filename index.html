@@ -21,13 +21,43 @@
         padding-bottom: clamp(20px, 3vw, 40px);
     }
 
-    /* INDYWIDUALNE SZEROKOŚCI DLA DANYCH SEKCJI */
-    .project-item:nth-of-type(1) { --item-width: clamp(200px, 30vw, 500px); }
-    .project-item:nth-of-type(2) { --item-width: clamp(200px, 30vw, 500px); }
-    .project-item:nth-of-type(3) { --item-width: clamp(200px, 30vw, 500px); }
-    .project-item:nth-of-type(4) { --item-width: clamp(200px, 30vw, 500px); }
-    .project-item:nth-of-type(5) { --item-width: clamp(100px, 50vw, 1000px); }
-    .project-item:nth-of-type(6) { --item-width: clamp(200px, 30vw, 500px); }
+    /* INDYWIDUALNE SZEROKOŚCI DLA DANYCH SEKCJI (PIONOWE I POZIOME OSOBNO) */
+    
+    /* Sekcja 1: Dziewczyny Maszyny */
+    .project-item:nth-of-type(1) { 
+        --portrait-width: clamp(140px, 12vw, 220px); 
+        --landscape-width: clamp(260px, 22vw, 400px); 
+    }
+    
+    /* Sekcja 2: Supplement packaging */
+    .project-item:nth-of-type(2) { 
+        --portrait-width: clamp(150px, 13vw, 240px); 
+        --landscape-width: clamp(300px, 26vw, 460px); 
+    }
+    
+    /* Sekcja 3: Movement diagram */
+    .project-item:nth-of-type(3) { 
+        --portrait-width: clamp(160px, 14vw, 260px); 
+        --landscape-width: clamp(280px, 24vw, 420px); 
+    }
+    
+    /* Sekcja 4: Sad Typography */
+    .project-item:nth-of-type(4) { 
+        --portrait-width: clamp(150px, 13vw, 230px); 
+        --landscape-width: clamp(250px, 20vw, 360px); 
+    }
+    
+    /* Sekcja 5: Circular Economy Video */
+    .project-item:nth-of-type(5) { 
+        --portrait-width: clamp(180px, 15vw, 280px); 
+        --landscape-width: clamp(340px, 30vw, 550px); 
+    }
+    
+    /* Sekcja 6: Wine label Winnica Łukasz */
+    .project-item:nth-of-type(6) { 
+        --portrait-width: clamp(130px, 11vw, 200px); 
+        --landscape-width: clamp(260px, 22vw, 380px); 
+    }
 
     h2 {
         font-size: clamp(1rem, 1.2vw + 0.5rem, 1.8rem);
@@ -58,17 +88,28 @@
         display: none;
     }
 
+    /* KADRY PRZYJMUJĄ WARTOŚCI PRZYPISANE DO DANEJ SEKCJI */
     .media-item {
-        width: var(--item-width) !important;
         height: auto !important;
         flex-shrink: 0;
         object-fit: contain;
         display: block;
     }
 
+    .media-item.portrait {
+        width: var(--portrait-width) !important;
+    }
+
+    .media-item.landscape {
+        width: var(--landscape-width) !important;
+    }
+
     @media (max-width: 768px) {
-        .project-item {
-            --item-width: 65vw !important;
+        .media-item.portrait {
+            width: 60vw !important;
+        }
+        .media-item.landscape {
+            width: 85vw !important;
         }
     }
 
@@ -95,14 +136,14 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
-                <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                <img class="media-item portrait" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -113,12 +154,12 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
-                <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2" ondragstart="return false;">
-                <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" ondragstart="return false;">
-                <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" ondragstart="return false;">
-                <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" ondragstart="return false;">
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                <img class="media-item landscape" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
+                <img class="media-item landscape" src="images/2/hagd_2.jpg" alt="HAGD 2" ondragstart="return false;">
+                <img class="media-item landscape" src="images/2/hagd_3.jpg" alt="HAGD 3" ondragstart="return false;">
+                <img class="media-item landscape" src="images/2/hagd_4.png" alt="HAGD 4" ondragstart="return false;">
+                <img class="media-item landscape" src="images/2/hagd_5.png" alt="HAGD 5" ondragstart="return false;">
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -129,11 +170,11 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
-                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2" ondragstart="return false;">
-                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3" ondragstart="return false;">
-                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4" ondragstart="return false;">
-                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
+                <img class="media-item portrait" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
+                <img class="media-item portrait" src="images/3/movement_2.png" alt="Movement 2" ondragstart="return false;">
+                <img class="media-item portrait" src="images/3/movement_3.png" alt="Movement 3" ondragstart="return false;">
+                <img class="media-item portrait" src="images/3/movement_4.png" alt="Movement 4" ondragstart="return false;">
+                <img class="media-item portrait" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -144,12 +185,12 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
-                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" ondragstart="return false;">
-                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                <video class="media-item portrait" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                <img class="media-item landscape" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" ondragstart="return false;">
+                <img class="media-item landscape" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -160,12 +201,12 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                <video class="media-item" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                <video class="media-item landscape" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>
@@ -176,13 +217,13 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
             <div class="media-slider">
-                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6" ondragstart="return false;">
-                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_2.png" alt="Wine 2" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_3.png" alt="Wine 3" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_4.png" alt="Wine 4" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_5.png" alt="Wine 5" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_6.png" alt="Wine 6" ondragstart="return false;">
+                <img class="media-item portrait" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
             </div>
             <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
         </div>

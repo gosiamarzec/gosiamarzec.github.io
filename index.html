@@ -21,7 +21,10 @@
             --border-width: 2px;
             --border-color: #1a1a1a;
 
-            --slider-gap: 1vw;              
+            --slider-gap: 1vw;            
+            --col-gap-1-2: 2.5vw;         
+            --col-gap-2-3: 3.5vw;         
+
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
             --nav-padding-bottom: 6px;      
@@ -207,13 +210,9 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
-        /* =========================================================
-           UKŁAD KOLUMN W SEKCJI TEKSTOWEJ PROJEKTU (RESPONSYWNY)
-           ========================================================= */
         .project-info {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 1.5vw;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 2.2fr;
             align-items: flex-start;
             font-size: var(--font-size-base);
             line-height: 1.25;
@@ -222,60 +221,12 @@
             font-weight: var(--font-weight-regular);
         }
 
-        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITOROWIE) — 3 KOLUMNY W 1 RZĘDZIE */
-        .col-title {
-            /* Zmieniaj procenty szerokości pierwszej kolumny (np. 30%) */
-            flex: 0 0 30%;
-            max-width: 30%;
-            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
+        .project-info > div:nth-child(1) {
+            padding-right: var(--col-gap-1-2);
         }
 
-        .col-scope {
-            /* Zmieniaj procenty szerokości drugiej kolumny (np. 20%) */
-            flex: 0 0 20%;
-            max-width: 20%;
-            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
-        }
-
-        .col-desc {
-            /* Zmieniaj procenty szerokości trzeciej kolumny (np. 50%) */
-            flex: 0 0 50%;
-            max-width: 50%;
-        }
-
-        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
-        @media (max-width: 720px) {
-            .col-title {
-                /* Proporcja 30 do 20 skrojona do pełnego rzędu (30 / 50 = 60%) */
-                flex: 0 0 60%;
-                max-width: 60%;
-            }
-
-            .col-scope {
-                /* Proporcja 20 do 30 skrojona do pełnego rzędu (20 / 50 = 40%) */
-                flex: 0 0 40%;
-                max-width: 40%;
-                padding-right: 0; /* Zerujemy prawy margines na końcu rzędu */
-                margin-left: auto;
-            }
-
-            .col-desc {
-                /* Trzecia kolumna przeskakuje pod spód i zajmuje 100% szerokości */
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-top: 1vw; /* Odstęp pionowy od górnych kolumn */
-            }
-        }
-
-        /* 3. MOBILKI (WYŚWIETLACZE PIONOWE) — PEŁNY UKŁAD JEDNOKOLUMNOWY */
-        @media (max-width: 600px) {
-            .col-title,
-            .col-scope,
-            .col-desc {
-                flex: 0 0 100%;
-                max-width: 100%;
-                padding-right: 0;
-            }
+        .project-info > div:nth-child(2) {
+            padding-right: var(--col-gap-2-3);
         }
 
         .project-title {
@@ -323,7 +274,7 @@
         }
 
         /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
+           INDYWIDUALNE SZEROKOŚCI SEKCJI (NOWA MACIERZ 1920px)
            ========================================================= */
 
         /* SEKCJA 1 */
@@ -430,24 +381,20 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ GLOBALNA MOBILNA */
+        /* RESPONSYWNOŚĆ MOBILNA */
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
             .media-item { width: 75vw !important; }
-
-            #about-section, #contact-section { 
-                width: 100%; 
-                border-left: none; 
-                border-right: none; 
-            }
-
+            .project-info { grid-template-columns: 1fr; gap: 12px; }
+            .project-info > div:nth-child(1),
+            .project-info > div:nth-child(2) { padding-right: 0; }
+            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
             .site-footer { 
                 flex-direction: row; 
                 justify-content: space-between; 
                 align-items: center; 
                 gap: 8px; 
             }
-
             .footer-email {
                 font-size: clamp(14px, 3.2vw, 18px);
             }
@@ -503,17 +450,17 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Dziewczyny<br>Maszyny<br>Event Design
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Visual identity,<br>
                     Digital design<br>for social media,<br>
                     Typeface,<br>
                     Motion design
                 </div>
-                <div class="col-desc">
+                <div>
                     The visual identity of the mentoring program organized by the Dziewczyny-Maszyny group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
                 </div>
             </div>
@@ -540,15 +487,15 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Supplement packaging & promotion
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Packaging design,<br>
                     Promotional materials
                 </div>
-                <div class="col-desc">
+                <div>
                     Packaging design and promotional strategy for dietary supplement line.
                 </div>
             </div>
@@ -573,15 +520,15 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Movement diagram
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Information design,<br>
                     Infographics
                 </div>
-                <div class="col-desc">
+                <div>
                     Visualizing movement metrics through graphic dynamic structures.
                 </div>
             </div>
@@ -605,15 +552,15 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Sad Typography
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Typography design,<br>
                     Poster series
                 </div>
-                <div class="col-desc">
+                <div>
                     Experimental typographic study exploring spatial layout and emotion.
                 </div>
             </div>
@@ -638,15 +585,15 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Circular Economy Explainer Video
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Motion Graphics,<br>
                     Storyboarding
                 </div>
-                <div class="col-desc">
+                <div>
                     Educational video explaining circular economy concepts.
                 </div>
             </div>
@@ -671,15 +618,15 @@
 
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title project-title">
+                <div class="project-title">
                     Wine label Winnica Łukasz
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Label Design,<br>
                     Print production
                 </div>
-                <div class="col-desc">
+                <div>
                     Label design series for local winery Winnica Łukasz.
                 </div>
             </div>
@@ -743,8 +690,8 @@
             
             if (Math.abs(distance) < 1) return;
 
-            const speedFactor = 1.5; 
-            const minDuration = 1000; 
+            const speedFactor = 2.0; 
+            const minDuration = 1200; 
             const maxDuration = 3000; 
 
             const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
@@ -809,14 +756,119 @@
 
                 if (prevItem) {
                     const prevItemRect = prevItem.getBoundingClientRect();
-                    targetScroll = slider.scrollLeft + (prevItemRect.left - sliderRect.left);
+                    const prevItemWidth = prevItemRect.width;
+
+                    let calculatedTarget = slider.scrollLeft - (sliderRect.right - prevItemRect.right);
+
+                    if (calculatedTarget < prevItemWidth * 0.5) {
+                        targetScroll = 0;
+                    } else {
+                        targetScroll = calculatedTarget;
+                    }
                 } else {
                     targetScroll = 0;
                 }
             }
 
+            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
+                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
+            }
+
+            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
             animateScroll(slider, targetScroll);
         }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.parentElement;
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+            if (!leftArrow || !rightArrow) return;
+
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            if (maxScroll <= 0) {
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'none';
+                return;
+            }
+
+            const isAtStart = slider.scrollLeft <= 5;
+            const isAtEnd = slider.scrollLeft >= maxScroll - 5;
+
+            leftArrow.style.display = isAtStart ? 'none' : 'flex';
+            rightArrow.style.display = isAtEnd ? 'none' : 'flex';
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const sliders = document.querySelectorAll(".media-slider");
+
+            sliders.forEach((slider) => {
+                slider.addEventListener("scroll", () => checkScrollPosition(slider));
+                checkScrollPosition(slider);
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    slider.classList.add('active');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                    slider.classList.remove('active');
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+            });
+
+            window.addEventListener('load', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
+            });
+
+            const sliderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        checkScrollPosition(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sliders.forEach(slider => sliderObserver.observe(slider));
+
+            window.addEventListener('resize', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
+            });
+
+            const videos = document.querySelectorAll("video.media-item");
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play().catch(() => {});
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            videos.forEach(video => videoObserver.observe(video));
+        });
     </script>
+
 </body>
 </html>

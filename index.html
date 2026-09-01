@@ -7,11 +7,15 @@
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-        background-color: #ededed;
-        padding: clamp(15px, 3vw, 40px);
-        font-family: sans-serif;
-    }
+body {
+    background-color: #ededed;
+    padding: clamp(15px, 3vw, 40px);
+    font-family: sans-serif;
+    
+    /* Zabezpieczenie przed rozlewaniem layoutu przy silnym oddaleniu (Ctrl -) */
+    max-width: 1800px; /* Maksymalna szerokość treści */
+    margin: 0 auto;    /* Wyśrodkowanie widoku */
+}
 
     .project-item {
         margin-bottom: clamp(30px, 4vw, 60px);

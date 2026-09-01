@@ -244,31 +244,28 @@
         }
 
         /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
-        @media (max-width: 720px) {
+        @media (max-width: 850px) {
             .col-title {
-                /* Proporcja 30 do 20 skrojona do pełnego rzędu (30 / 50 = 60%) */
-                flex: 0 0 60%;
-                max-width: 60%;
+                flex: 0 0 auto;
+                max-width: 50%;
             }
 
             .col-scope {
-                /* Proporcja 20 do 30 skrojona do pełnego rzędu (20 / 50 = 40%) */
-                flex: 0 0 40%;
-                max-width: 40%;
-                padding-right: 0; /* Zerujemy prawy margines na końcu rzędu */
-                margin-left: auto;
+                flex: 0 0 auto;
+                max-width: 50%;
+                padding-right: 0;
+                margin-left: auto; /* Przesuwa cały blok maksymalnie w prawo */
+                text-align: left;  /* Tekst w bloku wyrównany do lewej */
             }
 
             .col-desc {
-                /* Trzecia kolumna przeskakuje pod spód i zajmuje 100% szerokości */
                 flex: 0 0 100%;
                 max-width: 100%;
-                margin-top: 1vw; /* Odstęp pionowy od górnych kolumn */
+                margin-top: 1vw;
             }
         }
 
-        /* 3. MOBILKI (WYŚWIETLACZE PIONOWE) — PEŁNY UKŁAD JEDNOKOLUMNOWY */
-        @media (max-width: 374px) {
+        @media (max-width: 200px) {
             .col-title,
             .col-scope,
             .col-desc {

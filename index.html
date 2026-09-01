@@ -12,9 +12,9 @@ body {
     padding: clamp(15px, 3vw, 40px);
     font-family: sans-serif;
     
-    /* Zabezpieczenie przed rozlewaniem layoutu przy silnym oddaleniu (Ctrl -) */
-    max-width: 1800px; /* Maksymalna szerokość treści */
-    margin: 0 auto;    /* Wyśrodkowanie widoku */
+    /* Rozszerzenie limitu do pełnej szerokości 4K (3840px) */
+    max-width: 3840px;
+    margin: 0 auto;
 }
 
     .project-item {
@@ -46,12 +46,13 @@ body {
     }
 
     /* Skalowanie bazowe na PC z dolnym i górnym limitem zoomu */
-    .media-item {
-        height: clamp(380px, 35vw, 650px); /* Nie skurczy się poniżej 380px i nie urośnie powyżej 650px */
-        width: auto;
-        flex-shrink: 0;
-        object-fit: contain;
-    }
+.media-item {
+    /* Podbicie górnego limitu wysokości do 900px, by media rosły na 1440p i UltraWide */
+    height: clamp(380px, 35vw, 900px); 
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+}
 
     /* Ograniczenia dla urządzeń mobilnych */
     @media (max-width: 768px) {

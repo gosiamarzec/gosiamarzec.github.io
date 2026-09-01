@@ -37,7 +37,7 @@
             overflow-x: auto;
             scrollbar-width: none;
             scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
+            /* Usunięto scroll-snap-type, aby JS mógł precyzyjnie pozycjonować widok */
         }
 
         .media-slider::-webkit-scrollbar {
@@ -48,7 +48,6 @@
             max-height: 450px;
             width: auto;
             flex-shrink: 0;
-            scroll-snap-align: start;
         }
 
         /* Strzałki */
@@ -172,12 +171,40 @@
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
-            const scrollStep = slider.clientWidth;
+            const items = Array.from(slider.querySelectorAll('.media-item'));
             
-            slider.scrollBy({
-                left: direction * scrollStep,
-                behavior: 'smooth'
-            });
+            if (!items.length) return;
+
+            const sliderRect = slider.getBoundingClientRect();
+            const tolerance = 5; // Margines na zaokrąglenia przeglądarki
+
+            if (direction === 1) {
+                // PRZEWIJANIE W PRAWO: Szukamy pierwszego elementu wystającego po prawej stronie
+                const nextItem = items.find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.right > sliderRect.right + tolerance;
+                });
+
+                if (nextItem) {
+                    const targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
+                    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                } else {
+                    slider.scrollTo({ left: slider.scrollWidth, behavior: 'smooth' });
+                }
+            } else {
+                // PRZEWIJANIE W LEWO: Szukamy pierwszego uciętego/ukrytego elementu z lewej strony
+                const prevItem = items.slice().reverse().find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.left < sliderRect.left - tolerance;
+                });
+
+                if (prevItem) {
+                    const targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
+                    slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                } else {
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                }
+            }
         }
 
         function checkScrollPosition(slider) {

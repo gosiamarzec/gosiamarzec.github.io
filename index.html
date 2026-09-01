@@ -224,23 +224,26 @@
 
         /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITOROWIE) — 3 KOLUMNY W 1 RZĘDZIE */
         .col-title {
+            /* Zmieniaj procenty szerokości pierwszej kolumny (np. 30%) */
             flex: 0 0 30%;
             max-width: 30%;
-            padding-right: 2vw;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
         }
 
         .col-scope {
+            /* Zmieniaj procenty szerokości drugiej kolumny (np. 20%) */
             flex: 0 0 20%;
             max-width: 20%;
-            padding-right: 2vw;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
         }
 
         .col-desc {
+            /* Zmieniaj procenty szerokości trzeciej kolumny (np. 50%) */
             flex: 0 0 50%;
             max-width: 50%;
         }
 
-        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA — PRZESKOK NA UKŁAD 1+2 */
+        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
         @media (max-width: 850px) {
             .col-title {
                 flex: 0 0 auto;
@@ -251,8 +254,8 @@
                 flex: 0 0 auto;
                 max-width: 50%;
                 padding-right: 0;
-                margin-left: auto;
-                text-align: left;
+                margin-left: auto; /* Przesuwa cały blok maksymalnie w prawo */
+                text-align: left;  /* Tekst w bloku wyrównany do lewej */
             }
 
             .col-desc {
@@ -539,12 +542,11 @@
                 </div>
                 <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Packaging design,<br>
-                    Promotional materials
+                    Packaging,<br>
+                    Digital design<br>for social media
                 </div>
                 <div class="col-desc">
-                    Packaging design and promotional strategy for dietary supplement line.
-                </div>
+                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.                </div>
             </div>
 
             <div class="slider-wrapper">
@@ -568,15 +570,16 @@
         <article class="project-item">
             <div class="project-info">
                 <div class="col-title project-title">
-                    Movement diagram
+                    Movement<br>diagram
                 </div>
                 <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Information design,<br>
-                    Infographics
+                    Visual identity,<br>
+                    Illustrations,<br>
+                    Digital design<br>for social media
                 </div>
                 <div class="col-desc">
-                    Visualizing movement metrics through graphic dynamic structures.
+                    Graphic design project for cyclical physical movement courses. The graphic identity is based on presenting certain movement complexities in the form of simplified diagrams. This reflects the way movements are worked on during the classes.
                 </div>
             </div>
 
@@ -600,15 +603,18 @@
         <article class="project-item">
             <div class="project-info">
                 <div class="col-title project-title">
-                    Sad Typography
+                    Sad<br>Typography
                 </div>
                 <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Typography design,<br>
-                    Poster series
+                    Visual identity,<br>
+                    Digital design<br>for social media,<br>
+                    Typeface,<br>
+                    Video recording,<br>
+                    Video editing
                 </div>
                 <div class="col-desc">
-                    Experimental typographic study exploring spatial layout and emotion.
+                    Sad Dances are contemporary dance classes that allow participants to release their emotions, acting as a kind of catharsis. The visuals of the moving poster are a tribute to the organic movements of dance and refer to the nature-inspired, wavy, and dynamic shapes known from Art Nouveau.
                 </div>
             </div>
 
@@ -633,15 +639,17 @@
         <article class="project-item">
             <div class="project-info">
                 <div class="col-title project-title">
-                    Circular Economy Explainer Video
+                    Circular<br>Economy<br>Explainer Video
                 </div>
                 <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Motion Graphics,<br>
-                    Storyboarding
+                    Stop-motion animation,<br>
+                    Digital design,<br>
+                    Motion design,<br>
+                    Video editing
                 </div>
                 <div class="col-desc">
-                    Educational video explaining circular economy concepts.
+                    Explanatory video, which attempts to turn our inaction in the face of environmental disaster into action. The project aimed to present the idea of the natural system as a whole, of which we are an integral part, using the concept of the circular economy. Using stop-motion animation helps to create an atmosphere that feels closer and more grounded in reality. Motion design is the main element used to explain the discussed content.
                 </div>
             </div>
 
@@ -666,15 +674,15 @@
         <article class="project-item">
             <div class="project-info">
                 <div class="col-title project-title">
-                    Wine label Winnica Łukasz
+                    Wine label<br>Winnica Łukasz
                 </div>
                 <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Label Design,<br>
-                    Print production
+                    Brand identity,<br>
+                    Packaging
                 </div>
                 <div class="col-desc">
-                    Label design series for local winery Winnica Łukasz.
+                    The wine label was created for a family winery with deep agricultural roots. The project was about combining nurturing relationships between people and nature and honoring the cultivation experience that describes the vineyard and its owners. This is depicted in the graphic as a combination of nine unique fields (nine family members) forming color transitions (relationships). The colors are chosen to match the character of the wine.
                 </div>
             </div>
 
@@ -760,21 +768,6 @@
             requestAnimationFrame(step);
         }
 
-        function updateArrowVisibility(slider) {
-            const wrapper = slider.parentElement;
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-            
-            if (!leftArrow || !rightArrow) return;
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            const currentScroll = slider.scrollLeft;
-            const tolerance = 5;
-
-            leftArrow.style.display = currentScroll > tolerance ? 'flex' : 'none';
-            rightArrow.style.display = currentScroll < (maxScroll - tolerance) ? 'flex' : 'none';
-        }
-
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;
             const slider = wrapper.querySelector('.media-slider');
@@ -784,93 +777,48 @@
 
             const sliderRect = slider.getBoundingClientRect();
             const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
             const isMobile = window.innerWidth <= 768;
             const tolerance = isMobile ? 1 : 5;
 
             let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
-                for (let item of items) {
+                let nextItem = items.find(item => {
                     const itemRect = item.getBoundingClientRect();
-                    const itemOffsetLeft = item.offsetLeft - slider.offsetLeft;
+                    return itemRect.right > sliderRect.right + tolerance;
+                });
+
+                if (nextItem) {
+                    const nextItemRect = nextItem.getBoundingClientRect();
+                    const nextItemWidth = nextItemRect.width;
                     
-                    if (itemOffsetLeft > slider.scrollLeft + tolerance) {
-                        targetScroll = itemOffsetLeft;
-                        break;
+                    let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
+
+                    if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
+                        targetScroll = maxScroll;
+                    } else {
+                        targetScroll = calculatedTarget;
                     }
+                } else {
+                    targetScroll = maxScroll;
                 }
             } else {
-                for (let i = items.length - 1; i >= 0; i--) {
-                    const item = items[i];
-                    const itemOffsetLeft = item.offsetLeft - slider.offsetLeft;
-                    
-                    if (itemOffsetLeft < slider.scrollLeft - tolerance) {
-                        targetScroll = itemOffsetLeft;
-                        break;
-                    }
+                let prevItem = items.slice().reverse().find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.left < sliderRect.left - tolerance;
+                });
+
+                if (prevItem) {
+                    const prevItemRect = prevItem.getBoundingClientRect();
+                    targetScroll = slider.scrollLeft + (prevItemRect.left - sliderRect.left);
+                } else {
+                    targetScroll = 0;
                 }
             }
 
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
             animateScroll(slider, targetScroll);
         }
-
-        /* --- DRAG TO SCROLL (PRZECIĄGANIE MYSZKĄ) & AUTO-ODTWARZANIE WIDEO --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const sliders = document.querySelectorAll('.media-slider');
-
-            sliders.forEach(slider => {
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                // Inicjalizacja widoczności strzałek
-                updateArrowVisibility(slider);
-
-                slider.addEventListener('scroll', () => {
-                    updateArrowVisibility(slider);
-                });
-
-                slider.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    slider.classList.add('active');
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                });
-
-                slider.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
-
-                slider.addEventListener('mouseup', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
-
-                slider.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    slider.scrollLeft = scrollLeft - walk;
-                });
-            });
-
-            // Auto-play dla elementów video
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.play().catch(() => {
-                    // Ciche obsłużenie opcji wyłączonego autoplaya w przeglądarce
-                });
-            });
-        });
-
-        window.addEventListener('resize', () => {
-            document.querySelectorAll('.media-slider').forEach(slider => {
-                updateArrowVisibility(slider);
-            });
-        });
     </script>
 </body>
 </html>

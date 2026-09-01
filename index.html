@@ -115,8 +115,7 @@
             if (Math.abs(distance) < 1) return;
 
             // KONTROLA PRĘDKOŚCI:
-            // 0.8 ms na 1px przesunięcia (im większa liczba, tym WOLNIEJ)
-            // Przy 0.8: dystans 500px pokonuje w 400ms, a dystans 1500px w 1200ms
+            // 1.5 ms na 1px przesunięcia (im większa liczba, tym WOLNIEJ)
             const speedFactor = 1.5; 
             
             // Minimalny i maksymalny czas (zabezpieczenie dla bardzo małych/dużych przesunięć)
@@ -153,6 +152,9 @@
 
             const sliderRect = slider.getBoundingClientRect();
             const tolerance = 5;
+            
+            // Fizyczny maksymalny limit przewijania
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
             let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
@@ -164,7 +166,7 @@
                 if (nextItem) {
                     targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
                 } else {
-                    targetScroll = slider.scrollWidth - slider.clientWidth;
+                    targetScroll = maxScroll;
                 }
             } else {
                 const prevItem = items.slice().reverse().find(item => {
@@ -179,7 +181,11 @@
                 }
             }
 
-            // Uruchamiamy naszą customową animację zamiast natywnego scrollTo
+            // ZABEZPIECZENIE PRZED KRAWĘDZIĄ:
+            // Docinamy docelową pozycję do realnych granic skrola [0, maxScroll]
+            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+            // Uruchamiamy animację ze skorygowanym dystansem
             animateScroll(slider, targetScroll);
         }
 

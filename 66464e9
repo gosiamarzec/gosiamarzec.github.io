@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gosia Marzec - Portfolio</title>
+    <style>
+        /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
+        :root {
+            --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+            --font-size-base: clamp(20px, 1.8vw, 32px); 
+            --font-size-nav: clamp(20px, 1.8vw, 32px);    
+            --formula-font-size: clamp(15px, 1.5vw, 26px);
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-bold: 600;
+
+            --border-width-top: 3px;
+            --border-width: 2px;
+            --border-color: #1a1a1a;
+
+            --slider-gap: 1vw;              
+            --project-padding-top: 1.2vw;    
+            --project-padding-bottom: 2.5vw; 
+            --nav-padding-bottom: 6px;      
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ededed;
+            font-family: var(--font-family-main);
+            color: #1a1a1a;
+            padding: 12px 40px;
+            width: 100%;
+            max-width: 3840px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .main-container {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* --- NAWIGACJA GÓRNA (STICKY) --- */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: var(--nav-padding-bottom);
+            position: sticky;
+            top: 0;
+            background-color: #ededed;
+            z-index: 1000;
+            margin-bottom: 0;
+            transform: translateZ(0);
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            font-family: var(--font-family-main);
+            font-size: var(--font-size-nav);
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            line-height: 1;
+        }
+
+        .nav-button:hover {
+            opacity: 0.7;
+        }
+
+        /* --- NAKŁADKI ABOUT I CONTACT --- */
+        .overlay-panel {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0;
+            background-color: #ededed;
+            z-index: 900;
+            border-bottom: 2px solid var(--border-color);
+            border-top: 2px solid var(--border-color);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+            padding: 32px 28px;
+        }
+
+        .overlay-panel.active {
+            display: block;
+            opacity: 1;
+        }
+
+        #about-section {
+            left: 0;
+            width: 58%;
+            min-width: 340px;
+            max-width: 100%;
+            border-left: none;
+            border-right: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        #contact-section {
+            left: auto;
+            right: 0;
+            width: auto;
+            min-width: 240px;
+            text-align: right;
+            border-left: 2px solid var(--border-color);
+            border-right: none;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        #contact-section .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .contact-link {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-bold);
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- TREŚĆ ABOUT --- */
+        .intro-text {
+            font-size: clamp(20px, 2.1vw, 36px);
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+            margin-bottom: 40px;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .formula-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .formula {
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1.8vw, 32px);
+            font-size: var(--formula-font-size);
+            font-weight: var(--font-weight-bold);
+            line-height: 1.15;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .plus { 
+            font-weight: var(--font-weight-regular); 
+            font-size: 1.1em; 
+            text-align: center;
+            margin: 2px 0;
+        }
+
+        .dash { 
+            font-size: 1.6em; 
+            font-weight: 300; 
+        }
+
+        .arrow { 
+            font-size: 1.5em; 
+            margin-right: 8px; 
+            font-weight: 300;
+        }
+
+        .result { 
+            display: flex; 
+            align-items: center; 
+            white-space: nowrap; 
+            font-weight: var(--font-weight-bold);
+        }
+
+        /* --- STYLIZACJA PROJEKTÓW --- */
+        .project-item {
+            border-bottom: 2px solid var(--border-color);
+            padding-top: var(--project-padding-top);
+            padding-bottom: var(--project-padding-bottom);
+        }
+
+        /* =========================================================
+           UKŁAD KOLUMN W SEKCJI TEKSTOWEJ PROJEKTU (RESPONSYWNY)
+           ========================================================= */
+        .project-info {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 1.5vw;
+            align-items: flex-start;
+            font-size: var(--font-size-base);
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5vw;
+            font-weight: var(--font-weight-regular);
+        }
+
+        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITOROWIE) — 3 KOLUMNY W 1 RZĘDZIE */
+        .col-title {
+            /* Zmieniaj procenty szerokości pierwszej kolumny (np. 30%) */
+            flex: 0 0 30%;
+            max-width: 30%;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
+        }
+
+        .col-scope {
+            /* Zmieniaj procenty szerokości drugiej kolumny (np. 20%) */
+            flex: 0 0 20%;
+            max-width: 20%;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
+        }
+
+        .col-desc {
+            /* Zmieniaj procenty szerokości trzeciej kolumny (np. 50%) */
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
+        @media (max-width: 850px) {
+            .col-title {
+                flex: 0 0 auto;
+                max-width: 50%;
+            }
+
+            .col-scope {
+                flex: 0 0 auto;
+                max-width: 50%;
+                padding-right: 0;
+                margin-left: auto; /* Przesuwa cały blok maksymalnie w prawo */
+                text-align: left;  /* Tekst w bloku wyrównany do lewej */
+            }
+
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 1vw;
+            }
+        }
+
+        @media (max-width: 200px) {
+            .col-title,
+            .col-scope,
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding-right: 0;
+            }
+        }
+
+        .project-title {
+            font-weight: var(--font-weight-medium);
+        }
+
+        .scope-title {
+            text-decoration: underline;
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        /* --- SLIDER I MEDIA --- */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .media-slider {
+            display: flex;
+            gap: var(--slider-gap);
+            overflow-x: auto;
+            padding-bottom: 2px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            cursor: grab;
+            user-select: none;
+            align-items: flex-start;
+            scroll-behavior: auto;
+        }
+
+        .media-slider.active {
+            cursor: grabbing;
+        }
+
+        .media-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .media-item {
+            height: auto !important;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* =========================================================
+           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
+           ========================================================= */
+
+        /* SEKCJA 1 */
+        .m-1-1 { width: clamp(333px, 27vw, 564px) !important; }
+        .m-1-2, .m-1-3, .m-1-4, .m-1-5, .m-1-6, .m-1-7, .m-1-8 { 
+            width: clamp(234px, 19vw, 396px) !important; 
+        }
+
+        /* SEKCJA 2 */
+        .m-2-1, .m-2-3, .m-2-4 { 
+            width: clamp(311px, 25vw, 527px) !important; 
+        }
+        .m-2-2 { width: clamp(424px, 34vw, 718px) !important; }
+        .m-2-5 { width: clamp(480px, 38vw, 812px) !important; }
+        .m-2-6 { width: clamp(259px, 21vw, 438px) !important; }
+
+        /* SEKCJA 3 */
+        .m-3-1, .m-3-2, .m-3-3, .m-3-4 { 
+            width: clamp(381px, 31vw, 645px) !important; 
+        }
+        .m-3-5 { width: clamp(579px, 46vw, 979px) !important; }
+
+        /* SEKCJA 4 */
+        .m-4-1, .m-4-2, .m-4-3, .m-4-4 { 
+            width: clamp(287px, 23vw, 486px) !important; 
+        }
+        .m-4-5 { width: clamp(325px, 26vw, 550px) !important; }
+        .m-4-6 { width: clamp(345px, 28vw, 583px) !important; }
+
+        /* SEKCJA 5 */
+        .m-5-1, .m-5-2, .m-5-3, .m-5-4, .m-5-5, .m-5-6 { 
+            width: clamp(347px, 28vw, 587px) !important; 
+        }
+
+        /* SEKCJA 6 */
+        .m-6-1, .m-6-2, .m-6-3, .m-6-4, .m-6-5, .m-6-6, .m-6-7 { 
+            width: clamp(289px, 23vw, 490px) !important; 
+        }
+
+        /* --- STRZAŁKI SVG --- */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .slider-arrow svg {
+            width: clamp(28px, 2.5vw, 48px);
+            height: clamp(28px, 2.5vw, 48px);
+            stroke: #1a1a1a;
+        }
+
+        .slider-arrow:hover {
+            opacity: 0.5;
+        }
+
+        .slider-arrow.left {
+            left: -16px;
+            display: none;
+        }
+
+        .slider-arrow.right {
+            right: -16px;
+        }
+
+        /* --- STOPKA --- */
+        .site-footer {
+            padding-top: 1.5vw;
+            margin-top: 2vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            width: 100%;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-link {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: var(--font-size-base);
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer-email {
+            white-space: nowrap;
+        }
+
+        /* RESPONSYWNOŚĆ GLOBALNA MOBILNA */
+        @media (max-width: 768px) {
+            body { padding: 10px 20px; }
+            .media-item { width: 75vw !important; }
+
+            #about-section, #contact-section { 
+                width: 100%; 
+                border-left: none; 
+                border-right: none; 
+            }
+
+            .site-footer { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: center; 
+                gap: 8px; 
+            }
+
+            .footer-email {
+                font-size: clamp(14px, 3.2vw, 18px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <header class="top-nav">
+            <button id="about-btn" class="nav-button" onclick="toggleAbout()">About</button>
+            <button id="contact-btn" class="nav-button" onclick="toggleContact()">Contact</button>
+
+            <section id="about-section" class="overlay-panel">
+                <p class="intro-text">
+                    Hi, I'm Gosia. I look for problems that I can solve through graphic design.
+                </p>
+
+                <div class="formula-wrapper">
+                    <div class="formula">
+                        <div class="column">
+                            <div>graphic design<br>practice</div>
+                            <div class="plus">+</div>
+                            <div>technical<br>degree</div>
+                        </div>
+
+                        <div class="dash">—</div>
+
+                        <div class="column">
+                            <div>unquenchable<br>curiosity</div>
+                            <div class="plus">+</div>
+                            <div>figureing<br>everything out</div>
+                        </div>
+
+                        <div class="result">
+                            <span class="arrow">⟶</span>
+                            <span>that’s me</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-section" class="overlay-panel">
+                <div class="contact-content">
+                    <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="contact-link">Behance</a>
+                    <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="contact-link">Instagram</a>
+                    <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="contact-link">Linkedin</a>
+                    <a href="mailto:gosi.marzec@gmail.com" class="contact-link">gosi.marzec@gmail.com</a>
+                </div>
+            </section>
+        </header>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Dziewczyny<br>Maszyny<br>Event Design
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Visual identity,<br>
+                    Digital design<br>for social media,<br>
+                    Typeface,<br>
+                    Motion design
+                </div>
+                <div class="col-desc">
+                    The visual identity of the mentoring program organized by the Dziewczyny-Maszyny group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <video class="media-item m-1-1" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item m-1-2" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item m-1-3" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item m-1-4" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item m-1-5" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item m-1-6" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <img class="media-item m-1-7" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
+                    <video class="media-item m-1-8" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Supplement packaging & promotion
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Packaging design,<br>
+                    Promotional materials
+                </div>
+                <div class="col-desc">
+                    Packaging design and promotional strategy for dietary supplement line.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <img class="media-item m-2-1" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
+                    <img class="media-item m-2-2" src="images/2/hagd_2.jpg" alt="HAGD 2" ondragstart="return false;">
+                    <img class="media-item m-2-3" src="images/2/hagd_3.jpg" alt="HAGD 3" ondragstart="return false;">
+                    <img class="media-item m-2-4" src="images/2/hagd_4.png" alt="HAGD 4" ondragstart="return false;">
+                    <img class="media-item m-2-5" src="images/2/hagd_5.png" alt="HAGD 5" ondragstart="return false;">
+                    <video class="media-item m-2-6" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Movement diagram
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Information design,<br>
+                    Infographics
+                </div>
+                <div class="col-desc">
+                    Visualizing movement metrics through graphic dynamic structures.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <img class="media-item m-3-1" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
+                    <img class="media-item m-3-2" src="images/3/movement_2.png" alt="Movement 2" ondragstart="return false;">
+                    <img class="media-item m-3-3" src="images/3/movement_3.png" alt="Movement 3" ondragstart="return false;">
+                    <img class="media-item m-3-4" src="images/3/movement_4.png" alt="Movement 4" ondragstart="return false;">
+                    <img class="media-item m-3-5" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Sad Typography
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Typography design,<br>
+                    Poster series
+                </div>
+                <div class="col-desc">
+                    Experimental typographic study exploring spatial layout and emotion.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <video class="media-item m-4-1" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item m-4-2" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item m-4-3" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item m-4-4" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <img class="media-item m-4-5" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" ondragstart="return false;">
+                    <img class="media-item m-4-6" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Circular Economy Explainer Video
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Motion Graphics,<br>
+                    Storyboarding
+                </div>
+                <div class="col-desc">
+                    Educational video explaining circular economy concepts.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <video class="media-item m-5-1" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item m-5-2" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item m-5-3" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item m-5-4" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item m-5-5" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item m-5-6" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="project-item">
+            <div class="project-info">
+                <div class="col-title project-title">
+                    Wine label Winnica Łukasz
+                </div>
+                <div class="col-scope">
+                    <span class="scope-title">Scope of work</span><br>
+                    Label Design,<br>
+                    Print production
+                </div>
+                <div class="col-desc">
+                    Label design series for local winery Winnica Łukasz.
+                </div>
+            </div>
+
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="media-slider">
+                    <img class="media-item m-6-1" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
+                    <img class="media-item m-6-2" src="images/6/wine_2.png" alt="Wine 2" ondragstart="return false;">
+                    <img class="media-item m-6-3" src="images/6/wine_3.png" alt="Wine 3" ondragstart="return false;">
+                    <img class="media-item m-6-4" src="images/6/wine_4.png" alt="Wine 4" ondragstart="return false;">
+                    <img class="media-item m-6-5" src="images/6/wine_5.png" alt="Wine 5" ondragstart="return false;">
+                    <img class="media-item m-6-6" src="images/6/wine_6.png" alt="Wine 6" ondragstart="return false;">
+                    <img class="media-item m-6-7" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
+                </div>
+                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </article>
+
+        <footer class="site-footer">
+            <div class="footer-links">
+                <a href="https://www.behance.net/magorzatamarzec" target="_blank" class="footer-link">Behance</a>
+                <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
+            </div>
+            <div class="footer-email">
+                <a href="mailto:gosi.marzec@gmail.com" class="footer-link">gosi.marzec@gmail.com</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        /* --- OBSŁUGA PANELIKÓW ABOUT I CONTACT --- */
+        function toggleAbout() {
+            const aboutSec = document.getElementById('about-section');
+            const contactSec = document.getElementById('contact-section');
+            contactSec.classList.remove('active');
+            aboutSec.classList.toggle('active');
+        }
+
+        function toggleContact() {
+            const aboutSec = document.getElementById('about-section');
+            const contactSec = document.getElementById('contact-section');
+            aboutSec.classList.remove('active');
+            contactSec.classList.toggle('active');
+        }
+
+        /* --- PRECYZYJNA MECHANIKA SCROLLOWANIA I KARUZELI --- */
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function animateScroll(slider, targetScroll) {
+            const startScroll = slider.scrollLeft;
+            const distance = targetScroll - startScroll;
+            
+            if (Math.abs(distance) < 1) return;
+
+            const speedFactor = 1.5; 
+            const minDuration = 1000; 
+            const maxDuration = 3000; 
+
+            const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
+            let startTime = null;
+
+            function step(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easeProgress = easeInOutCubic(progress);
+                slider.scrollLeft = startScroll + (distance * easeProgress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        function scrollSlider(button, direction) {
+            const wrapper = button.parentElement;
+            const slider = wrapper.querySelector('.media-slider');
+            const items = Array.from(slider.querySelectorAll('.media-item'));
+            
+            if (!items.length) return;
+
+            const sliderRect = slider.getBoundingClientRect();
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            
+            const isMobile = window.innerWidth <= 768;
+            const tolerance = isMobile ? 1 : 5;
+
+            let targetScroll = slider.scrollLeft;
+
+            if (direction === 1) {
+                let nextItem = items.find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.right > sliderRect.right + tolerance;
+                });
+
+                if (nextItem) {
+                    const nextItemRect = nextItem.getBoundingClientRect();
+                    const nextItemWidth = nextItemRect.width;
+                    
+                    let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
+
+                    if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
+                        targetScroll = maxScroll;
+                    } else {
+                        targetScroll = calculatedTarget;
+                    }
+                } else {
+                    targetScroll = maxScroll;
+                }
+            } else {
+                let prevItem = items.slice().reverse().find(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    return itemRect.left < sliderRect.left - tolerance;
+                });
+
+                if (prevItem) {
+                    const prevItemRect = prevItem.getBoundingClientRect();
+                    targetScroll = slider.scrollLeft + (prevItemRect.left - sliderRect.left);
+                } else {
+                    targetScroll = 0;
+                }
+            }
+
+            animateScroll(slider, targetScroll);
+        }
+    </script>
+</body>
+</html>

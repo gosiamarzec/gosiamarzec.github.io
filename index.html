@@ -41,7 +41,7 @@
     scrollbar-width: none;
     cursor: grab;
     user-select: none;
-    align-items: flex-start; /* Górne wyrównanie dla mediów o różnych proporcjach */
+    align-items: flex-start; /* Przypina kadry do górnej krawędzi */
 }
 
     .media-slider.active {
@@ -52,14 +52,23 @@
         display: none;
     }
 
-    /* Skalowanie bazowe na PC z dolnym i górnym limitem zoomu */
+/* Skalowanie na PC oparte na szerokości */
+.media-item {
+    /* Sztywna lub elastyczna szerokość (np. clamp) */
+    width: clamp(250px, 22vw, 550px); 
+    height: auto;                     /* Wysokość wynika bezpośrednio z proporcji pliku */
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+/* Urządzenia mobilne */
+@media (max-width: 768px) {
     .media-item {
-        /* Podbicie górnego limitu wysokości do 900px, by media rosły na 1440p i UltraWide */
-        height: clamp(380px, 35vw, 900px); 
-        width: auto;
-        flex-shrink: 0;
-        object-fit: contain;
+        width: 55vw;                  /* Pokazuje 1 pełny kadr + fragment następnego */
+        height: auto;
+        max-height: none;
     }
+}
 
     /* Ograniczenia dla urządzeń mobilnych */
     @media (max-width: 768px) {

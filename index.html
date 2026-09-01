@@ -211,10 +211,19 @@
             let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
-                const nextItem = items.find(item => {
+                // Próba 1: Szukamy elementu wystającego po prawej stronie
+                let nextItem = items.find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.right > sliderRect.right + tolerance;
                 });
+
+                // Fallback: Jeśli wyliczenia zawiodły, bierze następny element w indeksie DOM
+                if (!nextItem) {
+                    const currentIndex = items.findIndex(item => item.getBoundingClientRect().right > sliderRect.left + tolerance);
+                    if (currentIndex !== -1 && currentIndex < items.length - 1) {
+                        nextItem = items[currentIndex + 1];
+                    }
+                }
 
                 if (nextItem) {
                     targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
@@ -222,10 +231,19 @@
                     targetScroll = maxScroll;
                 }
             } else {
-                const prevItem = items.slice().reverse().find(item => {
+                // Próba 1: Szukamy elementu wystającego po lewej stronie
+                let prevItem = items.slice().reverse().find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.left < sliderRect.left - tolerance;
                 });
+
+                // Fallback: Jeśli wyliczenia zawiodły, bierze poprzedni element w indeksie DOM
+                if (!prevItem) {
+                    const currentIndex = items.findIndex(item => item.getBoundingClientRect().right >= sliderRect.left);
+                    if (currentIndex > 0) {
+                        prevItem = items[currentIndex - 1];
+                    }
+                }
 
                 if (prevItem) {
                     targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
@@ -268,12 +286,10 @@
                 checkScrollPosition(slider);
             });
 
-            // Re-check w momencie pełnego załadowania strony (obrazy i wideo wyliczają wtedy ostateczny szerokość)
             window.addEventListener('load', () => {
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
-            // IntersectionObserver do uaktualniania widoczności strzałek, gdy sekcja wchodzi w viewport
             const sliderObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {

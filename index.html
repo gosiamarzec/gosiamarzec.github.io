@@ -21,10 +21,7 @@
             --border-width: 2px;
             --border-color: #1a1a1a;
 
-            --slider-gap: 1vw;             
-            --col-gap-1-2: 2.5vw;          
-            --col-gap-2-3: 3.5vw;          
-
+            --slider-gap: 1vw;              
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
             --nav-padding-bottom: 6px;      
@@ -210,7 +207,9 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
-        /* --- UKŁAD KOLUMN W SEKCJI TEKSTOWEJ (1 I 2 W RZĘDZIE, 3 PONIŻEJ) --- */
+        /* =========================================================
+           UKŁAD KOLUMN W SEKCJI TEKSTOWEJ PROJEKTU (RESPONSYWNY)
+           ========================================================= */
         .project-info {
             display: flex;
             flex-wrap: wrap;
@@ -223,18 +222,59 @@
             font-weight: var(--font-weight-regular);
         }
 
+        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITOROWIE) — 3 KOLUMNY W 1 RZĘDZIE */
         .col-title {
-            flex: 0 0 calc(50% - (var(--col-gap-1-2) / 2));
-            padding-right: var(--col-gap-1-2);
+            /* Zmieniaj procenty szerokości pierwszej kolumny (np. 30%) */
+            flex: 0 0 30%;
+            max-width: 30%;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
         }
 
         .col-scope {
-            flex: 0 0 calc(50% - (var(--col-gap-1-2) / 2));
+            /* Zmieniaj procenty szerokości drugiej kolumny (np. 20%) */
+            flex: 0 0 20%;
+            max-width: 20%;
+            padding-right: 2vw; /* Odstęp z prawej od kolejnej kolumny */
         }
 
         .col-desc {
-            flex: 0 0 100%;
-            margin-top: 0.5vw;
+            /* Zmieniaj procenty szerokości trzeciej kolumny (np. 50%) */
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
+        @media (max-width: 1200px) {
+            .col-title {
+                /* Proporcja 30 do 20 skrojona do pełnego rzędu (30 / 50 = 60%) */
+                flex: 0 0 60%;
+                max-width: 60%;
+            }
+
+            .col-scope {
+                /* Proporcja 20 do 30 skrojona do pełnego rzędu (20 / 50 = 40%) */
+                flex: 0 0 40%;
+                max-width: 40%;
+                padding-right: 0; /* Zerujemy prawy margines na końcu rzędu */
+            }
+
+            .col-desc {
+                /* Trzecia kolumna przeskakuje pod spód i zajmuje 100% szerokości */
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 1vw; /* Odstęp pionowy od górnych kolumn */
+            }
+        }
+
+        /* 3. MOBILKI (WYŚWIETLACZE PIONOWE) — PEŁNY UKŁAD JEDNOKOLUMNOWY */
+        @media (max-width: 600px) {
+            .col-title,
+            .col-scope,
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding-right: 0;
+            }
         }
 
         .project-title {
@@ -389,15 +429,10 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ MOBILNA */
+        /* RESPONSYWNOŚĆ GLOBALNA MOBILNA */
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
             .media-item { width: 75vw !important; }
-            
-            .col-title, .col-scope, .col-desc { 
-                flex: 0 0 100%; 
-                padding-right: 0; 
-            }
 
             #about-section, #contact-section { 
                 width: 100%; 
@@ -773,23 +808,13 @@
 
                 if (prevItem) {
                     const prevItemRect = prevItem.getBoundingClientRect();
-                    const prevItemWidth = prevItemRect.width;
-
-                    let calculatedTarget = slider.scrollLeft - (sliderRect.right - prevItemRect.right);
-
-                    if (calculatedTarget < prevItemWidth * 0.5) {
-                        targetScroll = 0;
-                    } else {
-                        targetScroll = calculatedTarget;
-                    }
+                    targetScroll = slider.scrollLeft + (prevItemRect.left - sliderRect.left);
                 } else {
                     targetScroll = 0;
                 }
             }
 
-            if (Math.abs(targetScroll - slider.scrollLeft) >= 1) {
-                animateScroll(slider, targetScroll);
-            }
+            animateScroll(slider, targetScroll);
         }
     </script>
 </body>

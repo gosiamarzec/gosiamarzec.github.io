@@ -293,7 +293,6 @@
             cursor: grab;
             user-select: none;
             align-items: flex-start;
-            scroll-behavior: auto;
         }
 
         .media-slider.active {
@@ -717,8 +716,43 @@
             contactSec.classList.toggle('active');
         }
 
-        /* --- OBSŁUGA AUTOMATYCZNEGO ODTWARZANIA WIDEO NA EKRANIE --- */
+        /* --- DEDYKOWANA FUNKCJA ANIMAJI PRZEWIJANIA (CUSTOM SMOOTH SCROLL WITH EASING) --- */
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function smoothScrollTo(element, target, duration) {
+            const start = element.scrollLeft;
+            const change = target - start;
+            const startTime = performance.now();
+
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = easeInOutCubic(progress);
+
+                element.scrollLeft = start + change * easeProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                }
+            }
+
+            requestAnimationFrame(animateScroll);
+        }
+
+        /* --- MECHANIKA STRZAŁEK NAWIGACYJNYCH --- */
+        function scrollSlider(button, direction) {
+            const wrapper = button.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.6;
+            const targetScroll = slider.scrollLeft + (direction * scrollAmount);
+            
+            smoothScrollTo(slider, targetScroll, 600);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            /* --- AUTOMATYCZNE ODTWARZANIE WIDEO NA EKRANIE --- */
             const videos = document.querySelectorAll('video');
 
             const videoObserver = new IntersectionObserver((entries) => {
@@ -734,7 +768,7 @@
 
             videos.forEach(video => videoObserver.observe(video));
 
-            /* --- PRZECIĄGANIE MYSZKĄ SLIDERÓW --- */
+            /* --- PRZECIĄGANIE MYSZKĄ ORAZ AKTUALIZACJA STRZAŁEK --- */
             const sliders = document.querySelectorAll('.media-slider');
 
             sliders.forEach(slider => {
@@ -786,18 +820,6 @@
                 });
             });
         });
-
-        /* --- MECHANIKA PRZEWIJANIA STRZAŁKAMI --- */
-        function scrollSlider(button, direction) {
-            const wrapper = button.closest('.slider-wrapper');
-            const slider = wrapper.querySelector('.media-slider');
-            const scrollAmount = slider.clientWidth * 0.6;
-            
-            slider.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
     </script>
 </body>
 </html>

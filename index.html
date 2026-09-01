@@ -34,14 +34,15 @@
         width: 100%;
     }
 
-    .media-slider {
-        display: flex;
-        gap: 1vw;
-        overflow-x: auto;
-        scrollbar-width: none;
-        cursor: grab; /* Wskazuje użytkownikowi, że można chwycić element */
-        user-select: none; /* Zapobiega zaznaczaniu tekstu/obrazków podczas przeciągania */
-    }
+.media-slider {
+    display: flex;
+    gap: 1vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    align-items: flex-start; /* Górne wyrównanie dla mediów o różnych proporcjach */
+}
 
     .media-slider.active {
         cursor: grabbing; /* Zmienia kursor na zamkniętą dłoń w trakcie przeciągania */

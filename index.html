@@ -35,7 +35,6 @@
             gap: 1vw;
             overflow-x: auto;
             scrollbar-width: none;
-            /* Wyłączamy CSS-owe smooth behavior – całą animacją steruje nasz JS */
         }
 
         .media-slider::-webkit-scrollbar {
@@ -101,26 +100,84 @@
         </div>
     </article>
 
+    <article class="project-item">
+        <h2>3. Movement diagram</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <img class="media-item" src="images/3/movement_1.png" alt="Movement 1">
+                <img class="media-item" src="images/3/movement_2.png" alt="Movement 2">
+                <img class="media-item" src="images/3/movement_3.png" alt="Movement 3">
+                <img class="media-item" src="images/3/movement_4.png" alt="Movement 4">
+                <img class="media-item" src="images/3/movement_5.png" alt="Movement 5">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>4. Sad Typography</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5">
+                <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>5. Circular Economy Explainer Video</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
+    <article class="project-item">
+        <h2>6. Wine label Winnica Łukasz</h2>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollSlider(this, -1)">←</button>
+            <div class="media-slider">
+                <img class="media-item" src="images/6/wine_1.png" alt="Wine 1">
+                <img class="media-item" src="images/6/wine_2.png" alt="Wine 2">
+                <img class="media-item" src="images/6/wine_3.png" alt="Wine 3">
+                <img class="media-item" src="images/6/wine_4.png" alt="Wine 4">
+                <img class="media-item" src="images/6/wine_5.png" alt="Wine 5">
+                <img class="media-item" src="images/6/wine_6.png" alt="Wine 6">
+                <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7">
+            </div>
+            <button class="slider-arrow right" onclick="scrollSlider(this, 1)">→</button>
+        </div>
+    </article>
+
     <script>
-        // Funkcja ułatwiająca gładkie przyspieszanie i hamowanie (Ease-In-Out)
         function easeInOutCubic(t) {
             return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
 
-        // Glówna funkcja wykonująca customową animację przewijania ze stałą prędkością
         function animateScroll(slider, targetScroll) {
             const startScroll = slider.scrollLeft;
             const distance = targetScroll - startScroll;
             
             if (Math.abs(distance) < 1) return;
 
-            // KONTROLA PRĘDKOŚCI:
-            // 1.5 ms na 1px przesunięcia (im większa liczba, tym WOLNIEJ)
             const speedFactor = 1.5; 
-            
-            // Minimalny i maksymalny czas (zabezpieczenie dla bardzo małych/dużych przesunięć)
-            const minDuration = 300; // ms
-            const maxDuration = 2000; // ms
+            const minDuration = 300; 
+            const maxDuration = 2000; 
 
             const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
             let startTime = null;
@@ -130,9 +187,7 @@
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // Przeliczamy postęp przez funkcję easing
                 const easeProgress = easeInOutCubic(progress);
-                
                 slider.scrollLeft = startScroll + (distance * easeProgress);
 
                 if (progress < 1) {
@@ -152,8 +207,6 @@
 
             const sliderRect = slider.getBoundingClientRect();
             const tolerance = 5;
-            
-            // Fizyczny maksymalny limit przewijania
             const maxScroll = slider.scrollWidth - slider.clientWidth;
             let targetScroll = slider.scrollLeft;
 
@@ -181,11 +234,7 @@
                 }
             }
 
-            // ZABEZPIECZENIE PRZED KRAWĘDZIĄ:
-            // Docinamy docelową pozycję do realnych granic skrola [0, maxScroll]
             targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-
-            // Uruchamiamy animację ze skorygowanym dystansem
             animateScroll(slider, targetScroll);
         }
 
@@ -198,6 +247,12 @@
 
             const maxScroll = slider.scrollWidth - slider.clientWidth;
             
+            if (maxScroll <= 0) {
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'none';
+                return;
+            }
+
             const isAtStart = slider.scrollLeft <= 5;
             const isAtEnd = slider.scrollLeft >= maxScroll - 5;
 
@@ -213,12 +268,28 @@
                 checkScrollPosition(slider);
             });
 
+            // Re-check w momencie pełnego załadowania strony (obrazy i wideo wyliczają wtedy ostateczny szerokość)
+            window.addEventListener('load', () => {
+                sliders.forEach((slider) => checkScrollPosition(slider));
+            });
+
+            // IntersectionObserver do uaktualniania widoczności strzałek, gdy sekcja wchodzi w viewport
+            const sliderObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        checkScrollPosition(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sliders.forEach(slider => sliderObserver.observe(slider));
+
             window.addEventListener('resize', () => {
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
             const videos = document.querySelectorAll("video.media-item");
-            const observer = new IntersectionObserver((entries) => {
+            const videoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.play().catch(() => {});
@@ -228,7 +299,7 @@
                 });
             }, { threshold: 0.5 });
 
-            videos.forEach(video => observer.observe(video));
+            videos.forEach(video => videoObserver.observe(video));
         });
     </script>
 

@@ -244,7 +244,7 @@
         }
 
         /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA (np. max-width: 1200px) — PRZESKOK NA UKŁAD 1+2 */
-        @media (max-width: 1200px) {
+        @media (max-width: 720px) {
             .col-title {
                 /* Proporcja 30 do 20 skrojona do pełnego rzędu (30 / 50 = 60%) */
                 flex: 0 0 60%;
@@ -256,6 +256,7 @@
                 flex: 0 0 40%;
                 max-width: 40%;
                 padding-right: 0; /* Zerujemy prawy margines na końcu rzędu */
+                margin-left: auto;
             }
 
             .col-desc {

@@ -215,52 +215,79 @@ body {
             requestAnimationFrame(step);
         }
 
-        function scrollSlider(button, direction) {
-            const wrapper = button.parentElement;
-            const slider = wrapper.querySelector('.media-slider');
-            const items = Array.from(slider.querySelectorAll('.media-item'));
+function scrollSlider(button, direction) {
+    const wrapper = button.parentElement;
+    const slider = wrapper.querySelector('.media-slider');
+    const items = Array.from(slider.querySelectorAll('.media-item'));
+    
+    if (!items.length) return;
+
+    const sliderRect = slider.getBoundingClientRect();
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    
+    const isMobile = window.innerWidth <= 768;
+    const tolerance = isMobile ? 1 : 5;
+
+    let targetScroll = slider.scrollLeft;
+
+    if (direction === 1) {
+        // Szukamy pierwszego elementu, który wystaje po prawej stronie
+        let nextItem = items.find(item => {
+            const itemRect = item.getBoundingClientRect();
+            return itemRect.right > sliderRect.right + tolerance;
+        });
+
+        if (nextItem) {
+            const nextItemRect = nextItem.getBoundingClientRect();
+            const nextItemWidth = nextItemRect.width;
             
-            if (!items.length) return;
+            // Domyślny docelowy punkt przewinięcia
+            let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
 
-            const sliderRect = slider.getBoundingClientRect();
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            
-            const isMobile = window.innerWidth <= 768;
-            const tolerance = isMobile ? 1 : 5;
-
-            let targetScroll = slider.scrollLeft;
-
-            if (direction === 1) {
-                let nextItem = items.find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.right > sliderRect.right + tolerance;
-                });
-
-                if (nextItem) {
-                    targetScroll = slider.scrollLeft + (nextItem.getBoundingClientRect().left - sliderRect.left);
-                } else {
-                    targetScroll = maxScroll;
-                }
+            // SPRAWDZENIE: Jeśli do końca slidera zostało mniej niż 50% szerokości wjeżdżającego obrazka,
+            // to przesuwamy od razu do samego końca (maxScroll)
+            if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
+                targetScroll = maxScroll;
             } else {
-                let prevItem = items.slice().reverse().find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.left < sliderRect.left - tolerance;
-                });
-
-                if (prevItem) {
-                    targetScroll = slider.scrollLeft - (sliderRect.left - prevItem.getBoundingClientRect().left);
-                } else {
-                    targetScroll = 0;
-                }
+                targetScroll = calculatedTarget;
             }
-
-            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
-                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
-            }
-
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-            animateScroll(slider, targetScroll);
+        } else {
+            targetScroll = maxScroll;
         }
+    } else {
+        // Szukamy pierwszego elementu, który wystaje po lewej stronie
+        let prevItem = items.slice().reverse().find(item => {
+            const itemRect = item.getBoundingClientRect();
+            return itemRect.left < sliderRect.left - tolerance;
+        });
+
+        if (prevItem) {
+            const prevItemRect = prevItem.getBoundingClientRect();
+            const prevItemWidth = prevItemRect.width;
+
+            // Domyślny docelowy punkt przewinięcia w lewo
+            let calculatedTarget = slider.scrollLeft - (sliderRect.left - prevItemRect.left);
+
+            // SPRAWDZENIE: Jeśli do początku slidera zostało mniej niż 50% szerokości obrazka,
+            // to dociągamy od razu do zera (0)
+            if (calculatedTarget < prevItemWidth * 0.5) {
+                targetScroll = 0;
+            } else {
+                targetScroll = calculatedTarget;
+            }
+        } else {
+            targetScroll = 0;
+        }
+    }
+
+    // Fallback zabezpieczający przed brakiem reakcji na małych ekranach
+    if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
+        targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
+    }
+
+    targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+    animateScroll(slider, targetScroll);
+}
 
         function checkScrollPosition(slider) {
             const wrapper = slider.parentElement;

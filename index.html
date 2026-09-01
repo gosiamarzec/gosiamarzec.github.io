@@ -41,9 +41,7 @@
     scrollbar-width: none;
     cursor: grab;
     user-select: none;
-    
-    /* 1. Wyrównanie do góry – zapobiega pionowemu rozciąganiu elementów */
-    align-items: flex-start; 
+    align-items: flex-start; /* Przypina kadry do górnej krawędzi */
 }
 
     .media-slider.active {
@@ -56,13 +54,9 @@
 
 /* Skalowanie na PC oparte na szerokości */
 .media-item {
-    /* 2. Limit wysokości wyznacza maksymalny rozmiar karuzeli (dla pionowych zdjęć) */
-    max-height: clamp(380px, 35vw, 900px); 
-    
-    /* 3. Usuwamy sztywne 'height' – obrazek dopasuje swoją wysokość i szerokość do własnych proporcji */
-    height: auto;
-    width: auto;
-    
+    /* Sztywna lub elastyczna szerokość (np. clamp) */
+    width: clamp(250px, 22vw, 550px); 
+    height: auto;                     /* Wysokość wynika bezpośrednio z proporcji pliku */
     flex-shrink: 0;
     object-fit: contain;
 }

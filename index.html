@@ -9,20 +9,19 @@
 
     body {
         background-color: #ededed;
-        padding: 40px;
+        padding: clamp(15px, 3vw, 40px);
         font-family: sans-serif;
-        /* Usuwamy sztywny max-width, strona znów wykorzystuje pełną szerokość */
     }
 
     .project-item {
-        margin-bottom: 60px;
+        margin-bottom: clamp(30px, 4vw, 60px);
         border-bottom: 2px solid #1a1a1a;
-        padding-bottom: 40px;
+        padding-bottom: clamp(20px, 3vw, 40px);
     }
 
     h2 {
-        font-size: 1.2rem;
-        margin-bottom: 15px;
+        font-size: clamp(1rem, 1.2vw + 0.5rem, 1.8rem);
+        margin-bottom: clamp(10px, 1.5vw, 20px);
         color: #1a1a1a;
     }
 
@@ -42,29 +41,23 @@
         display: none;
     }
 
-    /* dynamiczne skalowanie – wysokie na 1440p, stabilne na mniejszych */
+    /* Skalowanie bazowe na PC z dolnym i górnym limitem zoomu */
     .media-item {
-        height: 31vw; /* Przeskalowuje wysokość proporcjonalnie do szerokości okna */
-        min-height: 400px; /* Zabezpieczenie dla niższych rozdzielczości/laptopów */
-        max-height: 650px; /* Zabezpieczenie dla ekranów UltraWide / 4K */
+        height: clamp(380px, 35vw, 650px); /* Nie skurczy się poniżej 380px i nie urośnie powyżej 650px */
         width: auto;
         flex-shrink: 0;
         object-fit: contain;
     }
 
-/* Ograniczenia dla urządzeń mobilnych */
-@media (max-width: 600px) {
-    body {
-        padding: 15px;
+    /* Ograniczenia dla urządzeń mobilnych */
+    @media (max-width: 768px) {
+        .media-item {
+            height: auto;
+            min-height: unset;
+            max-height: clamp(150px, 30vh, 180px); /* Zmniejszony rozmiar na telefonie */
+            max-width: 60vw;                        /* Podgląd kolejnego kadru po prawej */
+        }
     }
-
-    .media-item {
-        height: auto;
-        min-height: unset;
-        max-height: 180px; /* Zmniejszono z 250px na 200px (o 20%) */
-        max-width: 60vw;   /* Zmniejszono z 85vw na 68vw (o 20%) */
-    }
-}
 
     /* Strzałki */
     .slider-arrow {
@@ -233,7 +226,6 @@
             let targetScroll = slider.scrollLeft;
 
             if (direction === 1) {
-                // Szukamy elementu wystającego po prawej stronie
                 let nextItem = items.find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.right > sliderRect.right + tolerance;
@@ -245,7 +237,6 @@
                     targetScroll = maxScroll;
                 }
             } else {
-                // Szukamy elementu wystającego po lewej stronie
                 let prevItem = items.slice().reverse().find(item => {
                     const itemRect = item.getBoundingClientRect();
                     return itemRect.left < sliderRect.left - tolerance;
@@ -258,7 +249,6 @@
                 }
             }
 
-            // Fallback zabezpieczający przed brakiem reakcji na małych ekranach
             if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
                 targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
             }

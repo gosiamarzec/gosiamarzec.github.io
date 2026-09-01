@@ -9,11 +9,9 @@
 
     body {
         background-color: #ededed;
-        padding: 40px 20px;
+        padding: 40px;
         font-family: sans-serif;
-        /* Ograniczenie szerokości całej strony dla dużych monitorów */
-        max-width: 1400px; 
-        margin: 0 auto;
+        /* Usuwamy sztywny max-width, strona znów wykorzystuje pełną szerokość */
     }
 
     .project-item {
@@ -35,7 +33,7 @@
 
     .media-slider {
         display: flex;
-        gap: 16px; /* Sztywny odstęp w px zamiast 1vw zapobiega rozciąganiu na 4K */
+        gap: 1vw;
         overflow-x: auto;
         scrollbar-width: none;
     }
@@ -44,16 +42,17 @@
         display: none;
     }
 
-    /* Dopasowanie wysokości do ekranu z sztywnym limitem 450px */
+    /* dynamiczne skalowanie – wysokie na 1440p, stabilne na mniejszych */
     .media-item {
-        height: 45vh;
-        max-height: 450px; 
+        height: 31vw; /* Przeskalowuje wysokość proporcjonalnie do szerokości okna */
+        min-height: 400px; /* Zabezpieczenie dla niższych rozdzielczości/laptopów */
+        max-height: 650px; /* Zabezpieczenie dla ekranów UltraWide / 4K */
         width: auto;
         flex-shrink: 0;
         object-fit: contain;
     }
 
-    /* Ograniczenia skalowania na telefonach */
+    /* Ograniczenia dla urządzeń mobilnych */
     @media (max-width: 768px) {
         body {
             padding: 15px;
@@ -61,6 +60,7 @@
 
         .media-item {
             height: auto;
+            min-height: unset;
             max-height: 250px;
             max-width: 85vw;
         }

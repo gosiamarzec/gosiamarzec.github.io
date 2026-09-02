@@ -22,8 +22,6 @@
             --border-color: #1a1a1a;
 
             --slider-gap: 1vw;            
-            --col-gap-1-2: 2.5vw;         
-            --col-gap-2-3: 3.5vw;         
 
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
@@ -203,7 +201,7 @@
             font-weight: var(--font-weight-bold);
         }
 
-        /* --- STYLIZACJA PROJEKTÓW --- */
+        /* --- STYLIZACJA PROJEKTÓW & KOLUMN --- */
         .project-item {
             border-bottom: 2px solid var(--border-color);
             padding-top: var(--project-padding-top);
@@ -211,8 +209,9 @@
         }
 
         .project-info {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr 2.2fr;
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 1.5vw;
             align-items: flex-start;
             font-size: var(--font-size-base);
             line-height: 1.25;
@@ -221,22 +220,61 @@
             font-weight: var(--font-weight-regular);
         }
 
-        .project-info > div:nth-child(1) {
-            padding-right: var(--col-gap-1-2);
-        }
-
-        .project-info > div:nth-child(2) {
-            padding-right: var(--col-gap-2-3);
-        }
-
-        .project-title {
+        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITORY) — 3 KOLUMNY W 1 RZĘDZIE */
+        .col-title {
+            flex: 0 0 30%;
+            max-width: 30%;
+            padding-right: 2vw;
             font-weight: var(--font-weight-medium);
+        }
+
+        .col-scope {
+            flex: 0 0 20%;
+            max-width: 20%;
+            padding-right: 2vw;
+        }
+
+        .col-desc {
+            flex: 0 0 50%;
+            max-width: 50%;
         }
 
         .scope-title {
             text-decoration: underline;
             display: inline-block;
             margin-bottom: 0;
+        }
+
+        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA — PRZESKOK NA UKŁAD 1+2 */
+        @media (max-width: 850px) {
+            .col-title {
+                flex: 0 0 auto;
+                max-width: 50%;
+            }
+
+            .col-scope {
+                flex: 0 0 auto;
+                max-width: 50%;
+                padding-right: 0;
+                margin-left: auto;
+                text-align: left;
+            }
+
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 1vw;
+            }
+        }
+
+        @media (max-width: 200px) {
+            .col-title,
+            .col-scope,
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding-right: 0;
+            }
         }
 
         /* --- SLIDER I MEDIA --- */
@@ -274,7 +312,7 @@
         }
 
         /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (NOWA MACIERZ 1920px)
+           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
            ========================================================= */
 
         /* SEKCJA 1 */
@@ -381,13 +419,10 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ MOBILNA */
+        /* RESPONSYWNOŚĆ MOBILNA DLA POZOSTAŁYCH ELEMENTÓW */
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
             .media-item { width: 75vw !important; }
-            .project-info { grid-template-columns: 1fr; gap: 12px; }
-            .project-info > div:nth-child(1),
-            .project-info > div:nth-child(2) { padding-right: 0; }
             #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
             .site-footer { 
                 flex-direction: row; 
@@ -448,19 +483,20 @@
             </section>
         </header>
 
+        <!-- SEKCJA 1 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="project-title">
+                <div class="col-title">
                     Dziewczyny<br>Maszyny<br>Event Design
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
                     Visual identity,<br>
                     Digital design<br>for social media,<br>
                     Typeface,<br>
                     Motion design
                 </div>
-                <div>
+                <div class="col-desc">
                     The visual identity of the mentoring program organized by the Dziewczyny-Maszyny group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
                 </div>
             </div>
@@ -485,18 +521,19 @@
             </div>
         </article>
 
+        <!-- SEKCJA 2 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="project-title">
-                    Supplement packaging & promotion
+                <div class="col-title">
+                    Supplement<br>packaging &<br>promotion
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Packaging design,<br>
-                    Promotional materials
+                    Packaging,<br>
+                    Digital design<br>for social media
                 </div>
-                <div>
-                    Packaging design and promotional strategy for dietary supplement line.
+                <div class="col-desc">
+                    Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
                 </div>
             </div>
 
@@ -518,18 +555,20 @@
             </div>
         </article>
 
+        <!-- SEKCJA 3 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="project-title">
-                    Movement diagram
+                <div class="col-title">
+                    Movement<br>diagram
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Information design,<br>
-                    Infographics
+                    Visual identity,<br>
+                    Illustrations,<br>
+                    Digital design<br>for social media
                 </div>
-                <div>
-                    Visualizing movement metrics through graphic dynamic structures.
+                <div class="col-desc">
+                    Graphic design project for cyclical physical movement courses. The graphic identity is based on presenting certain movement complexities in the form of simplified diagrams. This reflects the way movements are worked on during the classes.
                 </div>
             </div>
 
@@ -550,18 +589,22 @@
             </div>
         </article>
 
+        <!-- SEKCJA 4 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="project-title">
-                    Sad Typography
+                <div class="col-title">
+                    Sad<br>Typography
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Typography design,<br>
-                    Poster series
+                    Visual identity,<br>
+                    Digital design<br>for social media,<br>
+                    Typeface,<br>
+                    Video recording,<br>
+                    Video editing
                 </div>
-                <div>
-                    Experimental typographic study exploring spatial layout and emotion.
+                <div class="col-desc">
+                    Sad Dances are contemporary dance classes that allow participants to release their emotions, acting as a kind of catharsis. The visuals of the moving poster are a tribute to the organic movements of dance and refer to the nature-inspired, wavy, and dynamic shapes known from Art Nouveau.
                 </div>
             </div>
 
@@ -583,18 +626,21 @@
             </div>
         </article>
 
-        <article class="project-item">
+        <!-- SEKCJA 5 -->
+        <article class="project-item" id="circular-economy">
             <div class="project-info">
-                <div class="project-title">
-                    Circular Economy Explainer Video
+                <div class="col-title">
+                    Circular<br>Economy<br>Explainer Video
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Motion Graphics,<br>
-                    Storyboarding
+                    Stop-motion animation,<br>
+                    Digital design,<br>
+                    Motion design,<br>
+                    Video editing
                 </div>
-                <div>
-                    Educational video explaining circular economy concepts.
+                <div class="col-desc">
+                    Explanatory video, which attempts to turn our inaction in the face of environmental disaster into action. The project aimed to present the idea of the natural system as a whole, of which we are an integral part, using the concept of the circular economy. Using stop-motion animation helps to create an atmosphere that feels closer and more grounded in reality. Motion design is the main element used to explain the discussed content.
                 </div>
             </div>
 
@@ -616,18 +662,19 @@
             </div>
         </article>
 
+        <!-- SEKCJA 6 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="project-title">
-                    Wine label Winnica Łukasz
+                <div class="col-title">
+                    Wine label<br>Winnica Łukasz
                 </div>
-                <div>
+                <div class="col-scope">
                     <span class="scope-title">Scope of work</span><br>
-                    Label Design,<br>
-                    Print production
+                    Brand identity,<br>
+                    Packaging
                 </div>
-                <div>
-                    Label design series for local winery Winnica Łukasz.
+                <div class="col-desc">
+                    The wine label was created for a family winery with deep agricultural roots. The project was about combining nurturing relationships between people and nature and honoring the cultivation experience that describes the vineyard and its owners. This is depicted in the graphic as a combination of nine unique fields (nine family members) forming color transitions (relationships). The colors are chosen to match the character of the wine.
                 </div>
             </div>
 

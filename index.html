@@ -434,6 +434,24 @@
                 font-size: clamp(14px, 3.2vw, 18px);
             }
         }
+
+        /* UKRYWANIE SOCIALI I WYRÓWNANIE EMAILA DO PRAWEJ PONIŻEJ 600PX */
+        @media (max-width: 600px) {
+            .footer-links {
+                display: none;
+            }
+            .site-footer {
+                justify-content: flex-end;
+            }
+            .footer-email {
+                width: 100%;
+                text-align: right;
+            }
+            .footer-email .footer-link {
+                font-size: clamp(14px, 4.5vw, 20px);
+                word-break: break-all;
+            }
+        }
     </style>
 </head>
 <body>

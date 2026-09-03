@@ -1,0 +1,18 @@
+         @media (max-width: 850px) {
+            .col-title {
+                flex: 0 0 auto;
+                max-width: 50%;
+            }
+            .col-scope {
+                flex: 0 0 auto;
+                max-width: 50%;
+                padding-right: 0;
+                margin-left: auto; /* Przesuwa cały blok maksymalnie w prawo */
+                text-align: left;  /* Tekst w bloku wyrównany do lewej */
+            }
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 1vw;
+            }
+        } 

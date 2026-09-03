@@ -7,21 +7,31 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
+            /* Główny Font */
             --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
+            /* Rozmiar fontu tekstu oraz nawigacji */
             --font-size-base: clamp(20px, 1.8vw, 32px); 
             --font-size-nav: clamp(20px, 1.8vw, 32px);    
+            
+            /* Dedykowany, większy rozmiar dla formuły w sekcji About (zgodnie z referencją) */
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
             --font-weight-medium: 500;
             --font-weight-bold: 600;
 
+            /* Grubość linii - sztywne wartości px bez jednostek elastycznych */
             --border-width-top: 3px;
             --border-width: 2px;
             --border-color: #1a1a1a;
 
+            /* Odstępy i Odległości */
             --slider-gap: 1vw;            
+            
+            /* Odstępy między kolumnami opisu */
+            --col-gap-1-2: 2.5vw;         
+            --col-gap-2-3: 3.5vw;         
 
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 2.5vw; 
@@ -40,8 +50,6 @@
             color: #1a1a1a;
             padding: 12px 40px;
             width: 100%;
-            max-width: 3840px;
-            margin: 0 auto;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -144,7 +152,7 @@
             text-decoration: underline;
         }
 
-        /* --- TREŚĆ ABOUT --- */
+        /* --- TREŚĆ ABOUT (POWIĘKSZONA NA WZÓR REFERENCJI) --- */
         .intro-text {
             font-size: clamp(20px, 2.1vw, 36px);
             line-height: 1.25;
@@ -201,7 +209,7 @@
             font-weight: var(--font-weight-bold);
         }
 
-        /* --- STYLIZACJA PROJEKTÓW & KOLUMN --- */
+        /* --- STYLIZACJA PROJEKTÓW --- */
         .project-item {
             border-bottom: 2px solid var(--border-color);
             padding-top: var(--project-padding-top);
@@ -209,9 +217,8 @@
         }
 
         .project-info {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 1.5vw;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 2.2fr;
             align-items: flex-start;
             font-size: var(--font-size-base);
             line-height: 1.25;
@@ -220,61 +227,22 @@
             font-weight: var(--font-weight-regular);
         }
 
-        /* 1. DOMYŚLNIE (PEŁNY EKRAN / DUŻE MONITORY) — 3 KOLUMNY W 1 RZĘDZIE */
-        .col-title {
-            flex: 0 0 30%;
-            max-width: 30%;
-            padding-right: 2vw;
+        .project-info > div:nth-child(1) {
+            padding-right: var(--col-gap-1-2);
+        }
+
+        .project-info > div:nth-child(2) {
+            padding-right: var(--col-gap-2-3);
+        }
+
+        .project-title {
             font-weight: var(--font-weight-medium);
-        }
-
-        .col-scope {
-            flex: 0 0 20%;
-            max-width: 20%;
-            padding-right: 2vw;
-        }
-
-        .col-desc {
-            flex: 0 0 50%;
-            max-width: 50%;
         }
 
         .scope-title {
             text-decoration: underline;
             display: inline-block;
             margin-bottom: 0;
-        }
-
-        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA — PRZESKOK NA UKŁAD 1+2 */
-        @media (max-width: 850px) {
-            .col-title {
-                flex: 0 0 auto;
-                max-width: 50%;
-            }
-
-            .col-scope {
-                flex: 0 0 auto;
-                max-width: 50%;
-                padding-right: 0;
-                margin-left: auto;
-                text-align: left;
-            }
-
-            .col-desc {
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-top: 1vw;
-            }
-        }
-
-        @media (max-width: 200px) {
-            .col-title,
-            .col-scope,
-            .col-desc {
-                flex: 0 0 100%;
-                max-width: 100%;
-                padding-right: 0;
-            }
         }
 
         /* --- SLIDER I MEDIA --- */
@@ -296,7 +264,7 @@
             scroll-behavior: auto;
         }
 
-        .media-slider.active {
+        .media-slider:active {
             cursor: grabbing;
         }
 
@@ -305,51 +273,16 @@
         }
 
         .media-item {
-            height: auto !important;
+            max-height: clamp(300px, 35vw, 700px);
+            width: auto;
+            max-width: clamp(260px, 32vw, 600px);
             flex-shrink: 0;
-            object-fit: contain;
             display: block;
-        }
-
-        /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1920px)
-           ========================================================= */
-
-        /* SEKCJA 1 */
-        .m-1-1 { width: clamp(333px, 27vw, 564px) !important; }
-        .m-1-2, .m-1-3, .m-1-4, .m-1-5, .m-1-6, .m-1-7, .m-1-8 { 
-            width: clamp(234px, 19vw, 396px) !important; 
-        }
-
-        /* SEKCJA 2 */
-        .m-2-1, .m-2-3, .m-2-4 { 
-            width: clamp(311px, 25vw, 527px) !important; 
-        }
-        .m-2-2 { width: clamp(424px, 34vw, 718px) !important; }
-        .m-2-5 { width: clamp(480px, 38vw, 812px) !important; }
-        .m-2-6 { width: clamp(259px, 21vw, 438px) !important; }
-
-        /* SEKCJA 3 */
-        .m-3-1, .m-3-2, .m-3-3, .m-3-4 { 
-            width: clamp(381px, 31vw, 645px) !important; 
-        }
-        .m-3-5 { width: clamp(579px, 46vw, 979px) !important; }
-
-        /* SEKCJA 4 */
-        .m-4-1, .m-4-2, .m-4-3, .m-4-4 { 
-            width: clamp(287px, 23vw, 486px) !important; 
-        }
-        .m-4-5 { width: clamp(325px, 26vw, 550px) !important; }
-        .m-4-6 { width: clamp(345px, 28vw, 583px) !important; }
-
-        /* SEKCJA 5 */
-        .m-5-1, .m-5-2, .m-5-3, .m-5-4, .m-5-5, .m-5-6 { 
-            width: clamp(347px, 28vw, 587px) !important; 
-        }
-
-        /* SEKCJA 6 */
-        .m-6-1, .m-6-2, .m-6-3, .m-6-4, .m-6-5, .m-6-6, .m-6-7 { 
-            width: clamp(289px, 23vw, 490px) !important; 
+            vertical-align: top;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            pointer-events: auto;
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -419,10 +352,12 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ MOBILNA DLA POZOSTAŁYCH ELEMENTÓW */
+        /* RESPONSYWNOŚĆ MOBILNA */
         @media (max-width: 768px) {
             body { padding: 10px 20px; }
-            .media-item { width: 75vw !important; }
+            .project-info { grid-template-columns: 1fr; gap: 12px; }
+            .project-info > div:nth-child(1),
+            .project-info > div:nth-child(2) { padding-right: 0; }
             #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
             .site-footer { 
                 flex-direction: row; 
@@ -432,24 +367,6 @@
             }
             .footer-email {
                 font-size: clamp(14px, 3.2vw, 18px);
-            }
-        }
-
-        /* UKRYWANIE SOCIALI I WYRÓWNANIE EMAILA DO PRAWEJ PONIŻEJ 600PX */
-        @media (max-width: 600px) {
-            .footer-links {
-                display: none;
-            }
-            .site-footer {
-                justify-content: flex-end;
-            }
-            .footer-email {
-                width: 100%;
-                text-align: right;
-            }
-            .footer-email .footer-link {
-                font-size: clamp(14px, 4.5vw, 20px);
-                word-break: break-all;
             }
         }
     </style>
@@ -501,119 +418,115 @@
             </section>
         </header>
 
-        <!-- SEKCJA 1 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Dziewczyny<br>Maszyny<br>Event Design
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Visual identity,<br>
                     Digital design<br>for social media,<br>
                     Typeface,<br>
                     Motion design
                 </div>
-                <div class="col-desc">
+                <div>
                     The visual identity of the mentoring program organized by the Dziewczyny-Maszyny group, which supports writing and publishing texts. The theme of this edition is the word SLOWLY. The meaning of the slogan was captured using a script typeface, reflecting the time and dedication needed to create a character. The script typeface SLOWLY creates various patterns, reflecting the complexity and patience involved in the creative process.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item m-1-1" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
-                    <video class="media-item m-1-2" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
-                    <video class="media-item m-1-3" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
-                    <video class="media-item m-1-4" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
-                    <video class="media-item m-1-5" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
-                    <video class="media-item m-1-6" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
-                    <img class="media-item m-1-7" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
-                    <video class="media-item m-1-8" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_6.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/1/powoli_7.jpg" alt="Powoli 7" loading="lazy">
+                    <video class="media-item" loop muted playsinline><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
 
-        <!-- SEKCJA 2 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Supplement<br>packaging &<br>promotion
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Packaging,<br>
                     Digital design<br>for social media
                 </div>
-                <div class="col-desc">
+                <div>
                     Have a G Day is more than just a brand of supplements; it is a proposal for a daily ritual and a way of taking care of yourself. The brand has been designed to be not only effective but also visually appealing. It talks about balance and well-being in an accessible and fresh way. The packaging was created on this basis, referring to the requirements set out in the brand book.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <img class="media-item m-2-1" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
-                    <img class="media-item m-2-2" src="images/2/hagd_2.jpg" alt="HAGD 2" ondragstart="return false;">
-                    <img class="media-item m-2-3" src="images/2/hagd_3.jpg" alt="HAGD 3" ondragstart="return false;">
-                    <img class="media-item m-2-4" src="images/2/hagd_4.png" alt="HAGD 4" ondragstart="return false;">
-                    <img class="media-item m-2-5" src="images/2/hagd_5.png" alt="HAGD 5" ondragstart="return false;">
-                    <video class="media-item m-2-6" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/2/hagd_1.png" alt="HAGD 1" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_2.jpg" alt="HAGD 2" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_3.jpg" alt="HAGD 3" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_4.png" alt="HAGD 4" loading="lazy">
+                    <img class="media-item" src="images/2/hagd_5.png" alt="HAGD 5" loading="lazy">
+                    <video class="media-item" loop muted playsinline><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
 
-        <!-- SEKCJA 3 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Movement<br>diagram
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Visual identity,<br>
                     Illustrations,<br>
                     Digital design<br>for social media
                 </div>
-                <div class="col-desc">
+                <div>
                     Graphic design project for cyclical physical movement courses. The graphic identity is based on presenting certain movement complexities in the form of simplified diagrams. This reflects the way movements are worked on during the classes.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <img class="media-item m-3-1" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
-                    <img class="media-item m-3-2" src="images/3/movement_2.png" alt="Movement 2" ondragstart="return false;">
-                    <img class="media-item m-3-3" src="images/3/movement_3.png" alt="Movement 3" ondragstart="return false;">
-                    <img class="media-item m-3-4" src="images/3/movement_4.png" alt="Movement 4" ondragstart="return false;">
-                    <img class="media-item m-3-5" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
+                    <img class="media-item" src="images/3/movement_1.png" alt="Movement 1" loading="lazy">
+                    <img class="media-item" src="images/3/movement_2.png" alt="Movement 2" loading="lazy">
+                    <img class="media-item" src="images/3/movement_3.png" alt="Movement 3" loading="lazy">
+                    <img class="media-item" src="images/3/movement_4.png" alt="Movement 4" loading="lazy">
+                    <img class="media-item" src="images/3/movement_5.png" alt="Movement 5" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
 
-        <!-- SEKCJA 4 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Sad<br>Typography
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Visual identity,<br>
                     Digital design<br>for social media,<br>
@@ -621,96 +534,94 @@
                     Video recording,<br>
                     Video editing
                 </div>
-                <div class="col-desc">
+                <div>
                     Sad Dances are contemporary dance classes that allow participants to release their emotions, acting as a kind of catharsis. The visuals of the moving poster are a tribute to the organic movements of dance and refer to the nature-inspired, wavy, and dynamic shapes known from Art Nouveau.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item m-4-1" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
-                    <video class="media-item m-4-2" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
-                    <video class="media-item m-4-3" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
-                    <video class="media-item m-4-4" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
-                    <img class="media-item m-4-5" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" ondragstart="return false;">
-                    <img class="media-item m-4-6" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/4/smutne_tance_4.mp4" type="video/mp4"></video>
+                    <img class="media-item" src="images/4/smutne_tance_5.jpg" alt="Smutne Tance 5" loading="lazy">
+                    <img class="media-item" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
 
-        <!-- SEKCJA 5 -->
         <article class="project-item" id="circular-economy">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Circular<br>Economy<br>Explainer Video
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Stop-motion animation,<br>
                     Digital design,<br>
                     Motion design,<br>
                     Video editing
                 </div>
-                <div class="col-desc">
+                <div>
                     Explanatory video, which attempts to turn our inaction in the face of environmental disaster into action. The project aimed to present the idea of the natural system as a whole, of which we are an integral part, using the concept of the circular economy. Using stop-motion animation helps to create an atmosphere that feels closer and more grounded in reality. Motion design is the main element used to explain the discussed content.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <video class="media-item m-5-1" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
-                    <video class="media-item m-5-2" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
-                    <video class="media-item m-5-3" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
-                    <video class="media-item m-5-4" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
-                    <video class="media-item m-5-5" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
-                    <video class="media-item m-5-6" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_2.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_3.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_4.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_5.mp4" type="video/mp4"></video>
+                    <video class="media-item" loop muted playsinline><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
 
-        <!-- SEKCJA 6 -->
         <article class="project-item">
             <div class="project-info">
-                <div class="col-title">
+                <div class="project-title">
                     Wine label<br>Winnica Łukasz
                 </div>
-                <div class="col-scope">
+                <div>
                     <span class="scope-title">Scope of work</span><br>
                     Brand identity,<br>
                     Packaging
                 </div>
-                <div class="col-desc">
+                <div>
                     The wine label was created for a family winery with deep agricultural roots. The project was about combining nurturing relationships between people and nature and honoring the cultivation experience that describes the vineyard and its owners. This is depicted in the graphic as a combination of nine unique fields (nine family members) forming color transitions (relationships). The colors are chosen to match the character of the wine.
                 </div>
             </div>
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
                 <div class="media-slider">
-                    <img class="media-item m-6-1" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
-                    <img class="media-item m-6-2" src="images/6/wine_2.png" alt="Wine 2" ondragstart="return false;">
-                    <img class="media-item m-6-3" src="images/6/wine_3.png" alt="Wine 3" ondragstart="return false;">
-                    <img class="media-item m-6-4" src="images/6/wine_4.png" alt="Wine 4" ondragstart="return false;">
-                    <img class="media-item m-6-5" src="images/6/wine_5.png" alt="Wine 5" ondragstart="return false;">
-                    <img class="media-item m-6-6" src="images/6/wine_6.png" alt="Wine 6" ondragstart="return false;">
-                    <img class="media-item m-6-7" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
+                    <img class="media-item" src="images/6/wine_1.png" alt="Wine 1" loading="lazy">
+                    <img class="media-item" src="images/6/wine_2.png" alt="Wine 2" loading="lazy">
+                    <img class="media-item" src="images/6/wine_3.png" alt="Wine 3" loading="lazy">
+                    <img class="media-item" src="images/6/wine_4.png" alt="Wine 4" loading="lazy">
+                    <img class="media-item" src="images/6/wine_5.png" alt="Wine 5" loading="lazy">
+                    <img class="media-item" src="images/6/wine_6.png" alt="Wine 6" loading="lazy">
+                    <img class="media-item" src="images/6/wine_7-.png" alt="Wine 7" loading="lazy">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </div>
         </article>
@@ -721,219 +632,190 @@
                 <a href="https://www.instagram.com/marzec.gosia/" target="_blank" class="footer-link">Instagram</a>
                 <a href="https://www.linkedin.com/in/marzecmalgorzata/" target="_blank" class="footer-link">Linkedin</a>
             </div>
-            <div class="footer-email">
-                <a href="mailto:gosi.marzec@gmail.com" class="footer-link">gosi.marzec@gmail.com</a>
+            <div>
+                <a href="mailto:gosi.marzec@gmail.com" class="footer-link footer-email">gosi.marzec@gmail.com</a>
             </div>
         </footer>
 
     </div>
 
     <script>
-        /* --- OBSŁUGA PANELIKÓW ABOUT I CONTACT --- */
         function toggleAbout() {
-            const aboutSec = document.getElementById('about-section');
-            const contactSec = document.getElementById('contact-section');
-            contactSec.classList.remove('active');
-            aboutSec.classList.toggle('active');
+            const aboutSection = document.getElementById('about-section');
+            const aboutBtn = document.getElementById('about-btn');
+            const contactSection = document.getElementById('contact-section');
+            const contactBtn = document.getElementById('contact-btn');
+
+            contactSection.classList.remove('active');
+            contactBtn.innerText = 'Contact';
+
+            if (aboutSection.classList.contains('active')) {
+                aboutSection.classList.remove('active');
+                aboutBtn.innerText = 'About';
+            } else {
+                aboutSection.classList.add('active');
+                aboutBtn.innerText = 'Close';
+            }
         }
 
         function toggleContact() {
-            const aboutSec = document.getElementById('about-section');
-            const contactSec = document.getElementById('contact-section');
-            aboutSec.classList.remove('active');
-            contactSec.classList.toggle('active');
-        }
+            const contactSection = document.getElementById('contact-section');
+            const contactBtn = document.getElementById('contact-btn');
+            const aboutSection = document.getElementById('about-section');
+            const aboutBtn = document.getElementById('about-btn');
 
-        /* --- PRECYZYJNA MECHANIKA SCROLLOWANIA I KARUZELI --- */
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
+            aboutSection.classList.remove('active');
+            aboutBtn.innerText = 'About';
 
-        function animateScroll(slider, targetScroll) {
-            const startScroll = slider.scrollLeft;
-            const distance = targetScroll - startScroll;
-            
-            if (Math.abs(distance) < 1) return;
-
-            const speedFactor = 2.0; 
-            const minDuration = 1200; 
-            const maxDuration = 3000; 
-
-            const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
-            let startTime = null;
-
-            function step(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easeProgress = easeInOutCubic(progress);
-                slider.scrollLeft = startScroll + (distance * easeProgress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                }
-            }
-
-            requestAnimationFrame(step);
-        }
-
-        function scrollSlider(button, direction) {
-            const wrapper = button.parentElement;
-            const slider = wrapper.querySelector('.media-slider');
-            const items = Array.from(slider.querySelectorAll('.media-item'));
-            
-            if (!items.length) return;
-
-            const sliderRect = slider.getBoundingClientRect();
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            
-            const isMobile = window.innerWidth <= 768;
-            const tolerance = isMobile ? 1 : 5;
-
-            let targetScroll = slider.scrollLeft;
-
-            if (direction === 1) {
-                let nextItem = items.find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.right > sliderRect.right + tolerance;
-                });
-
-                if (nextItem) {
-                    const nextItemRect = nextItem.getBoundingClientRect();
-                    const nextItemWidth = nextItemRect.width;
-                    
-                    let calculatedTarget = slider.scrollLeft + (nextItemRect.left - sliderRect.left);
-
-                    if (maxScroll - calculatedTarget < nextItemWidth * 0.5) {
-                        targetScroll = maxScroll;
-                    } else {
-                        targetScroll = calculatedTarget;
-                    }
-                } else {
-                    targetScroll = maxScroll;
-                }
+            if (contactSection.classList.contains('active')) {
+                contactSection.classList.remove('active');
+                contactBtn.innerText = 'Contact';
             } else {
-                let prevItem = items.slice().reverse().find(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    return itemRect.left < sliderRect.left - tolerance;
-                });
-
-                if (prevItem) {
-                    const prevItemRect = prevItem.getBoundingClientRect();
-                    const prevItemWidth = prevItemRect.width;
-
-                    let calculatedTarget = slider.scrollLeft - (sliderRect.right - prevItemRect.right);
-
-                    if (calculatedTarget < prevItemWidth * 0.5) {
-                        targetScroll = 0;
-                    } else {
-                        targetScroll = calculatedTarget;
-                    }
-                } else {
-                    targetScroll = 0;
-                }
+                contactSection.classList.add('active');
+                contactBtn.innerText = 'Close';
             }
-
-            if (Math.abs(targetScroll - slider.scrollLeft) < 10) {
-                targetScroll = slider.scrollLeft + (direction * (sliderRect.width * 0.8));
-            }
-
-            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-            animateScroll(slider, targetScroll);
-        }
-
-        function checkScrollPosition(slider) {
-            const wrapper = slider.parentElement;
-            const leftArrow = wrapper.querySelector('.slider-arrow.left');
-            const rightArrow = wrapper.querySelector('.slider-arrow.right');
-
-            if (!leftArrow || !rightArrow) return;
-
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            
-            if (maxScroll <= 0) {
-                leftArrow.style.display = 'none';
-                rightArrow.style.display = 'none';
-                return;
-            }
-
-            const isAtStart = slider.scrollLeft <= 5;
-            const isAtEnd = slider.scrollLeft >= maxScroll - 5;
-
-            leftArrow.style.display = isAtStart ? 'none' : 'flex';
-            rightArrow.style.display = isAtEnd ? 'none' : 'flex';
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             const sliders = document.querySelectorAll(".media-slider");
 
             sliders.forEach((slider) => {
-                slider.addEventListener("scroll", () => checkScrollPosition(slider));
-                checkScrollPosition(slider);
-
                 let isDown = false;
                 let startX;
                 let scrollLeft;
 
-                slider.addEventListener('mousedown', (e) => {
+                slider.addEventListener("scroll", () => checkScrollPosition(slider));
+
+                slider.addEventListener("mousedown", (e) => {
+                    if (e.button !== 0) return;
                     isDown = true;
-                    slider.classList.add('active');
                     startX = e.pageX - slider.offsetLeft;
                     scrollLeft = slider.scrollLeft;
                 });
 
-                slider.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
+                slider.addEventListener("mouseleave", () => { isDown = false; });
+                slider.addEventListener("mouseup", () => { isDown = false; });
 
-                slider.addEventListener('mouseup', () => {
-                    isDown = false;
-                    slider.classList.remove('active');
-                });
-
-                slider.addEventListener('mousemove', (e) => {
+                slider.addEventListener("mousemove", (e) => {
                     if (!isDown) return;
                     e.preventDefault();
                     const x = e.pageX - slider.offsetLeft;
                     const walk = (x - startX) * 1.5;
                     slider.scrollLeft = scrollLeft - walk;
                 });
+
+                slider.querySelectorAll("img, video").forEach((media) => {
+                    media.addEventListener("dragstart", (e) => e.preventDefault());
+
+                    /* Nasłuchiwanie na załadowanie mediów, aby strzałki pojawiły się od razu */
+                    if (media.tagName.toLowerCase() === 'video') {
+                        media.addEventListener('loadedmetadata', () => checkScrollPosition(slider));
+                    } else {
+                        if (media.complete) {
+                            checkScrollPosition(slider);
+                        } else {
+                            media.addEventListener('load', () => checkScrollPosition(slider));
+                        }
+                    }
+                });
+
+                checkScrollPosition(slider);
             });
 
             window.addEventListener('load', () => {
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
-
-            const sliderObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        checkScrollPosition(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            sliders.forEach(slider => sliderObserver.observe(slider));
-
             window.addEventListener('resize', () => {
                 sliders.forEach((slider) => checkScrollPosition(slider));
             });
 
             const videos = document.querySelectorAll("video.media-item");
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    const video = entry.target;
                     if (entry.isIntersecting) {
-                        entry.target.play().catch(() => {});
+                        video.play().catch(() => {});
                     } else {
-                        entry.target.pause();
+                        video.pause();
                     }
                 });
-            }, { threshold: 0.5 });
+            }, { threshold: 0.1 });
 
-            videos.forEach(video => videoObserver.observe(video));
+            videos.forEach((video) => observer.observe(video));
         });
-    </script>
 
+        /* --- S-CURVE EASE-IN-OUT SILNIK PRZEWIJANIA --- */
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        const activeAnimations = new WeakMap();
+
+        function customSmoothScroll(element, target, duration) {
+            const start = element.scrollLeft;
+            const change = target - start;
+            const startTime = performance.now();
+
+            if (activeAnimations.has(element)) {
+                cancelAnimationFrame(activeAnimations.get(element));
+            }
+
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = easeInOutCubic(progress);
+
+                element.scrollLeft = start + (change * easeProgress);
+
+                if (progress < 1) {
+                    const frameId = requestAnimationFrame(animateScroll);
+                    activeAnimations.set(element, frameId);
+                } else {
+                    activeAnimations.delete(element);
+                }
+            }
+
+            const frameId = requestAnimationFrame(animateScroll);
+            activeAnimations.set(element, frameId);
+        }
+
+        function scrollSlider(arrowButton, direction) {
+            const wrapper = arrowButton.closest('.slider-wrapper');
+            const slider = wrapper.querySelector('.media-slider');
+            const scrollAmount = slider.clientWidth * 0.75;
+            
+            let currentTarget = slider.scrollLeft;
+            if (activeAnimations.has(slider)) {
+                currentTarget = slider._targetScrollLeft || slider.scrollLeft;
+            }
+
+            let targetScroll = currentTarget + (direction * scrollAmount);
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+            slider._targetScrollLeft = targetScroll;
+
+            /* Płynne przewijanie 1.1 sekundy z łagodnym wyhamowaniem */
+            customSmoothScroll(slider, targetScroll, 1500);
+        }
+
+        function checkScrollPosition(slider) {
+            const wrapper = slider.closest('.slider-wrapper');
+            if (!wrapper) return;
+
+            const leftArrow = wrapper.querySelector('.slider-arrow.left');
+            const rightArrow = wrapper.querySelector('.slider-arrow.right');
+
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+            if (leftArrow) {
+                leftArrow.style.display = slider.scrollLeft > 5 ? 'flex' : 'none';
+            }
+
+            if (rightArrow) {
+                rightArrow.style.display = (maxScroll - slider.scrollLeft) > 5 ? 'flex' : 'none';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -38,7 +38,10 @@
             background-color: #edece9;
             font-family: var(--font-family-main);
             color: #222222;
-            padding: 12px 40px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            padding-left: 35px;
+            padding-right: 35px;
             width: 100%;
             max-width: 1920px;
             margin: 0 auto;
@@ -57,7 +60,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid var(--border-color);
+            border-bottom: 0.25vw solid var(--border-color);
             padding-bottom: var(--nav-padding-bottom);
             position: sticky;
             top: 0;
@@ -111,8 +114,9 @@
             min-width: 340px;
             max-width: 100%;
             border-left: none;
-            border-right: 2px solid var(--border-color);
-            border-bottom: 2px solid var(--border-color);
+            border-top: 0.25vw solid var(--border-color);
+            border-right: 0.25vw solid var(--border-color);
+            border-bottom: 0.25vw solid var(--border-color);
         }
 
         #contact-section {
@@ -121,9 +125,10 @@
             width: auto;
             min-width: 240px;
             text-align: right;
-            border-left: 2px solid var(--border-color);
+            border-top: 0.25vw solid var(--border-color);
+            border-left: 0.25vw solid var(--border-color);
             border-right: none;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 0.25vw solid var(--border-color);
         }
 
         #contact-section .contact-content {
@@ -206,6 +211,23 @@
             border-bottom: 2px solid var(--border-color);
             padding-top: var(--project-padding-top);
             padding-bottom: var(--project-padding-bottom);
+        }
+
+        /* Dedykowane modyfikacje dla pierwszej sekcji projektu (selekcja zgodna z lokalnymi zmianami) */
+        article.project-item:nth-child(2) > div:nth-child(1) {
+            padding-bottom: 2vw;
+        }
+
+        article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
+            padding-right: 2vw;
+        }
+
+        article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(2) {
+            padding-left: 2vw;
+        }
+
+        article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(3) {
+            padding-left: 1vw;
         }
 
         .project-info {

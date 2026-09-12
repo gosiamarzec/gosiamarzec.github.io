@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
     <title>Gosia Marzec - Portfolio</title>
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
-			--font-family-main: "Inter",  "elza", "neue-haas-grotesk-display", "indivisible", sans-serif;
+            --font-family-main: "Inter", "elza", "neue-haas-grotesk-display", "indivisible", sans-serif;
 
-            --font-size-base: clamp(20px, 2vw, 50px); 
-            --font-size-nav: clamp(20px, 2vw, 50px);    
+            --font-size-base: clamp(20px, 1.9vw, 50px); 
+            --font-size-nav: clamp(20px, 1.9vw, 50px);    
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
@@ -121,6 +121,8 @@
             border-top: 0.25vw solid var(--border-color);
             border-right: 0.25vw solid var(--border-color);
             border-bottom: 0.25vw solid var(--border-color);
+            padding-left: 0px;
+            padding-top: 20px;
         }
 
         #contact-section {
@@ -133,6 +135,8 @@
             border-left: 0.25vw solid var(--border-color);
             border-right: none;
             border-bottom: 0.25vw solid var(--border-color);
+            padding-top: 1vw;
+            padding-bottom: 1vw;
         }
 
         #contact-section .contact-content {
@@ -160,6 +164,10 @@
             letter-spacing: -0.3px;
             margin-bottom: 40px;
             font-weight: var(--font-weight-regular);
+        }
+
+        .about-image-wrapper > img:nth-child(1) {
+            padding-right: 7vw;
         }
 
         .formula-wrapper {
@@ -217,13 +225,19 @@
             padding-bottom: var(--project-padding-bottom);
         }
 
-        /* Dedykowane modyfikacje dla pierwszej sekcji projektu (selekcja zgodna z lokalnymi zmianami) */
+        article.project-item:nth-child(7) {
+            border-bottom-width: 0.25vw;
+            border-bottom-style: solid;
+        }
+
+        /* Moduły projektów - dostosowanie odstępów */
         article.project-item:nth-child(2) > div:nth-child(1) {
             padding-bottom: 2vw;
         }
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
             padding-right: 2vw;
+            padding-left: 0.25vw;
         }
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(2) {
@@ -232,6 +246,14 @@
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(3) {
             padding-left: 1vw;
+        }
+
+        article.project-item:nth-child(3) > div:nth-child(1),
+        article.project-item:nth-child(4) > div:nth-child(1),
+        article.project-item:nth-child(5) > div:nth-child(1),
+        #circular-economy > div:nth-child(1),
+        article.project-item:nth-child(7) > div:nth-child(1) {
+            padding-bottom: 2vw;
         }
 
         .project-info {
@@ -416,13 +438,13 @@
 
         /* --- STOPKA --- */
         .site-footer {
-            padding-top: 1.5vw;
-            margin-top: 2vw;
+            padding-top: 0px;
+            margin-top: 0px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: var(--font-size-base);
-            font-weight: var(--font-weight-regular);
+            font-weight: var(--font-weight-bold);
             width: 100%;
         }
 
@@ -743,11 +765,9 @@
             const aboutBtn = document.getElementById('about-btn');
             const contactBtn = document.getElementById('contact-btn');
 
-            // Zamykamy sekcję Contact, jeśli była otwarta
             contactSec.classList.remove('active');
             contactBtn.textContent = 'Contact';
 
-            // Przełączamy sekcję About
             const isActive = aboutSec.classList.toggle('active');
             aboutBtn.textContent = isActive ? 'Close' : 'About';
         }
@@ -758,11 +778,9 @@
             const aboutBtn = document.getElementById('about-btn');
             const contactBtn = document.getElementById('contact-btn');
 
-            // Zamykamy sekcję About, jeśli była otwarta
             aboutSec.classList.remove('active');
             aboutBtn.textContent = 'About';
 
-            // Przełączamy sekcję Contact
             const isActive = contactSec.classList.toggle('active');
             contactBtn.textContent = isActive ? 'Close' : 'Contact';
         }

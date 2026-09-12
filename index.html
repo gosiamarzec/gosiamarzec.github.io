@@ -7,15 +7,15 @@
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
         :root {
-            --font-family-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			--font-family-main: "Inter",  "elza", "neue-haas-grotesk-display", "indivisible", sans-serif;
 
-            --font-size-base: clamp(20px, 1.8vw, 32px); 
-            --font-size-nav: clamp(20px, 1.8vw, 32px);    
+            --font-size-base: clamp(20px, 2vw, 50px); 
+            --font-size-nav: clamp(20px, 2vw, 50px);    
             --formula-font-size: clamp(15px, 1.5vw, 26px);
 
             --font-weight-regular: 400;
-            --font-weight-medium: 500;
-            --font-weight-bold: 600;
+            --font-weight-medium: 400;
+            --font-weight-bold: 500;
 
             --border-width-top: 3px;
             --border-width: 2px;
@@ -24,8 +24,8 @@
             --slider-gap: 1vw;            
 
             --project-padding-top: 1.2vw;    
-            --project-padding-bottom: 2.5vw; 
-            --nav-padding-bottom: 6px;      
+            --project-padding-bottom: 7.5vw; 
+            --nav-padding-bottom: 3px;      
         }
 
         * {
@@ -35,12 +35,12 @@
         }
 
         body {
-            background-color: #ebebeb;
+            background-color: #edece9;
             font-family: var(--font-family-main);
-            color: #1a1a1a;
+            color: #222222;
             padding: 12px 40px;
             width: 100%;
-            max-width: 3840px;
+            max-width: 1920px;
             margin: 0 auto;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -61,7 +61,7 @@
             padding-bottom: var(--nav-padding-bottom);
             position: sticky;
             top: 0;
-            background-color: #ebebeb;
+            background-color: #edece9;
             z-index: 1000;
             margin-bottom: 0;
             transform: translateZ(0);
@@ -74,7 +74,7 @@
             font-size: var(--font-size-nav);
             font-weight: var(--font-weight-bold);
             cursor: pointer;
-            color: #1a1a1a;
+            color: #222222;
             text-decoration: none;
             letter-spacing: -0.3px;
             line-height: 1;
@@ -146,7 +146,7 @@
 
         /* --- TREŚĆ ABOUT --- */
         .intro-text {
-            font-size: clamp(20px, 2.1vw, 36px);
+            font-size: clamp(20px, 2.0vw, 50px);
             line-height: 1.25;
             letter-spacing: -0.3px;
             margin-bottom: 40px;
@@ -714,15 +714,31 @@
         function toggleAbout() {
             const aboutSec = document.getElementById('about-section');
             const contactSec = document.getElementById('contact-section');
+            const aboutBtn = document.getElementById('about-btn');
+            const contactBtn = document.getElementById('contact-btn');
+
+            // Zamykamy sekcję Contact, jeśli była otwarta
             contactSec.classList.remove('active');
-            aboutSec.classList.toggle('active');
+            contactBtn.textContent = 'Contact';
+
+            // Przełączamy sekcję About
+            const isActive = aboutSec.classList.toggle('active');
+            aboutBtn.textContent = isActive ? 'Close' : 'About';
         }
 
         function toggleContact() {
             const aboutSec = document.getElementById('about-section');
             const contactSec = document.getElementById('contact-section');
+            const aboutBtn = document.getElementById('about-btn');
+            const contactBtn = document.getElementById('contact-btn');
+
+            // Zamykamy sekcję About, jeśli była otwarta
             aboutSec.classList.remove('active');
-            contactSec.classList.toggle('active');
+            aboutBtn.textContent = 'About';
+
+            // Przełączamy sekcję Contact
+            const isActive = contactSec.classList.toggle('active');
+            contactBtn.textContent = isActive ? 'Close' : 'Contact';
         }
 
         /* --- PRECYZYJNA MECHANIKA SCROLLOWANIA I KARUZELI --- */

@@ -33,7 +33,9 @@
 
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 7.5vw; 
-            --nav-padding-bottom: 3px;      
+            --nav-padding-bottom: 3px;
+			
+			--columns-spread: clamp(10px, 2vw, 38px);
         }
 
         * {
@@ -241,12 +243,12 @@
         }
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
-            padding-right: 2vw;
+            padding-right: var(--columns-spread);
             padding-left: 0px;
         }
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(2) {
-            padding-left: 2vw;
+            padding-left: var(--columns-spread);
         }
 
         article.project-item:nth-child(2) > div:nth-child(1) > div:nth-child(3) {

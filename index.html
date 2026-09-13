@@ -310,30 +310,32 @@
             width: 100%;
         }
 
-        .media-slider {
+		.media-slider {
             display: flex;
             gap: var(--slider-gap);
             overflow-x: auto;
             padding-bottom: 2px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-						 
             user-select: none;
             align-items: flex-start;
             scroll-behavior: auto;
-            cursor: e-resize;
         }
 
-        .media-slider.at-start {
-            cursor: w-resize;
+        /* --- WŁASNE KURSORY DLA SLIDERA I JEGO DZIECI --- */
+        .media-slider,
+        .media-slider * {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' y1='12' x2='20' y2='12'%3E%3C/line%3E%3Cpolyline points='14 6 20 12 14 18'%3E%3C/polyline%3E%3C/svg%3E") 18 18, e-resize !important;
         }
 
-        .media-slider.active {
-            cursor: grabbing;
+        .media-slider.at-start,
+        .media-slider.at-start * {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='20' y1='12' x2='4' y2='12'%3E%3C/line%3E%3Cpolyline points='10 6 4 12 10 18'%3E%3C/polyline%3E%3C/svg%3E") 18 18, w-resize !important;
         }
 
-        .media-slider::-webkit-scrollbar {
-            display: none;
+        .media-slider.active,
+        .media-slider.active * {
+            cursor: grabbing !important;
         }
 
         .media-item {

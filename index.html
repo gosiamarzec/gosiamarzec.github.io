@@ -300,42 +300,6 @@
             margin-bottom: 0;
         }
 
-        /* 2. PO PRZYBLIŻENIU / ZMNIEJSZENIU OKNA — PRZESKOK NA UKŁAD 1+2 */
-        @media (max-width: 850px) {
-            .col-title {
-                flex: 0 0 auto;
-                max-width: 50%;
-            }
-
-            .col-scope {
-                flex: 0 0 auto;
-                max-width: 50%;
-                padding-right: 0;
-                margin-left: auto;
-                text-align: left;
-            }
-
-            .col-desc {
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-top: 6vw;
-                margin-bottom: 6vw;
-            }
-			.project-item {
-        	padding-bottom: 35px; /* <--- SZTYWNY LUB RELATYWNY ODSTĘP NA TELEFONIE */
-    		}
-        }
-
-        @media (max-width: 200px) {
-            .col-title,
-            .col-scope,
-            .col-desc {
-                flex: 0 0 100%;
-                max-width: 100%;
-                padding-right: 0;
-            }
-        }
-
         /* --- SLIDER I MEDIA --- */
         .slider-wrapper {
             position: relative;
@@ -478,37 +442,68 @@
             white-space: nowrap;
         }
 
-        /* RESPONSYWNOŚĆ MOBILNA DLA POZOSTAŁYCH ELEMENTÓW */
+        /* =========================================================
+           JEDYNY BREAKPOINT MOBILNY (768px)
+           ========================================================= */
         @media (max-width: 768px) {
-            body { padding: 10px 20px; }
-            .media-item { width: 75vw !important; }
-            #about-section, #contact-section { width: 100%; border-left: none; border-right: none; }
-            .site-footer { 
-                flex-direction: row; 
-                justify-content: space-between; 
-                align-items: center; 
-                gap: 8px; 
+            body { 
+                padding: 10px 20px; 
             }
-            .footer-email {
-                font-size: clamp(14px, 3.2vw, 18px);
-            }
-			.project-item {
-        	padding-bottom: 35px; /* <--- SZTYWNY LUB RELATYWNY ODSTĘP NA TELEFONIE */
-    		}
-        }
 
-        /* UKRYWANIE SOCIALI I WYRÓWNANIE EMAILA DO PRAWEJ PONIŻEJ 600PX */
-        @media (max-width: 600px) {
+            /* UKŁAD KOLUMN Z BUTELEK ORAZ ODSTĘPY */
+            .col-title {
+                flex: 0 0 auto;
+                max-width: 50%;
+            }
+
+            .col-scope {
+                flex: 0 0 auto;
+                max-width: 50%;
+                padding-right: 0;
+                margin-left: auto;
+                text-align: left;
+            }
+
+            .col-desc {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 6vw;
+                margin-bottom: 6vw;
+            }
+
+            article.project-item {
+                padding-bottom: 35px !important;
+            }
+
+            /* KARUZELA I PANELIE */
+            .media-item { 
+                width: 75vw !important; 
+            }
+
+            #about-section, 
+            #contact-section { 
+                width: 100%; 
+                border-left: none; 
+                border-right: none; 
+            }
+
+            /* UKRYWANIE SOCIALI ZE STAREGO 600PX I FORMATOWANIE EMAILA */
             .footer-links {
                 display: none;
             }
-            .site-footer {
-                justify-content: flex-end;
+
+            .site-footer { 
+                flex-direction: row; 
+                justify-content: flex-end; 
+                align-items: center; 
+                gap: 8px; 
             }
+
             .footer-email {
                 width: 100%;
                 text-align: right;
             }
+
             .footer-email .footer-link {
                 font-size: clamp(14px, 4.5vw, 20px);
                 word-break: break-all;

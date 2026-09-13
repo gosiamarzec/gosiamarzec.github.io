@@ -393,13 +393,17 @@
         }
 
 		.slider-arrow svg {
-		    width: clamp(32px, 3vw, 52px);
+		    width: clamp(35px, 3.5vw, 60px); /* Dopasowanie szerokości pod dłuższą strzałkę Unicode */
 		    height: auto;
-		    fill: none; /* Usuwamy pełne wypełnienie */
-		    stroke: #1a1a1a; /* Kolor linii */
-		    stroke-width: 2.5; /* Grubość linii - dostosuj wedle uznania */
-		    /*stroke-linecap: round; /* Zaokrąglone końcówki linii */
-		    /*stroke-linejoin: round; /* Zaokrąglone łączenia linii */
+		    overflow: visible;
+		}
+		
+		.slider-arrow text {
+		    fill: #1a1a1a;
+		    font-family: system-ui, -apple-system, sans-serif; /* Standardowy font systemowy zapewniający poprawne renderowanie Unicode */
+		    font-size: 32px;
+		    dominant-baseline: central;
+		    text-anchor: middle;
 		}
 
         .slider-arrow:hover {
@@ -564,7 +568,7 @@
             <div class="slider-wrapper">
 				<button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
 				    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
-				        <path d="M40 12H4M14 2L4 12l10 10" />
+				        <text x="50%" y="50%" transform="rotate(180 20 12)">&#x27F6;</text>
 				    </svg>
 				</button>
                 <div class="media-slider">
@@ -579,7 +583,7 @@
                 </div>
 				<button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
 				    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
-				        <path d="M0 12h36M26 2l10 10-10 10" />
+				        <text x="50%" y="50%">&#x27F6;</text>
 				    </svg>
 				</button>
             </div>

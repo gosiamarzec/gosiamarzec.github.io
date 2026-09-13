@@ -36,7 +36,11 @@
             --nav-padding-bottom: 3px;
 			
 			--columns-spread: clamp(10px, 2vw, 38px);
-        }
+			/* Zmienne animacji slidera */
+		    --slider-speed-factor: 2.0;
+		    --slider-min-duration: 1200ms;
+		    --slider-max-duration: 3000ms;
+		}
 
         * {
             box-sizing: border-box;
@@ -799,34 +803,36 @@
             return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
 
-        function animateScroll(slider, targetScroll) {
-            const startScroll = slider.scrollLeft;
-            const distance = targetScroll - startScroll;
-            
-            if (Math.abs(distance) < 1) return;
-
-            const speedFactor = 2.0; 
-            const minDuration = 1200; 
-            const maxDuration = 3000; 
-
-            const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
-            let startTime = null;
-
-            function step(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easeProgress = easeInOutCubic(progress);
-                slider.scrollLeft = startScroll + (distance * easeProgress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                }
-            }
-
-            requestAnimationFrame(step);
-        }
+		function animateScroll(slider, targetScroll) {
+		    const startScroll = slider.scrollLeft;
+		    const distance = targetScroll - startScroll;
+		    
+		    if (Math.abs(distance) < 1) return;
+		
+		    // Pobranie wartości z :root
+		    const rootStyles = getComputedStyle(document.documentElement);
+		    const speedFactor = parseFloat(rootStyles.getPropertyValue('--slider-speed-factor')) || 2.0;
+		    const minDuration = parseFloat(rootStyles.getPropertyValue('--slider-min-duration')) || 1200;
+		    const maxDuration = parseFloat(rootStyles.getPropertyValue('--slider-max-duration')) || 3000;
+		
+		    const duration = Math.min(Math.max(Math.abs(distance) * speedFactor, minDuration), maxDuration);
+		    let startTime = null;
+		
+		    function step(currentTime) {
+		        if (!startTime) startTime = currentTime;
+		        const elapsed = currentTime - startTime;
+		        const progress = Math.min(elapsed / duration, 1);
+		        
+		        const easeProgress = easeInOutCubic(progress);
+		        slider.scrollLeft = startScroll + (distance * easeProgress);
+		
+		        if (progress < 1) {
+		            requestAnimationFrame(step);
+		        }
+		    }
+		
+		    requestAnimationFrame(step);
+		}
 
         function scrollSlider(button, direction) {
             const wrapper = button.parentElement;

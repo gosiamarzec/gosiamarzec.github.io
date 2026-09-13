@@ -7,10 +7,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
     <title>Gosia Marzec - Portfolio</title>
     <style>
         /* --- ZMIENNE KONTROLI LAYOUTU I TYPOGRAFII --- */
@@ -388,7 +384,7 @@
             border: none;
             cursor: pointer;
             z-index: 10;
-            padding: 6px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -397,9 +393,9 @@
         }
 
         .slider-arrow svg {
-            width: clamp(28px, 2.5vw, 48px);
-            height: clamp(28px, 2.5vw, 48px);
-            stroke: #1a1a1a;
+            width: clamp(32px, 3vw, 52px);
+            height: auto;
+            fill: #1a1a1a;
         }
 
         .slider-arrow:hover {
@@ -563,7 +559,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <video class="media-item m-1-1" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
@@ -576,7 +572,7 @@
                     <video class="media-item m-1-8" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>
@@ -599,7 +595,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <img class="media-item m-2-1" src="images/2/hagd_1.png" alt="HAGD 1" ondragstart="return false;">
@@ -610,7 +606,7 @@
                     <video class="media-item m-2-6" loop muted playsinline ondragstart="return false;"><source src="images/2/hagd_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>
@@ -634,7 +630,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <img class="media-item m-3-1" src="images/3/movement_1.png" alt="Movement 1" ondragstart="return false;">
@@ -644,7 +640,7 @@
                     <img class="media-item m-3-5" src="images/3/movement_5.png" alt="Movement 5" ondragstart="return false;">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>
@@ -670,7 +666,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <video class="media-item m-4-1" loop muted playsinline ondragstart="return false;"><source src="images/4/smutne_tance_1.mp4" type="video/mp4"></video>
@@ -681,7 +677,7 @@
                     <img class="media-item m-4-6" src="images/4/smutne_tance_6.jpg" alt="Smutne Tance 6" ondragstart="return false;">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>
@@ -706,7 +702,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <video class="media-item m-5-1" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_1.mp4" type="video/mp4"></video>
@@ -717,7 +713,7 @@
                     <video class="media-item m-5-6" loop muted playsinline ondragstart="return false;"><source src="images/5/circulary_6.mp4" type="video/mp4"></video>
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>
@@ -740,7 +736,7 @@
 
             <div class="slider-wrapper">
                 <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
                 </button>
                 <div class="media-slider">
                     <img class="media-item m-6-1" src="images/6/wine_1.png" alt="Wine 1" ondragstart="return false;">
@@ -752,7 +748,7 @@
                     <img class="media-item m-6-7" src="images/6/wine_7-.png" alt="Wine 7" ondragstart="return false;">
                 </div>
                 <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
                 </button>
             </div>
         </article>

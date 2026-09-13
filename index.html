@@ -392,11 +392,15 @@
             transition: opacity 0.2s ease;
         }
 
-        .slider-arrow svg {
-            width: clamp(32px, 3vw, 52px);
-            height: auto;
-            fill: #1a1a1a;
-        }
+		.slider-arrow svg {
+		    width: clamp(32px, 3vw, 52px);
+		    height: auto;
+		    fill: none; /* Usuwamy pełne wypełnienie */
+		    stroke: #1a1a1a; /* Kolor linii */
+		    stroke-width: 2.5; /* Grubość linii - dostosuj wedle uznania */
+		    /*stroke-linecap: round; /* Zaokrąglone końcówki linii */
+		    /*stroke-linejoin: round; /* Zaokrąglone łączenia linii */
+		}
 
         .slider-arrow:hover {
             opacity: 0.5;
@@ -558,9 +562,11 @@
             </div>
 
             <div class="slider-wrapper">
-                <button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
-                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M40 10H12V3L0 12l12 9v-7h28z"/></svg>
-                </button>
+				<button class="slider-arrow left" onclick="scrollSlider(this, -1)" aria-label="Poprzednie">
+				    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
+				        <path d="M40 12H4M14 2L4 12l10 10" />
+				    </svg>
+				</button>
                 <div class="media-slider">
                     <video class="media-item m-1-1" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_1.mp4" type="video/mp4"></video>
                     <video class="media-item m-1-2" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_2.mp4" type="video/mp4"></video>
@@ -571,9 +577,11 @@
                     <img class="media-item m-1-7" src="images/1/powoli_7.jpg" alt="Powoli 7" ondragstart="return false;">
                     <video class="media-item m-1-8" loop muted playsinline ondragstart="return false;"><source src="images/1/powoli_8.mp4" type="video/mp4"></video>
                 </div>
-                <button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
-                    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 10h28V3l12 9-12 9v-7H0z"/></svg>
-                </button>
+				<button class="slider-arrow right" onclick="scrollSlider(this, 1)" aria-label="Następne">
+				    <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
+				        <path d="M0 12h36M26 2l10 10-10 10" />
+				    </svg>
+				</button>
             </div>
         </article>
 

@@ -13,9 +13,9 @@
         :root {
             --font-family-main: "Inter", "elza", "neue-haas-grotesk-display", "indivisible", sans-serif;
 
-            --font-size-base: clamp(18px, 1.9vw, 36.5px); 
-            --font-size-nav: clamp(18px, 1.9vw, 36.5px);    
-            --formula-font-size: clamp(15px, 1.5vw, 26px);
+            --font-size-base: clamp(16px, 1.9vw, 27.5px); 
+            --font-size-nav: clamp(16px, 1.9vw, 27.5px);    
+            --formula-font-size: clamp(13px, 1.5vw, 19.5px);
 
             --font-weight-regular: 400;
             --font-weight-medium: 500;
@@ -25,13 +25,13 @@
             --border-width: 2px;
             --border-color: #1a1a1a;
 
-            --slider-gap: 1vw;            
+            --slider-gap: clamp(8px, 1vw, 14.5px);            
 
             --project-padding-top: 1.2vw;    
             --project-padding-bottom: 7.5vw; 
             --nav-padding-bottom: 3px;
 			
-			--columns-spread: clamp(10px, 2vw, 38px);
+			--columns-spread: clamp(10px, 2vw, 28.5px);
 			/* Zmienne animacji slidera */
 		    --slider-speed-factor: 1.0;
 		    --slider-min-duration: 1200ms;
@@ -50,10 +50,10 @@
             color: #222222;
             padding-top: 0px;
             padding-bottom: 12px;
-            padding-left: 35px;
-            padding-right: 35px;
+            padding-left: clamp(16px, 1.8vw, 26px);
+            padding-right: clamp(16px, 1.8vw, 26px);
             width: 100%;
-            max-width: 1920px;
+            max-width: 1440px;
             margin: 0 auto;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -166,7 +166,7 @@
 
         /* --- TREŚĆ ABOUT --- */
         .intro-text {
-            font-size: clamp(18px, 1.9vw, 36.5px);
+            font-size: clamp(16px, 1.9vw, 27.5px);
             line-height: 1.25;
             letter-spacing: -0.3px;
             margin-bottom: 40px;
@@ -335,44 +335,44 @@
         }
 
         /* =========================================================
-           INDYWIDUALNE SZEROKOŚCI SEKCJI (FULL-WIDTH 1920px + MACBOOK)
+           INDYWIDUALNE SZEROKOŚCI SEKCJI (MACIERZ 1440px - SKALOWANA 0.75)
            ========================================================= */
 
 		/* SEKCJA 1 */
-        .m-1-1 { width: clamp(250px, 29.5vw, 570px) !important; }
+        .m-1-1 { width: clamp(250px, 31vw, 428px) !important; }
         .m-1-2, .m-1-3, .m-1-4, .m-1-5, .m-1-6, .m-1-7, .m-1-8 { 
-            width: clamp(176px, 20.8vw, 402px) !important; 
+            width: clamp(176px, 22vw, 302px) !important; 
         }
 
         /* SEKCJA 2 */
         .m-2-1, .m-2-3, .m-2-4 { 
-            width: clamp(233px, 27.8vw, 532px) !important; 
+            width: clamp(233px, 30vw, 399px) !important; 
         }
-        .m-2-2 { width: clamp(318px, 37.4vw, 724px) !important; }
-        .m-2-5 { width: clamp(360px, 42.4vw, 818px) !important; }
-        .m-2-6 { width: clamp(194px, 22.8vw, 440px) !important; }
+        .m-2-2 { width: clamp(318px, 39vw, 543px) !important; }
+        .m-2-5 { width: clamp(360px, 43vw, 614px) !important; }
+        .m-2-6 { width: clamp(194px, 24vw, 330px) !important; }
 
         /* SEKCJA 3 */
         .m-3-1, .m-3-2, .m-3-3, .m-3-4 { 
-            width: clamp(286px, 30.3vw, 584px) !important; 
+            width: clamp(286px, 31vw, 438px) !important; 
         }
-        .m-3-5 { width: clamp(434px, 46vw, 888px) !important; }
+        .m-3-5 { width: clamp(434px, 47vw, 666px) !important; }
 
         /* SEKCJA 4 */
         .m-4-1, .m-4-2, .m-4-3, .m-4-4 { 
-            width: clamp(215px, 22.8vw, 440px) !important; 
+            width: clamp(215px, 24vw, 330px) !important; 
         }
-        .m-4-5 { width: clamp(244px, 28vw, 550px) !important; }
-        .m-4-6 { width: clamp(259px, 27vw, 532px) !important; }
+        .m-4-5 { width: clamp(244px, 26vw, 413px) !important; }
+        .m-4-6 { width: clamp(259px, 28vw, 399px) !important; }
 
         /* SEKCJA 5 */
         .m-5-1, .m-5-2, .m-5-3, .m-5-4, .m-5-5, .m-5-6 { 
-            width: clamp(260px, 30.8vw, 595px) !important; 
+            width: clamp(260px, 32vw, 446px) !important; 
         }
 
         /* SEKCJA 6 */
         .m-6-1, .m-6-2, .m-6-3, .m-6-4, .m-6-5, .m-6-6, .m-6-7 { 
-            width: clamp(217px, 22.9vw, 445px) !important; 
+            width: clamp(217px, 25vw, 334px) !important; 
         }
 
         /* --- STRZAŁKI SVG --- */
@@ -393,7 +393,7 @@
         }
 
 		.slider-arrow svg {
-		    width: clamp(35px, 3.5vw, 60px); /* Dopasowanie szerokości pod dłuższą strzałkę Unicode */
+		    width: clamp(28px, 3vw, 45px); /* Dopasowanie szerokości pod dłuższą strzałkę Unicode */
 		    height: auto;
 		    overflow: visible;
 		}
@@ -855,7 +855,7 @@
 		        slider.scrollLeft = startScroll + (distance * easeProgress);
 		
 		        if (progress < 1) {
-		            requestAnimationFrame(step);
+			        requestAnimationFrame(step);
 		        }
 		    }
 		
